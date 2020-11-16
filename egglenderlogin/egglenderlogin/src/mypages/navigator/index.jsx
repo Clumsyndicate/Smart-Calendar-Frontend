@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-export default class eggNavigator extends Component{
+import {Link} from 'react-router-dom'
+export default class EggNavigator extends Component{
     render(){
         return(
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -11,17 +12,19 @@ export default class eggNavigator extends Component{
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
-                        <a className="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <Link className="nav-link" to="/Homepage">Home <span class="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        setting
+                        User
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a className="dropdown-item" href="#">myProfile</a>
-                        <a className="dropdown-item" href="#">mySetting</a>
+                        <Link className="dropdown-item" to="/profile">myProfile</Link>
+                        <Link className="dropdown-item" to="/setting">mySetting</Link>
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#">Logout</a>
+                        <Link className="dropdown-item" to="/login">Logout</Link>
+                        <Link className="dropdown-item" to="/signup">Signup</Link>
+                        <Link className="dropdown-item" to="/login">Login</Link>
                         </div>
                     </li>
                     </ul>

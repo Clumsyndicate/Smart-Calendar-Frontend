@@ -1,16 +1,26 @@
 import React, {Component} from 'react'
 
-import eggNavigator from './mypages/navigator/index'
-import eggLogin from './mypages/login/index'
-import eggProfile from './mypages/profile/index'
-import eggRegister from './mypages/register/index'
-import eggHomepage from './mypages/Homepage/index'
+import {BrowserRouter,Switch, Route} from 'react-router-dom';
+import EggNavigator from './mypages/navigator/index';
+import eggLogin from './mypages/login/index';
+import eggProfile from './mypages/profile/index';
+import eggSignup from './mypages/signup/index';
+import eggHomepage from './mypages/Homepage/index';
+import eggSetting from './mypages/setting/index'
 export default class App extends Component{
     render(){
         return(
-            <div>
-                placeholder
-            </div>
+            <BrowserRouter>
+                <EggNavigator/>
+                    <Switch>
+                        <Route path ='/' exact component = {eggHomepage}/>
+                        <Route path ='/Homepage' exact component = {eggHomepage}/>
+                        <Route path ='/signup' exact component = {eggSignup}/>
+                        <Route path ='/login' exact component = {eggLogin}/>
+                        <Route path ='/profile' exact component = {eggProfile}/>
+                        <Route path ='/setting' exact component = {eggSetting}/>
+                    </Switch>
+            </BrowserRouter>
         )
     }
 }

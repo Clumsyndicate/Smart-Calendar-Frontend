@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-export default class eggRegister extends Component{
+export default class eggSetting extends Component{
     render(){
         return(
             <div>
-                placeHolder for EggRegister
+                placeHolder for eggSetting
             </div>
         )
     }
