@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 
-import eggNavigator from './mypages/navigator'
-import eggLogin from './mypages/login'
-import eggProfile from './mypages/profile'
-import eggRegister from './mypages/register'
-import eggHomepage from './mypages/Homepage'
+import eggNavigator from './mypages/navigator/index'
+import eggLogin from './mypages/login/index'
+import eggProfile from './mypages/profile/index'
+import eggRegister from './mypages/register/index'
+import eggHomepage from './mypages/Homepage/index'
 export default class App extends Component{
     render(){
         return(
+            <div>
+                placeholder
+            </div>
         )
     }
 }
