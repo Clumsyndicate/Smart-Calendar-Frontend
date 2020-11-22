@@ -5,9 +5,11 @@ import {
   Scheduler,
   DayView,
   WeekView,
+  MonthView,
   Appointments,
   Toolbar,
   DateNavigator,
+  ViewSwitcher,
   TodayButton,
   AppointmentForm,
   AppointmentTooltip,
@@ -73,7 +75,7 @@ export default class Demo extends React.PureComponent {
 
     this.state = {
       data: appointments,
-      currentDate: '2020-11-16',
+      // currentDate: '2020-11-16',
     };
 
     this.commitChanges = this.commitChanges.bind(this);
@@ -104,30 +106,44 @@ export default class Demo extends React.PureComponent {
       <Paper>
         <Scheduler
           data={data}
-          height={1660}
+          // height={1660}
         >
           <ViewState 
             currentDate={currentDate}
           />
-          <EditingState
-            onCommitChanges={this.commitChanges}
+
+          <DayView
+            // displayName={'One day'}
+            startDayHour={7}
+            endDayHour={19}
+            intervalCount={1}
           />
-          <IntegratedEditing />
           <WeekView
             startDayHour={9}
             endDayHour={19}
             timeTableCellComponent={TimeTableCell} // the cell of the verti-timetable
             dayScaleCellComponent={DayScaleCell} // the headline cell
           />
+          <MonthView
+            // startDayHour={9}
+            // endDayHour={19}
+          />
+          <EditingState
+            onCommitChanges={this.commitChanges}
+          />
+          <IntegratedEditing />
+          
           <ConfirmationDialog />
           <Appointments />
           <AppointmentTooltip
             showOpenButton
+            showCloseButton
             showDeleteButton
           />
           <AppointmentForm />
           <Toolbar />
           <DateNavigator />
+          <ViewSwitcher />
           <TodayButton />
         </Scheduler>
       </Paper>
