@@ -240,5 +240,26 @@ export const appointments = [
     allDay: true,
     id: 39,
     location: 'Room 1',
-  },
+  }, 
+// {
+//   title: 'recurring1',
+//   startDate: new Date(2018, 5, 25, 9, 35),
+//   endDate: new Date(2018, 5, 25, 11, 30),
+//   id: 40,
+//   rRule: 'FREQ=DAILY;COUNT=300',
+//   exDate: '20180628T063500Z,20180626T063500Z',
+// }, {
+//   title: 'recurring2',
+//   startDate: new Date(2018, 5, 25, 12, 11),
+//   endDate: new Date(2018, 5, 25, 13, 0),
+//   id: 41,
+//   rRule: 'FREQ=DAILY;COUNT=400',
+//   exDate: '20180627T091100Z',
+// }, {
+//   title: 'recurring3',
+//   startDate: new Date(2018, 5, 25, 13, 30),
+//   endDate: new Date(2018, 5, 25, 14, 35),
+//   id: 42,
+//   rRule: 'FREQ=DAILY;COUNT=500',
+// }
 ];
