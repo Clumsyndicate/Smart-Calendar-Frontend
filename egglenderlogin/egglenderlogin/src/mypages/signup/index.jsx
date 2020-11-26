@@ -1,15 +1,21 @@
 import React, {Component} from 'react'
-export default class eggSignup extends Component{
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import { signupAct } from './store/creator';
+import {reducer, actionCreator as signupActionCreator} from './store'
+class eggSignup extends Component{
     state = {
         userName: '',
         userEmail: '',
         userPwd: '',
         userPwd2: '',
     };
-    handleSubmit =  data =>
-    {
-        data.preventDefault();
-        console.log(this.state)
+    handleSubmit = async e => {
+        e.preventDefault();
+        const { data } = await this.props.signupFn.signupAct(
+          this.state
+        );
+
     }
     handleInput = data =>
     {
@@ -40,8 +46,8 @@ export default class eggSignup extends Component{
                         <input type="password" className="form-control" id="userPwd2" defaultValue={userPwd2} onChange={this.handleInput}/>
                     </div>
                     <div className="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="usercheck" onChange={this.handleInput}/>
-                        <label className="form-check-label" htmlFor="usercheck">Remember me</label>
+                        <input type="checkbox" className="form-check-input" id="remember" onChange={this.handleInput}/>
+                        <label className="form-check-label" htmlFor="remember">Remember me</label>
                     </div>
                     <button type="submit" className="btn btn-primary">Login</button>
                 </form>
@@ -49,3 +55,16 @@ export default class eggSignup extends Component{
         )
     }
 }
+const mapStateToProps = state =>
+{
+    return {
+        signupData: state.signup
+    }
+}
+const mapDispatchToProps = dispatch =>
+{
+    return {
+        signupFn: bindActionCreators(signupActionCreator, dispatch)
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(eggSignup)
