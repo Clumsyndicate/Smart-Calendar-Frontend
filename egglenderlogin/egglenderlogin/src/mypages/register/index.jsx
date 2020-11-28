@@ -49,14 +49,14 @@ class eggregister extends Component{
         return(
             <div>
                 <form onSubmit = {this.handleSubmit}>
-                    <div className="form-group">
+                    <div className="form-group is-invalid">
                         <label htmlFor="userName">Username</label>
                         <input id="userName" type = "text" defaultValue={userName} onChange={this.handleInput}/>
                         <small id="userNameHelp" className="form-text text-muted">
                             {errMessage[0] === 'userName' && errMessage[1] }
                         </small>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group ">
                         <label htmlFor="userEmail">Email address</label>
                         <input type="email" className="form-control" id="userEmail" defaultValue={userEmail} onChange={this.handleInput}/>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
