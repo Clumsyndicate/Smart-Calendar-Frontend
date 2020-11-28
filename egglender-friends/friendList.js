@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     flexWrap: 'nowrap',
-    height:250,
+    height:300,
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
@@ -59,21 +59,9 @@ export default function FriendList() {
         {tileData.map((tile,index) => (
           <GridListTile key={index} rows={12}>
             {/* <img src={tile.img} alt={tile.title} /> */}
-            <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes}/>
+            <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes} contact={tile.contact}/>
 
 
-            {/* <GridListTileBar
-              title={tile.title}
-              classes={{
-                root: classes.titleBar,
-                title: classes.title,
-              }}
-              actionIcon={
-                <IconButton aria-label={`star ${tile.title}`}>
-                  <StarBorderIcon className={classes.title} />
-                </IconButton>
-              }
-            /> */}
           </GridListTile>
         ))}
       </GridList>
