@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import classnames  from 'classnames'
-export default class Registerf extends Component
+import {withRouter} from 'react-router-dom'
+import shortid from 'shortid'
+
+class Registerf extends Component
 {
     state = {
         info: {
@@ -30,6 +33,12 @@ export default class Registerf extends Component
                 }
             );
         }
+        this.props.history.push("/Homepage")
+        this.props.noteFn.addNoteAct({
+            type: 'alert-primary',
+            text: 'You have successfully SignUp and LogIn',
+            id: shortid.generate()
+        })
     }
     handleInput = data =>
     {
@@ -107,3 +116,5 @@ export default class Registerf extends Component
         )
     }
 }
+
+export default withRouter(Registerf);
