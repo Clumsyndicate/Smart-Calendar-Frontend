@@ -18,7 +18,7 @@ export default class eggLogin extends Component{
                         <label className="form-check-label" htmlFor="usercheck">Remember me</label>
                     </div>
                     <button type="submit" className="btn btn-primary">Login</button>
-                    <a className="btn" href="/signup" role="button">Sign Up </a>
+                    <a className="btn" href="/register" role="button">Sign Up </a>
                 </form>
             </div>
         )

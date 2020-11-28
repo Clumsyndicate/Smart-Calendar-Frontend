@@ -1,8 +1,8 @@
 import axios from '../../../utils/request'
-export const signupAct = data =>
+export const registerAct = data =>
 {
     return dispatch => {
-        return axios.post('/api/signup', data );
+        return axios.post('/api/register', data );
     };
     
     

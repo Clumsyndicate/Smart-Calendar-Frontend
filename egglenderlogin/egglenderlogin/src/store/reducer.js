@@ -1,5 +1,5 @@
 import { combineReducers} from 'redux';
-import { reducer as signupReducer} from '../mypages/signup/store'
+import { reducer as registerReducer} from '../mypages/register/store'
 export default combineReducers({
-    signup: signupReducer
+    register: registerReducer
 });

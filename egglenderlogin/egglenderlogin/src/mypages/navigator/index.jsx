@@ -23,7 +23,7 @@ export default class EggNavigator extends Component{
                         <Link className="dropdown-item" to="/setting">mySetting</Link>
                         <div className="dropdown-divider"></div>
                         <Link className="dropdown-item" to="/login">Logout</Link>
-                        <Link className="dropdown-item" to="/signup">Signup</Link>
+                        <Link className="dropdown-item" to="/register">register</Link>
                         <Link className="dropdown-item" to="/login">Login</Link>
                         </div>
                     </li>
