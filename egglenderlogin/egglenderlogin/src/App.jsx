@@ -7,11 +7,13 @@ import eggProfile from './mypages/profile/index';
 import eggregister from './mypages/register/index';
 import eggHomepage from './mypages/Homepage/index';
 import eggSetting from './mypages/setting/index'
+import Notification from './mypages/notification'
 export default class App extends Component{
     render(){
         return(
             <BrowserRouter>
                 <EggNavigator/>
+                <Notification/>
                     <Switch>
                         <Route path ='/' exact component = {eggHomepage}/>
                         <Route path ='/Homepage' exact component = {eggHomepage}/>
