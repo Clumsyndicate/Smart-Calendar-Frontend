@@ -1,4 +1,4 @@
-export default (state = {name: 'ifer'}, action) => {
+export default (state = {name: 'register'}, action) => {
     switch (action.type) {
         default:
             return state;
