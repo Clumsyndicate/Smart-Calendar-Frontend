@@ -27,13 +27,23 @@ class Registerf extends Component
         console.log(data)
         if(data.status === 1)
         {
+            console.log(data.msg)
+            if(data.msg =="Username has already existed")
+            {
+                this.props.noteFn.addNoteAct({
+                    type: 'alert-primary',
+                    text: 'Username has already existed',
+                    id: shortid.generate()
+                })
+            }
+            
             return this.setState(
                 {
                     errMessage:data.msg,
                 }
             );
         }
-        this.props.history.push("/Homepage")
+        this.props.history.push("/working")
         this.props.noteFn.addNoteAct({
             type: 'alert-primary',
             text: 'You have successfully SignUp and LogIn',
