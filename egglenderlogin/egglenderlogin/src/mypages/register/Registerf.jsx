@@ -28,7 +28,7 @@ class Registerf extends Component
         if(data.status === 1)
         {
             console.log(data.msg)
-            if(data.msg =="Username has already existed")
+            if(data.msg ==="Username has already existed")
             {
                 this.props.noteFn.addNoteAct({
                     type: 'alert-primary',
@@ -43,7 +43,7 @@ class Registerf extends Component
                 }
             );
         }
-        this.props.history.push("/working")
+        this.props.history.push("/myProfile")
         this.props.noteFn.addNoteAct({
             type: 'alert-primary',
             text: 'You have successfully SignUp and LogIn',
