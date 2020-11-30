@@ -13,3 +13,10 @@ export const syncInfoAct = data => {
         payload: data,
     };
 };
+
+export const logoutAct = data => {
+    return dispatch => {
+        localStorage.removeItem('storeTOKEN');
+        dispatch(syncInfoAct({}));
+    };
+};

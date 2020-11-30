@@ -29,7 +29,7 @@ class LoginF extends Component
         {
             localStorage.setItem('storeTOKEN', data.mytoken)
             this.props.loginFn.syncInfoAct(decoder(data.mytoken))
-            this.props.history.push('/working')
+            this.props.history.push('/myProfile')
             this.props.noteFn.addNoteAct({
                 type: 'alert-primary',
                 text: 'You have successfully login!',

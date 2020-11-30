@@ -19,8 +19,9 @@ export default class App extends Component{
                         <Route path ='/Homepage' exact component = {eggHomepage}/>
                         <Route path ='/register' exact component = {eggregister}/>
                         <Route path ='/login' exact component = {eggLogin}/>
-                        <Route path ='/profile' exact component = {eggProfile}/>
+                        <Route path ='/myProfile' exact component = {eggProfile}/>
                         <Route path ='/setting' exact component = {eggSetting}/>
+
                     </Switch>
             </BrowserRouter>
         )

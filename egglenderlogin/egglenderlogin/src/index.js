@@ -9,7 +9,16 @@ const token =localStorage.getItem('storeTOKEN')
 
 if(token)
 {
-    store.dispatch(syncInfoAct(decoder(token)));
+    try 
+    {
+        store.dispatch(syncInfoAct(decoder(token)));
+    }
+    catch
+    {
+        localStorage.removeItem('storeTOKEN')
+        window.location.href = '/login';
+    }
+    
 }
 
 ReactDOM.render(
