@@ -19,3 +19,11 @@ To deal with these problems, we are introducing the following features:
 This repository holds the frontend code. [Backend is here](https://github.com/Clumsyndicate/Smart-Calendar-backend)
 
 The frontend application is built with React.
+
+## Class scheduling and class adding part
+[link to this repository](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/blob/main/egglender-class)
+
+Interactive online react IDE: [Codesandbox](https://codesandbox.io/s/ucla-class-scheduler-v2-gp43m)
+
+Demo screenshot:
+![](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/raw/main/egglender-class/Screenshot/Demo_v2.png)
