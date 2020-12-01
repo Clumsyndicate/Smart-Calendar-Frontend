@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 import {BrowserRouter,Switch, Route} from 'react-router-dom';
 import EggNavigator from './mypages/navigator/index';
+import TestNavigator from './mypages/navigator/testindex'
 import eggLogin from './mypages/login/index';
 import eggProfile from './mypages/profile/index';
 import eggregister from './mypages/register/index';
@@ -12,7 +13,8 @@ export default class App extends Component{
     render(){
         return(
             <BrowserRouter>
-                <EggNavigator/>
+                {/* <EggNavigator/> */}
+                <TestNavigator/>
                 <Notification/>
                     <Switch>
                         <Route path ='/' exact component = {eggHomepage}/>
