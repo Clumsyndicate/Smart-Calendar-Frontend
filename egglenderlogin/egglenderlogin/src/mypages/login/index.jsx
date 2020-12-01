@@ -5,10 +5,11 @@ import {bindActionCreators} from 'redux'
 import {actionCreators as loginActionCreators} from './store'
 import  {actionCreators as noteActionCreators} from '../notification/store'
 import LoginF from './Loginf';
+import LoginF2 from './Loginf2';
 class eggLogin extends Component{
     render() {
         return (
-          <LoginF {...this.props}/>
+          <LoginF2 {...this.props}/>
         );
       }
     
