@@ -1,0 +1,74 @@
+.aParent {
+	display: flex;
+	border: 3px solid #fff;
+    padding: 5px;
+}
+
+.calendar-layout {
+    width: 75%;
+    float: left;
+    padding: 20px;
+    border: 1.5px solid LightSkyBlue;
+}  
+
+.widget-container {
+    width: 25%;
+    float: left;
+    padding: 20px;
+    border: 1.5px solid LightSkyBlue;
+}  
+
+.option {
+  display: flex;
+}
+
+.option > span {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.dx-scheduler {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.option .caption {
+	font-weight: bold;
+    font-size: 135%;
+}
+
+.header .caption {
+	font-weight: bold;
+    font-size: 120%;
+}
+
+.header {
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(191, 191, 191, 0.15);
+}
+
+.option, 
+{
+    margin-top: 10px;
+    padding: 20px;
+    background: rgba(191, 191, 191, 0.15);
+}
+
+.option {
+    margin-top: 10px;
+}
+
+.option > span {
+    margin-right: 10px;
+}
+
+.option > .dx-selectbox {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 350px;
+    width: 100%;
+}
+
+

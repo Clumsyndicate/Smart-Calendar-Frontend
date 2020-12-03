@@ -1,4 +1,3 @@
-
 import React, {Component,useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -6,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import tileData from '../../calendar-friend/tileData'
 import FriendList from '../../calendar-friend/friendList'
+import App from '../../calendar-layout/App'
 // const styles = theme => ({
 //   root: {
 //     flexGrow: 1,
@@ -26,6 +26,7 @@ export default class CenteredGrid extends Component {
   render()
   {
     // const { classes } = this.props;
+    <App />
     return (
       <FriendList data={this.state.friends}/>
     );
