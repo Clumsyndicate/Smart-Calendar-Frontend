@@ -4,41 +4,37 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import tileData from '../../calendar-friend/tileData'
+import FriendList from '../../calendar-friend/friendList'
+// const styles = theme => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+//   paper: {
+//     padding: theme.spacing(2),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary,
+//   },
+// });
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-});
-
-class CenteredGrid extends Component {
+export default class CenteredGrid extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { friends: tileData };
+  }
   
   render()
   {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>for calendar</Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>for friendlist</Paper>
-          </Grid>
-        </Grid>
-      </div>
+      <FriendList data={this.state.friends}/>
     );
 
   }
   
  
 }
-export default withStyles(styles)(CenteredGrid);
+// export default withStyles(styles)(CenteredGrid);
 // import React, {Component,useState} from 'react'
 // import { Container } from '@material-ui/core';
 // import CssBaseline from '@material-ui/core/CssBaseline';
