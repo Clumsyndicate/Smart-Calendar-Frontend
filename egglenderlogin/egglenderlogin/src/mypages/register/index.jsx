@@ -5,10 +5,11 @@ import {registerAct} from './store/creator';
 import {reducer, actionCreator as registerActionCreator} from './store'
 import  {actionCreators as noteActionCreators} from '../notification/store'
 import Registerf from './Registerf'
+import  Registerf2 from './Registerf2'
 class eggregister extends Component{
     render()
     {
-        return <Registerf {...this.props}></Registerf>
+        return <Registerf2 {...this.props}></Registerf2>
     }
     
 }
