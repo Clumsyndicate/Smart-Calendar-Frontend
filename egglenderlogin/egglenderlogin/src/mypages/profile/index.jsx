@@ -1,144 +1,77 @@
-// import React, {Component} from 'react'
-// import axios from '../../utils/request'
-// export default class eggProfile extends Component{
-//     async componentDidMount()
-//     {
-//         const {data} = await axios.post('/api/myProfile')
-//         console.log(data);
-//     }
-//     render(){
-//         return(
-//             <div>
-//                 placeHolder for EggProfile
-//             </div>
-//         )
-//     }
-// }
 
 import React, {Component,useState} from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import ReactDOM from "react-dom";
-import AddIcon from "@material-ui/icons/Add";
-import { Fab} from "@material-ui/core";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
-    margin: 0,
+    flexGrow: 1,
+  },
+  paper: {
     padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
 });
 
-const DialogTitle = withStyles(styles)((props) => {
-  const { children, classes, onClose, ...other } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
+class CenteredGrid extends Component {
+  
+  render()
+  {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>for calendar</Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>for friendlist</Paper>
+          </Grid>
+        </Grid>
+      </div>
+    );
 
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
-
-
-
-
-class eggProfile extends Component{
-    constructor(props) {
-        super(props);
-        this.state = { open: false};
-      }
-      render(){
-        const handleClickOpen = () => 
-        {
-            this.setState({ open: true });
-        };
-        const handleClose = () => {
-            this.setState({ open: false });
-        };
-        return (
-    
-            <div>
-              <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open dialog
-              </Button>
-              <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={this.state.open}>
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                  Upload your Class Planner calendar file
-                </DialogTitle>
-                <DialogContent dividers>
-                  
-                  <Typography gutterBottom>
-                    If you do not have a calendar file (.ics) yet, you could download the sample calendar file here: 
-                     
-                  </Typography>
-                  <a href="url">sample .ics file</a>
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus onClick={handleClose} color="primary">
-                    Save changes
-                  </Button>
-        
-                  <label htmlFor="upload-photo">
-                <input
-                  style={{ display: "none" }}
-                  id="upload-photo"
-                  name="upload-photo"
-                  type="file"
-                  accept=".ics,.txt"
-                />
-                <Button color="primary" component="span">
-                  Upload
-                </Button>{" "}
-               
-                
-        
-              </label>
-                </DialogActions>
-              </Dialog>
-            </div>
-          );
-
-    }   
-
+  }
+  
+ 
 }
+export default withStyles(styles)(CenteredGrid);
+// import React, {Component,useState} from 'react'
+// import { Container } from '@material-ui/core';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+// import Typography from '@material-ui/core/Typography';
 
-export default withStyles(styles)(eggProfile);
+
+
+
+
+
+// export default class eggProfile extends Component{
+//     constructor(props) {
+//         super(props);
+//         this.state = { open: false};
+//       }
+//       render(){
+//         return (
+//           <React.Fragment>
+//             <CssBaseline />
+//             <Container maxWidth= {false}>
+//               <Typography component="div" style={{ backgroundColor: '#673ab7', height: '50vh' }} />
+//             </Container>
+//             <Container maxWidth= {false}>
+//               <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '25vh' }} />
+//             </Container>
+//           </React.Fragment>
+//           );
+
+//     }   
+
+// }
+
+
 
 
 // export default function eggProfile() {
