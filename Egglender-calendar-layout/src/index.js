@@ -1,5 +1,12 @@
-import React from "react";
-import { render } from "react-dom";
-import Demo from "./demo";
+import './styles.css';
 
-render(<Demo />, document.getElementById("root"));
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from './App.js';
+// import demo from './demo.js'
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('app'),
+ );
