@@ -87,7 +87,6 @@ class TestNavigator extends Component{
                         <AccountCircle />
                     </IconButton>
                     <Popper open={open} anchorEl={this.state.anchorEl} transition>
-            
                     <Menu
                     id="menu-appbar"
                     anchorEl={this.state.anchorEl}
@@ -115,9 +114,15 @@ class TestNavigator extends Component{
             ) 
             : 
             (
+            <div>
             <Button color="inherit">
                 <Link to='/login' style={{ color: 'white' }}>login</Link>
             </Button>
+            <Button color="inherit">
+                <Link to='/myProfile' style={{ color: 'white' }}>ToCalendar</Link>
+            </Button>
+
+            </div>
                 
             )}
 
