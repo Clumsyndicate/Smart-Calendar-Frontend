@@ -1,22 +1,71 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+
+
 const useStyles = makeStyles({
   root: {
     maxWidth: 200,
-    height:300
+    height:280
   },
+  cardtext:{
+    overflow:"hidden"
+
+  },
+  content:{
+    height:80
+  }
 });
+
+function Content(props){
+  const classes = useStyles();
+  if(!props.in){
+    return(
+      <div>
+  <Typography variant="body2" color="textSecondary" component="p">
+  {props.text}
+  </Typography>
+  <Typography variant="body2" color="textSecondary" component="p">
+  {props.classList}
+  </Typography>
+  </div>
+  )
+  }
+
+  let contactText=""
+  if(Object.keys(props.contact).length===0){
+    contactText="The person did not share any contact way~"
+  }
+  else{
+    let way=Object.keys(props.contact)[0];
+    contactText+=way;
+    contactText+=": "+props.contact[way]
+
+  }
+
+  return( 
+  <div>
+    <Typography variant="body2" color="textSecondary" component="p" className={classes.cardtext}>
+      {contactText}
+    </Typography>
+
+  </div>)
+}
+
 
 export default function FriendCard(props) {
   const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  }
   let text
   if(props.num===1){
     text="1 class in common:"
@@ -31,33 +80,30 @@ export default function FriendCard(props) {
         classList+=", "
     }
   }
+  let buttonText=expanded?"Hide Contact":"See Contact"
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+    
         <CardMedia
           component="img"
-          //alt="Contemplative Reptile"
-          height="100"
-          width="50"
+          height="120"
+          width="40"
           image={props.img}
-          title="Contemplative Reptile"
         />
-        <CardContent>
+        
+        <CardContent className={classes.content}>
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {text}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {classList}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+          <Content in={expanded} text={text} classList={classList} contact={props.contact}/>
+          </CardContent>
+          
+          
+    
       <CardActions>
         
-        <Button size="small" color="primary">
-          See Contact
+        <Button size="small" color="primary" onClick={handleExpandClick}>
+          {buttonText}
         </Button>
       </CardActions>
     </Card>
