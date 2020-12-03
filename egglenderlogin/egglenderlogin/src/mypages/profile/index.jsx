@@ -26,9 +26,12 @@ export default class CenteredGrid extends Component {
   render()
   {
     // const { classes } = this.props;
-    <App />
+  
     return (
+      <div>
+      <App />
       <FriendList data={this.state.friends}/>
+      </div>
     );
 
   }
