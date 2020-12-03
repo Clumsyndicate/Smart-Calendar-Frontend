@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
   },
   content:{
-    height:90,
+    height:115,
     overflow:"hidden"
   }
 });
