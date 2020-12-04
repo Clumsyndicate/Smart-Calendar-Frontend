@@ -6,7 +6,9 @@ import { withStyles } from '@material-ui/core/styles';
 import tileData from '../../calendar-friend/tileData'
 import FriendList from '../../calendar-friend/friendList'
 import App from '../../calendar-layout/App'
-import '../../calendar-layout/styles.css';
+import '../../calendar-layout/styles.css'
+
+
 
 // const styles = theme => ({
 //   root: {
