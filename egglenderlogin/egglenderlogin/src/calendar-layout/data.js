@@ -1,33 +1,13 @@
 import {calendar} from './personal.js';
-// console.log(calendar);
 
-import {
-  pink, purple, teal, amber, deepOrange,
-} from '@material-ui/core/colors';
+import axios from 'axios';
+import React, { Component } from 'react';
 
-export const resourcesData = [
-  {
-    text: 'Room 101',
-    id: 1,
-    color: amber,
-  }, {
-    text: 'Room 102',
-    id: 2,
-    color: pink,
-  }, {
-    text: 'Room 103',
-    id: 3,
-    color: purple,
-  }, {
-    text: 'Room 104',
-    id: 4,
-    color: deepOrange,
-  }, {
-    text: 'Room 105',
-    id: 5,
-    color: teal,
-  },
-];
+
+const api = axios.create({
+  baseURL: `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+})
+
 
 function convert(str){
 	var ret = str
@@ -39,45 +19,64 @@ function convert(str){
 }
 
 function timezone(str){
-  var newstr = new String(str);
+  var newstr = str.toString();
   var sub = newstr.substring(0, 25);
-  var txt = new String(sub+"GMT-0800 (PST)");
+  var txt = (sub+"GMT-0800 (PST)").toString();
   return txt;
 }
 
+function get_data(){
+  // parse the calendar data from ical file
+  const raw = calendar;
+  const ical = require("ical");
+  const cal_data = ical.parseICS(raw);
+  var temp = [];
+  var i = 0;
 
-const raw = calendar;
-const ical = require("ical");
-const data1 = ical.parseICS(raw);
-var temp = [];
-
-for (let k in data1) {
-  if (data1.hasOwnProperty(k)) {
-    var ev = data1[k];
-    if (data1[k].type === "VEVENT") {
-      var event = ev.summary;
-      var start = timezone(ev.start);
-      var end = timezone(ev.end);
-      if(ev.rrule !== undefined){
-        var rrule = convert(ev.rrule.toString());
-      var url = "null";
-      if(ev.url !== undefined){
-      url = ev.url;
-      }
-      ;}
-
-      temp.push({
-        text: event,
-        startDate: start,
-        endDate: end,
-        id: 1,
-        location: url,
-        recurrenceRule: rrule
-      });
-    }
-  }
+  // // iteratively store each event data into an element of temp
+  // for (let k in cal_data) {
+  //   if (cal_data.hasOwnProperty(k)) {
+  //     var ev = cal_data[k];
+  //     if (cal_data[k].type === "VEVENT") {
+  //       i++;
+  //       var event = ev.summary;
+  //       var start = timezone(ev.start);
+  //       var end = timezone(ev.end);
+  //       if(ev.rrule !== undefined){
+  //         var rrule = convert(ev.rrule.toString());
+  //         var url = "null";
+  //         if(ev.url !== undefined){
+  //           url = ev.url;
+  //         }
+  //       }
+  //       // push in events
+  //       temp.push({
+  //         text: event,
+  //         startDate: start,
+  //         endDate: end,
+  //         id: i,
+  //         location: url,
+  //         recurrenceRule: rrule
+  //       });
+  //     }
+  //   }
+  // }
+  // console.log(temp.length);
+  // // post the data onto the backend
+  // for (var j = 0; j < temp.length; ++j)
+  // {
+  //   try {
+  //     const response = api.post('https://5fc9fe933c1c22001644175c.mockapi.io/events', temp[j]);
+  //     console.log('👉 Returned data:', response);
+  //   } catch (e) {
+  //     console.log(`😱 Axios request failed: ${e}`);
+  //   }
+  // }
+  return temp;
 }
-// console.log(temp);
-export const data = temp;
+
+
+
+export const data = get_data();
 
 export const locations = ['Europe/London','Asia/Shanghai','Asia/Kolkata', 'America/Los_Angeles'];

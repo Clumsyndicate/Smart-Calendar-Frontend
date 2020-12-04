@@ -2,15 +2,16 @@ import React from 'react';
 import moment from "moment";
 import Scheduler, { Editing } from 'devextreme-react/scheduler';
 import SelectBox from 'devextreme-react/select-box';
-import CheckBox from 'devextreme-react/check-box';
 import List, { ItemDragging } from 'devextreme-react/list';
 import { events } from './events.js';
-
 import { data, locations } from './data.js';
 import timeZoneUtils from 'devextreme/time_zone_utils';
 
+import axios from 'axios';
+
+
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
-var txt = new String(moment().format("ddd[,] MMM DD"));
+var txt = moment().format("ddd[,] MMM DD").toString();
 
 const views = ['week', 'month', 'day'];
 
@@ -24,6 +25,11 @@ function getLocations(date) {
 
 const demoLocations = getLocations(currentDate);
 
+
+function ItemTemplate(data) {
+  return <div>{data.text}</div>;
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +38,7 @@ class App extends React.Component {
       demoLocations: demoLocations,
       //for list
       deleteType: 'slideItem',
+      searchMode: 'contains',
       events,
     };
     this.onValueChanged = this.onValueChanged.bind(this);
@@ -43,6 +50,70 @@ class App extends React.Component {
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
     this.onReorder = this.onReorder.bind(this);
+  }
+
+
+
+
+
+  state = {
+    loading: true,
+    error: "",
+    datab: null,
+    eventsb: null,
+  };
+
+  loadData = () => {
+    this.setState({ loading: true });
+    return axios
+      .get(
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+      )
+      .then(result => {
+        console.log(result);
+        this.setState({
+          datab: result.data,
+          loading: false,
+          error: false
+        });
+      })
+      .catch(error => {
+        console.error("error: ", error);
+        this.setState({
+          // objects cannot be used as a react child
+          // -> <p>{error}</p> would throw otherwise
+          error: `${error}`,
+          loading: false
+        });
+      });
+  };
+
+  loadList = () => {
+    this.setState({ loading: true });
+    return axios
+      .get(
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+      )
+      .then(result => {
+        console.log(result.data.text);
+        this.setState({
+          eventsb: result.data,
+          loading: false,
+          error: false
+        });
+      })
+      .catch(error => {
+        console.error("error: ", error);
+        this.setState({
+          error: `${error}`,
+          loading: false
+        });
+      });
+  };
+
+  componentDidMount() {
+    this.loadData();
+    this.loadList();
   }
 
   onValueChanged(e) {
@@ -103,7 +174,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { timeZone, demoLocations, events } = this.state;
+    const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
     return (
       <React.Fragment>
 
@@ -122,7 +193,7 @@ class App extends React.Component {
               />
             </div>
             <Scheduler
-              dataSource={data}
+              dataSource={datab}
               views={views}
               defaultCurrentView="week"
               startDayHour={0}
@@ -140,14 +211,15 @@ class App extends React.Component {
           <div className="widget-container">
 
             <div className="header">
-              <span className="caption">Upcoming Dues !!! </span>
+              <span className="caption">Upcoming Events !!! </span>
               <div>( Slide left to delete, or drag to change 
                priority, or just put a check in the box !) 
               </div>
             </div>
 
             <List
-              items={events}
+              dataSource={eventsb}
+              // items={events}
               height={800}
               keyExpr="id"
               repaintChangesOnly={true}
@@ -155,10 +227,14 @@ class App extends React.Component {
               itemDeleteMode={this.state.deleteType}
               showSelectionControls={true}
               selectionMode="multiple"
-              onOptionChanged={this.onSelectedItemsChange}>
+              onOptionChanged={this.onSelectedItemsChange}
+              itemRender={ItemTemplate}
+              searchExpr="text"
+              searchEnabled={true}
+              searchMode={this.state.searchMode}>
               <ItemDragging
                 allowReordering={true}
-                data="events"
+                data="eventsb"
                 onDragStart={this.onDragStart}
                 onAdd={this.onAdd}
                 onRemove={this.onRemove}
