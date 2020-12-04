@@ -52,10 +52,6 @@ class App extends React.Component {
     this.onReorder = this.onReorder.bind(this);
   }
 
-
-
-
-
   state = {
     loading: true,
     error: "",
@@ -177,13 +173,13 @@ class App extends React.Component {
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
     return (
       <React.Fragment>
-
+        <div className="Title">MY EGGLENDAR</div>
         <div class="aParent">
-
           <div className="calendar-layout">
             <div className="option">
-              <span className="caption">{txt} 「 Time Zone 」:</span>
+              <span className="caption">{txt} 「 Time Zone 」</span>
               <SelectBox
+                className="selector"
                 items={demoLocations}
                 displayExpr="title"
                 valueExpr="id"
@@ -212,9 +208,8 @@ class App extends React.Component {
 
             <div className="header">
               <span className="caption">Upcoming Events !!! </span>
-              <div>( Slide left to delete, or drag to change 
-               priority, or just put a check in the box !) 
-              </div>
+              <div className="sideNote">( Slide left to delete, or drag to change 
+               priority, or just put a check in the box !)</div>
             </div>
 
             <List
