@@ -54,6 +54,10 @@ export default function FriendList(props) {
   let displaylength=props.data.length>8? 8:props.data.length
 
   return (
+    <div>
+      <br/>
+    <div style={{textAlign:"left"}}><h5>Potential Study Partners:</h5></div>
+    <br/>
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={displaylength} spacing={1}>
         {props.data.map((tile,index) => (
@@ -65,6 +69,7 @@ export default function FriendList(props) {
           </GridListTile>
         ))}
       </GridList>
+    </div>
     </div>
   );
 }
