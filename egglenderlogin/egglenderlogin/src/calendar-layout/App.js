@@ -16,18 +16,42 @@ const views = ['week', 'month', 'timelineWeek'];
 
 
 function getLocations(date) {
-  const timeZones = timeZoneUtils.getTimeZones(date);
-  return timeZones.filter((timeZone) => {
-    return locations.indexOf(timeZone.id) !== -1;
-  });
+  const tz = [
+    {
+       offset: -8,
+       title: "Pacific Time (GMT -08:00) America - Los Angeles",
+       id: "America/Godthab"
+    },
+    {
+     offset: -6,
+     title: "Central Standard Time (GMT -06:00) America - Chicago",
+     id: "Atlantic/Azores"
+    },
+    {
+     offset: -5,
+     title: "Eastern Time (GMT -05:00) America - New_York",
+     id: "Portugal"
+    },
+    {
+     offset: 0,
+     title: "Greenwich Mean Time (GMT +00:00) Europe - London",
+     id: "Antarctica/Vostok"
+    },
+   {
+       offset: 8,
+       title: "China Standard Time (GMT +08:00) Asia - Shanghai",
+       id: "Antarctica/McMurdo"
+    },
+    {
+     offset: 5.5,
+     title: "India Standard Time (GMT +05:30) Asia - Kolkata",
+     id: "Australia/Yancowinna"
+    }
+ ]
+ return tz;
 }
 
-//const demoLocations = getLocations(currentDate);
-var demoLocationstemp = getLocations(currentDate);
-demoLocationstemp[0].offset = 6;
-demoLocationstemp[0].id = "America/Glace_Bay";
-demoLocationstemp[3].id = "Etc/GMT-12";
-const demoLocations = demoLocationstemp;
+const demoLocations = getLocations(currentDate);
 
 function ItemTemplate(data) {
   return <div>{data.text}</div>;
@@ -119,6 +143,7 @@ class App extends React.Component {
     this.setState({
       timeZone: e.value
     });
+    console.log(this.timeZone);
   }
   onAppointmentFormOpening(e) {
     const form = e.form;
