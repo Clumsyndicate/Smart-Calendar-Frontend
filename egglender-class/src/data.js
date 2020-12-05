@@ -1,6 +1,10 @@
-import  {calendar}  from './personal.js';//get calendar file
+import {
+  calendar
+} from './personal.js'; //get calendar file
 import axios from 'axios';
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 
 
 const api = axios.create({
@@ -8,7 +12,7 @@ const api = axios.create({
 })
 
 export class List extends Component {
-	constructor(){
+  constructor() {
     super();
     api.get('/').then(res => {
       console.log(res.data)
@@ -16,18 +20,19 @@ export class List extends Component {
   }
 }
 
-function convert(str){
-	var ret = str
-	if(ret.indexOf("DTSTART") !== -1){
-		var temp = ret.match(/.+?(?=;DTSTART)/);
-		ret = temp[0];
+function convert(str) {
+  var ret = str
+  if (ret.indexOf("DTSTART") !== -1) {
+    var temp = ret.match(/.+?(?=;DTSTART)/);
+    ret = temp[0];
   }
-	return ret;
+  return ret;
 }
-function timezone(str){
+
+function timezone(str) {
   var newstr = new String(str);
   var sub = newstr.substring(0, 25);
-  var txt = new String(sub+"GMT-0800 (PST)")
+  var txt = new String(sub + "GMT-0800 (PST)")
   return txt
 }
 
@@ -44,13 +49,13 @@ for (let k in data1) {
       var event = ev.summary;
       var start = timezone(ev.start);
       var end = timezone(ev.end);
-      if(ev.rrule !== undefined){
+      if (ev.rrule !== undefined) {
         var rrule = convert(ev.rrule.toString());
-      var url = "null";
-      if(ev.url !== undefined){
-      url = ev.url;
+        var url = "null";
+        if (ev.url !== undefined) {
+          url = ev.url;
+        };
       }
-      ;}
 
       temp.push({
         text: event,
@@ -67,7 +72,6 @@ for (let k in data1) {
 
 
 export const data = temp;
-console.log(JSON.stringify(data,null,'\t'));//json output
+console.log(JSON.stringify(data, null, '\t')); //json output
 
-export const locations = ['Europe/London','Asia/Shanghai','Asia/Kolkata', 'America/Los_Angeles'];
-
+export const locations = ['Europe/London', 'Asia/Shanghai', 'Asia/Kolkata', 'America/Los_Angeles'];
