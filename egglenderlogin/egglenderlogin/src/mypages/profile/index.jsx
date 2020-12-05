@@ -24,20 +24,44 @@ import '../../calendar-layout/styles.css'
 export default class CenteredGrid extends Component {
   constructor(props) {
     super(props);
-    this.state = { friends: tileData };
+    this.state = { friends: tileData, isLoaded: true, error: null};
   }
   
+  // componentDidMount() {
+  //   fetch("https://5fcb6ef351f70e00161f193f.mockapi.io/friends")
+  //     .then(res => res.json())
+  //     .then(
+  //       (result) => {
+  //         this.setState({
+  //           isLoaded: true,
+  //           friends: result.friendList
+  //         });
+  //       },
+  //       (error) => {
+  //         this.setState({
+  //           isLoaded: true,
+  //           error
+  //         });
+  //       }
+  //     )
+  // }
+
   render()
   {
+    const { friends, isLoaded, error } = this.state;
     // const { classes } = this.props;
-  
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div><App /> <div>Loading...</div></div>;
+    } else {
     return (
       <div>
         <App />
         <FriendList data={this.state.friends}/>
       </div>
     );
-
+    }
   }
   
  

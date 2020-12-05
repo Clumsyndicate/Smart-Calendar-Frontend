@@ -1,201 +1,102 @@
 import React, {Component} from 'react'
-import fetch from 'cross-fetch';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Center } from 'devextreme-react/map';
+import SelectionBar from './selection'
+import Button from '@material-ui/core/Button';
+import  { Redirect } from 'react-router-dom'
 
+// let array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
+class EggSetting extends React.Component{
+  constructor(props) {
+    super(props);
+    this.array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
+    //this.array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
+    this.state = {
+        classes: ["CS 180", "CS97","Physics 1B", "Math 33A",""],
+        classText: this.computeClassText(this.array)
+    };  
+   
+}
 
-
-export default function EggSetting() {
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const loading = open && options.length === 0;
-    
-    let newclassList={class1:"CS 180", class2: "CS97",class3:"Math 33B",class4:"Physics 1B",class5:""}
-  React.useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-      
-      const countries = await response.json();
-
-      if (active) {
-        setOptions(Object.keys(countries).map((key) => countries[key].item[0]));
+computeClassText=(arr)=>{
+  let text=""
+  for(let i=0;i<arr.length;i++){
+    if(arr[i]!==""){
+      text+=arr[i]
+      if(i!=arr.length-1){
+        text+=" "
       }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
+        
     }
-  }, [open]);
+  }
+  return text;
+}
 
+myCallback = (newclass,index) => {
+  // let array=this.state.classes
+ this.array[index]=newclass
+  // this.setState({ classes: array });
+  
+}
+
+deleteClass=(index)=>{
+   let arr=this.state.classes
+  arr[index]=""
+  this.setState({ classes: arr });
+  this.array[index]=""
+}
+
+returnBack=()=>{
+  // console.log(this.state.classes)
+  // console.log(this.array)
+  let text = this.computeClassText(this.array)
+  this.setState({
+    classText:text
+  })
+  // console.log(text)
+  // this.props.history.push('/myProfile')
+  //post to backend here
+}
+
+render(){
+  console.log(this.state.classes)
   return (
+
       <div>
       <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-          
           <h2>Change Enrolled Classes</h2>
           </div>
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '12vh'}}>
-    <Autocomplete
-      id="class1"
-      style={{ width: 300}}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={(option) => option.name}
-      options={options}
-      loading={loading}
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+          <SelectionBar class1={this.state.classes[0]} callback={this.myCallback} index="0" deletefunc={this.deleteClass}/>
+          </div>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+          <SelectionBar class1={this.state.classes[1]} callback={this.myCallback} index="1"deletefunc={this.deleteClass}/>
+          </div>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+          <SelectionBar class1={this.state.classes[2]} callback={this.myCallback} index="2" deletefunc={this.deleteClass}/>
+          </div>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+          <SelectionBar class1={this.state.classes[3]} callback={this.myCallback} index="3" deletefunc={this.deleteClass}/>
+          </div>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+          <SelectionBar class1={this.state.classes[4]} callback={this.myCallback} index="4" deletefunc={this.deleteClass}/>
+          </div>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+            <h6>Your current enrolled classes are: <br/><br/> {this.state.classText}</h6>
       
-      renderInput={(params) => {
-        let class1=newclassList.class1
-        newclassList.class1=params.inputProps.value?params.inputProps.value:class1
-          return(
-        <TextField
-          {...params}
-          label={params.inputProps.value?"Class 1":class1}
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-          )}}
-    />
-    </div>
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',height: '12vh'}}>
-    <Autocomplete
-      id="class2"
-      style={{ width: 300}}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={(option) => option.name}
-      options={options}
-      loading={loading}
+      </div>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
+          
+          <Button variant="outlined" color="primary" style={{marginLeft:"1rem"}} onClick={this.returnBack}>
+        Save Change
+      </Button>
+
+      </div>
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
+          <p>Your change won't be saved unless you click it</p>
       
-      renderInput={(params) => {
-        let class2=newclassList.class2
-        newclassList.class2=params.inputProps.value?params.inputProps.value:class2
-          return(
-        <TextField
-          {...params}
-          label={params.inputProps.value?"Class 2":class2}
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-          )}}
-    />
+      </div>
+          
     </div>
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '12vh'}}>
-    <Autocomplete
-      id="class3"
-      style={{ width: 300}}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={(option) => option.name}
-      options={options}
-      loading={loading}
-      
-      renderInput={(params1) => {
-        let class3=newclassList.class3
-        newclassList.class3=params1.inputProps.value?params1.inputProps.value:class3
-          return(
-        <TextField
-          {...params1}
-          id="1"
-          label={params1.inputProps.value?"Class 3":class3}
-          variant="outlined"
-          InputProps={{
-            ...params1.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params1.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-          )}}
-    />
-    </div>
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20vh'}}>
-    <Autocomplete
-      id="class4"
-      style={{ width: 300}}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={(option) => option.name}
-      options={options}
-      loading={loading}
-      
-      renderInput={(params) => {
-        let class4=newclassList.class4
-        newclassList.class4=params.inputProps.value?params.inputProps.value:class4
-          return(
-        <TextField
-          {...params}
-          label={params.inputProps.value?"Class 4":class4}
-          variant="outlined"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-          )}}
-    />
-    </div>
-    </div>
-  );
+  );}
 }
+
+export default EggSetting

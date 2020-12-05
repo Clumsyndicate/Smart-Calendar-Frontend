@@ -11,8 +11,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 200,
-    height:280
+    maxWidth: 210,
+    height:325
   },
   cardtext:{
     overflow:"hidden"
@@ -20,8 +20,10 @@ const useStyles = makeStyles({
   },
   content:{
     height:115,
-    overflow:"hidden"
-  }
+    overflow:"hidden",
+    maxWidth:240
+  },
+  
 });
 
 function Content(props){
@@ -86,10 +88,11 @@ export default function FriendCard(props) {
     <Card className={classes.root}>
     
         <CardMedia
+          
           component="img"
-          height="120"
-          width="40"
+          height="170"
           image={props.img}
+          
         />
         
         <CardContent className={classes.content}>

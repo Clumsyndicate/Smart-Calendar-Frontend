@@ -1,5 +1,6 @@
 
 import avatar from './image/useravatar.png';
+import yellow from './image/yellowavatar.jpeg';
 
 
 const tileData = [
@@ -12,7 +13,7 @@ const tileData = [
 
   },
   {
-    img: avatar,
+    img: yellow,
     name:"Charle Li",
     total:1,
     classes:["CS 97"],
