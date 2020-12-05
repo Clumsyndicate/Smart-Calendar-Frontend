@@ -6,6 +6,7 @@ import List, { ItemDragging } from 'devextreme-react/list';
 import { events } from './events.js';
 import { data, locations } from './data.js';
 import timeZoneUtils from 'devextreme/time_zone_utils';
+import Button from './button.js'
 
 import axios from 'axios';
 
@@ -13,18 +14,55 @@ import axios from 'axios';
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
 var txt = moment().format("ddd[,] MMM DD").toString();
 
-const views = ['week', 'month', 'day'];
+// const views = ['week', 'month', 'day'];
 
+// function getLocations(date) {
+//   const timeZones = timeZoneUtils.getTimeZones(date);
+//   return timeZones.filter((timeZone) => {
+//     return locations.indexOf(timeZone.id) !== -1;
+//   });
+// }
+
+// const demoLocations = getLocations(currentDate);
+const views = ['day', 'week', 'agenda', 'month'];
 
 function getLocations(date) {
-  const timeZones = timeZoneUtils.getTimeZones(date);
-  return timeZones.filter((timeZone) => {
-    return locations.indexOf(timeZone.id) !== -1;
-  });
+  const tz = [
+     {
+        offset: -8,
+        title: "Pacific Time (GMT -08:00) America - Los Angeles",
+        id: "America/Godthab"
+     },
+     {
+      offset: -6,
+      title: "Central Standard Time (GMT -06:00) America - Chicago",
+      id: "Atlantic/Azores"
+     },
+     {
+      offset: -5,
+      title: "Eastern Time (GMT -05:00) America - New_York",
+      id: "Portugal"
+     },
+     {
+      offset: 0,
+      title: "Greenwich Mean Time (GMT +00:00) Europe - London",
+      id: "Antarctica/Vostok"
+     },
+    {
+        offset: 8,
+        title: "China Standard Time (GMT +08:00) Asia - Shanghai",
+        id: "Antarctica/McMurdo"
+     },
+     {
+      offset: 5.5,
+      title: "India Standard Time (GMT +05:30) Asia - Kolkata",
+      id: "Australia/Yancowinna"
+     }
+  ]
+  return tz;
 }
 
 const demoLocations = getLocations(currentDate);
-
 
 function ItemTemplate(data) {
   return <div>{data.text}</div>;
@@ -59,7 +97,7 @@ class App extends React.Component {
     eventsb: null,
   };
 
-  loadData = () => {
+  loadCal = () => {
     this.setState({ loading: true });
     return axios
       .get(
@@ -108,7 +146,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.loadData();
+    this.loadCal();
     this.loadList();
   }
 
@@ -172,6 +210,7 @@ class App extends React.Component {
   render() {
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
     return (
+      
       <React.Fragment>
         <div className="Title">MY EGGLENDAR</div>
         <div class="aParent">
@@ -187,6 +226,7 @@ class App extends React.Component {
                 value={timeZone}
                 onValueChanged={this.onValueChanged}
               />
+              <span className="button"><Button /></span>
             </div>
             <Scheduler
               dataSource={datab}

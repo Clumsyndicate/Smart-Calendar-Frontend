@@ -53,6 +53,10 @@
   font-family: "Times New Roman", Times, serif;
 }
 
+.option .button {
+  margin-left: 105px;
+}
+
 .dx-scheduler {
   margin-top: 20px;
   margin-right: 10px;

@@ -19,11 +19,9 @@ function convert(str){
 }
 
 function timezone(str){
-  console.log("this is the original: "+str);
   var newstr = str.toString();
   var sub = newstr.substring(0, 25);
-  var txt = (sub+"GMT-0800 (PST)").toString();
-  console.log("this is the final: "+txt);
+  var txt = (sub+"GMT-0300 (PST)").toString();
   return txt;
 }
 
