@@ -7,9 +7,10 @@ export const loginAct = data => {
     };
 };
 
-export const syncInfoAct = data => {
+export const syncInfoAct = (userName,data) => {
     return {   
         type: actionTypes.SYNC_STATEANDINFO,
+        userName:userName,
         payload: data,
     };
 };

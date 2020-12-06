@@ -1,0 +1,75 @@
+.Title {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 250%;
+  margin-left: 10px;
+  margin-right: 5px;
+  padding: 15px;
+  background: #E6E6FA; /*粉紫#E6E6FA 淡粉#FFF0F5 爱丽丝蓝#F0F8FF*/
+  font-family: "Garamond", serif;
+}
+
+.aParent {
+	display: flex;
+	border: 3px solid #fff;
+  padding: 5px;
+  background: #F0F8FF;
+}
+
+.calendar-layout {
+  width: 75%;
+  float: left;
+  padding: 20px;
+  border: 1.5px solid #87CEFA; /*淡天蓝#87CEFA*/
+}  
+
+.widget-container {
+  width: 25%;
+  float: left;
+  padding: 20px;
+  border: 1.5px solid #87CEFA; /*淡天蓝#87CEFA*/
+}  
+
+.option {
+  display: flex;
+}
+
+.option > span {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.option .selector {
+  background: #FFF0F5;  
+}
+
+.option .caption {
+	font-weight: bold;
+  font-size: 135%;
+  margin-left: 10px;
+  margin-right: 10px;
+  background: #FFF0F5; /*天蓝#87CEEB*/
+  font-family: "Times New Roman", Times, serif;
+}
+
+.option .button {
+  margin-left: 105px;
+}
+
+.dx-scheduler {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.header .caption {
+	font-weight: bold;
+  font-size: 120%;
+  font-family: "Georgia", serif;
+}
+
+.header {
+  margin-top: 10px;
+  padding: 15px;
+  background: rgba(191, 191, 191, 0.15);
+}

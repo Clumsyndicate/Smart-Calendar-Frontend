@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
   },
   content:{
-    height:90,
+    height:115,
     overflow:"hidden"
   }
 });
@@ -93,7 +93,7 @@ export default function FriendCard(props) {
         />
         
         <CardContent className={classes.content}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5">
             {props.name}
           </Typography>
           <Content in={expanded} text={text} classList={classList} contact={props.contact}/>
