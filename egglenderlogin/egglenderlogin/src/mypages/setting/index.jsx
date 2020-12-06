@@ -1,8 +1,12 @@
 import React, {Component} from 'react'
 import SelectionBar from './selection'
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
 import  { Redirect } from 'react-router-dom'
-
+import shortid from 'shortid';
+import {reducer, actionCreators as settingActionCreator} from './store'
+import  {actionCreators as noteActionCreators} from '../notification/store'
 // let array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
 class EggSetting extends React.Component{
   constructor(props) {
@@ -36,6 +40,40 @@ myCallback = (newclass,index) => {
   // this.setState({ classes: array });
   
 }
+// componentWillMount = async() => {
+//   console.log('reach the start of the page')
+//   const {data} =await this.props.settingFn.settingAct(this.props.loginData);
+//   if(data.status===1)
+//   {
+//       this.props.noteFn.addNoteAct({
+//           type: 'alert-primary',
+//           text: 'Cannot get your classes data',
+//           id: shortid.generate()
+//       })
+//   }
+//   else
+//   {
+//     this.array = data.array;
+//   }
+// }
+componentDidMount = async() => {
+  const {data} =await this.props.settingFn.settingAct(this.props.loginData);
+  if(data.status===1)
+  {
+      this.props.noteFn.addNoteAct({
+          type: 'alert-primary',
+          text: 'Cannot get your classes data',
+          id: shortid.generate()
+      })
+  }
+  else
+  {
+    console.log(this.props.loginData)
+    console.log(data.userName)
+    this.array = data.array;
+    this.setState({ classes: data.array });
+  }
+}
 
 deleteClass=(index)=>{
    let arr=this.state.classes
@@ -44,7 +82,9 @@ deleteClass=(index)=>{
   this.array[index]=""
 }
 
-returnBack=()=>{
+returnBack= async() =>{
+  const {data} =await this.props.settingFn.settingUpdate(this.props.loginData);
+  console.log('reach the submit')
   // console.log(this.state.classes)
   // console.log(this.array)
   let text = this.computeClassText(this.array)
@@ -57,7 +97,7 @@ returnBack=()=>{
 }
 
 render(){
-  console.log(this.state.classes)
+  // console.log(this.state.classes)
   return (
 
       <div>
@@ -99,4 +139,17 @@ render(){
   );}
 }
 
-export default EggSetting
+const mapStateToProps = state =>
+{
+    return {
+      loginData: state.login
+    }
+}
+const mapDispatchToProps = dispatch =>
+{
+    return {
+        settingFn: bindActionCreators(settingActionCreator, dispatch),
+        noteFn: bindActionCreators(noteActionCreators, dispatch),
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(EggSetting)
