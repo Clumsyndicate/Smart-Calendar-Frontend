@@ -93,7 +93,7 @@ returnBack= async e =>{
   // console.log('next should be loginData')
   // console.log(this.props.loginData);
   // console.log('reach the submit');
-  console.log(data);
+  // console.log(data);
   // console.log(this.state.classes)
   // console.log(this.array)
   let text = this.computeClassText(this.array)
