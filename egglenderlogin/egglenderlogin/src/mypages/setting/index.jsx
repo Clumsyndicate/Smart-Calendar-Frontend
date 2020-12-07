@@ -82,9 +82,18 @@ deleteClass=(index)=>{
   this.array[index]=""
 }
 
-returnBack= async() =>{
-  const {data} =await this.props.settingFn.settingUpdate(this.props.loginData);
-  console.log('reach the submit')
+returnBack= async e =>{
+  e.preventDefault();
+  console.log(this.array)
+  const {data} =await this.props.settingFn.settingUpdate({
+    login:this.props.loginData,
+    array: this.array,
+    userName: this.props.loginData.userName,
+  });
+  // console.log('next should be loginData')
+  // console.log(this.props.loginData);
+  // console.log('reach the submit');
+  console.log(data);
   // console.log(this.state.classes)
   // console.log(this.array)
   let text = this.computeClassText(this.array)

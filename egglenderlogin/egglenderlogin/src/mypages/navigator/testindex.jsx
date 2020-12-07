@@ -86,9 +86,6 @@ class TestNavigator extends Component{
                         >
                         <AccountCircle />
                     </IconButton>
-                    <Button color="inherit" style={{float:"right"}}>
-                        <Link to='/setting' style={{ color: 'white' }}>Change Enroll List</Link>
-                    </Button>
                     <Popper open={open} anchorEl={this.state.anchorEl} transition>
                     <Menu
                     id="menu-appbar"
@@ -107,6 +104,9 @@ class TestNavigator extends Component{
                     >
                         <MenuItem onClick={handleClose}>
                             <Link to='/myProfile' style={{ color: 'black' }}>Calender</Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <Link to='/setting' style={{ color: 'black' }}>Change Enroll List</Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
                             <Link to='/login' className="dropdown-item" href = "logoutAct" onClick={this.props.logoutAct}>Logout</Link>
@@ -178,6 +178,7 @@ class TestNavigator extends Component{
             
             </Toolbar>
             </StyledBar>
+            <renderMenu1/>
             </div>
         )
     }

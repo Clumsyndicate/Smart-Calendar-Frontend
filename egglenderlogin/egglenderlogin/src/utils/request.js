@@ -15,7 +15,7 @@ axios.interceptors.request.use(config => {
     }
     else
     {
-        console.log('reachhere')
+        // console.log('reachhere')
         delete config.headers.Authorization;
     }
     return config;

@@ -15,8 +15,8 @@ if(token)
     }
     catch
     {
+        localStorage.removeItem('storeuserName');
         localStorage.removeItem('storeTOKEN')
-        localStorage.removeItem('storeuserName')
         window.location.href = '/login';
     }
     

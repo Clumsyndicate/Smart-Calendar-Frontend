@@ -7,5 +7,5 @@ export default combineReducers({
     register: registerReducer,
     note: noteReducer,
     login: loginReducer,
-    setting: settingReducer
+    setting: settingReducer,
 });

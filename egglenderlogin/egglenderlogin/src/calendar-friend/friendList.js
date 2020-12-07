@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     flexWrap: 'nowrap',
-    height:300,
+    height:335,
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
  */
 export default function FriendList(props) {
   const classes = useStyles();
+  console.log(props.data)
   let displaylength=props.data.length>8? 8:props.data.length
 
   return (
@@ -61,7 +62,7 @@ export default function FriendList(props) {
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={displaylength} spacing={1}>
         {props.data.map((tile,index) => (
-          <GridListTile key={index} rows={12}>
+          <GridListTile key={index} rows={13}>
             {/* <img src={tile.img} alt={tile.title} /> */}
             <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes} contact={tile.contact}/>
 

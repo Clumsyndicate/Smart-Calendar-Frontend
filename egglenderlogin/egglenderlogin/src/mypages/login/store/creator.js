@@ -7,7 +7,7 @@ export const loginAct = data => {
     };
 };
 
-export const syncInfoAct = (userName,data) => {
+export const syncInfoAct = (userName, data) => {
     return {   
         type: actionTypes.SYNC_STATEANDINFO,
         userName:userName,
@@ -18,6 +18,7 @@ export const syncInfoAct = (userName,data) => {
 export const logoutAct = data => {
     return dispatch => {
         localStorage.removeItem('storeTOKEN');
+        localStorage.removeItem('storeuserName');
         dispatch(syncInfoAct({}));
     };
 };

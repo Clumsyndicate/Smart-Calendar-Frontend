@@ -2,8 +2,8 @@ import * as actionTypes from './types'
 import isEmpty from 'lodash/isEmpty'
 const initial = {
     hasLogin: false,
-    info: {},
     userName: '',
+    info: {},
 }
 export default (state = initial, action) => {
     switch (action.type) {
