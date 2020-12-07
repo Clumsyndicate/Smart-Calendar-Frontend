@@ -37,7 +37,7 @@ computeClassText=(arr)=>{
 myCallback = (newclass,index) => {
   // let array=this.state.classes
  this.array[index]=newclass
-  // this.setState({ classes: array });
+  this.setState({ classes: this.array });
   
 }
 // componentWillMount = async() => {
@@ -56,24 +56,24 @@ myCallback = (newclass,index) => {
 //     this.array = data.array;
 //   }
 // }
-componentDidMount = async() => {
-  const {data} =await this.props.settingFn.settingAct(this.props.loginData);
-  if(data.status===1)
-  {
-      this.props.noteFn.addNoteAct({
-          type: 'alert-primary',
-          text: 'Cannot get your classes data',
-          id: shortid.generate()
-      })
-  }
-  else
-  {
-    console.log(this.props.loginData)
-    console.log(data.userName)
-    this.array = data.array;
-    this.setState({ classes: data.array });
-  }
-}
+// componentDidMount = async() => {
+//   const {data} =await this.props.settingFn.settingAct(this.props.loginData);
+//   if(data.status===1)
+//   {
+//       this.props.noteFn.addNoteAct({
+//           type: 'alert-primary',
+//           text: 'Cannot get your classes data',
+//           id: shortid.generate()
+//       })
+//   }
+//   else
+//   {
+//     console.log(this.props.loginData)
+//     console.log(data.userName)
+//     this.array = data.array;
+//     this.setState({ classes: data.array });
+//   }
+// }
 
 deleteClass=(index)=>{
    let arr=this.state.classes
@@ -82,11 +82,22 @@ deleteClass=(index)=>{
   this.array[index]=""
 }
 
-returnBack= async() =>{
-  const {data} =await this.props.settingFn.settingUpdate(this.props.loginData);
-  console.log('reach the submit')
+// returnBack= async() =>{
+//   const {data} =await this.props.settingFn.settingUpdate(this.props.loginData);
+//   console.log('reach the submit')
+//   // console.log(this.state.classes)
+//   // console.log(this.array)
+//   let text = this.computeClassText(this.array)
+//   this.setState({
+//     classText:text
+//   })
+//   // console.log(text)
+//   // this.props.history.push('/myProfile')
+//   //post to backend here
+// }
+returnBack=()=>{
   // console.log(this.state.classes)
-  // console.log(this.array)
+  console.log(this.array)
   let text = this.computeClassText(this.array)
   this.setState({
     classText:text
@@ -95,7 +106,6 @@ returnBack= async() =>{
   // this.props.history.push('/myProfile')
   //post to backend here
 }
-
 render(){
   // console.log(this.state.classes)
   return (

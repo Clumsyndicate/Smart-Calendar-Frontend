@@ -10,13 +10,14 @@ import Button from '@material-ui/core/Button';
 export default function SelectionBar(props) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
+  const [inputstate, setInput] = React.useState("clear");
   const loading = open && options.length === 0;
    let class1 =props.class1
    const func=props.callback
    const deletefunc=props.deletefunc
    const index = parseInt(props.index,10)
    const classtext="Class " +(index+1)
-   let prev=""
+   //let prev=""
   React.useEffect(() => {
     let active = true;
     
@@ -63,13 +64,13 @@ export default function SelectionBar(props) {
       getOptionLabel={(option) => option.name}
       options={options}
       loading={loading}
-      
+      onInputChange={(event,value,reason)=>{setInput(reason);if(reason==="reset")func(value,index)}}
       renderInput={(params) => {
         class1=params.inputProps.value?params.inputProps.value:class1
-        if(!loading&&class1!=""&&class1!=prev&&prev!=""){
-            func(class1,index)
-        }
-        prev=class1
+        // if(!loading&&class1!=""&&class1!=prev){
+        //     func(class1,index)
+        // }
+        //prev=class1
           return(
         <TextField
           {...params}
@@ -90,7 +91,7 @@ export default function SelectionBar(props) {
     {/* <Button variant="outlined" color="primary" onClick={()=>{func(class1,index)}} style={{marginLeft:"1rem"}}>
         confirm
       </Button> */}
-      <Button variant="outlined" color="primary" onClick={()=>{deletefunc(index)}} style={{marginLeft:"1rem"}}>
+      <Button variant="outlined" color="primary" onClick={()=>{deletefunc(index)}} style={{marginLeft:"1rem"}} disabled={inputstate==="clear"?false:true}>
         delete
       </Button>
     </div>
