@@ -106,7 +106,10 @@ class TestNavigator extends Component{
                             <Link to='/myProfile' style={{ color: 'black' }}>Calender</Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Link className="dropdown-item" href = "logoutAct" onClick={this.props.logoutAct}>Logout</Link>
+                        <Link to='/setting' style={{ color: 'black' }}>Change Enroll List</Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <Link to='/login' className="dropdown-item" href = "logoutAct" onClick={this.props.logoutAct}>Logout</Link>
                         </MenuItem>
                     </Menu>
                     </Popper>

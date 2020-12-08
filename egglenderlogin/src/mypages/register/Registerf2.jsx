@@ -181,16 +181,8 @@ class Registerf2 extends Component
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign In
+                        Sign Up
                     </Button>
-                    <Grid container>
-                        <Grid item>
-                        Don't have an account?
-                        <Button color="inherit">
-                            <Link to='/register' style={{ color: 'Black' }}>Signup</Link>
-                        </Button>
-                        </Grid>
-                    </Grid>
                     </form>
                 </div>
                 </Container>
