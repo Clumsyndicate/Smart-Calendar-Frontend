@@ -9,6 +9,7 @@ export const settingAct = data => {
 
 export const settingUpdate = data => {
     return dispatch => {
+        console.log('reach update');
         return axios.post('/api/settingupdate', data);
     };
 };
