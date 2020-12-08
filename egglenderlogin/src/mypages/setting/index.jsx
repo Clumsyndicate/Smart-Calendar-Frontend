@@ -7,14 +7,15 @@ import  { Redirect } from 'react-router-dom'
 import shortid from 'shortid';
 import {reducer, actionCreators as settingActionCreator} from './store'
 import  {actionCreators as noteActionCreators} from '../notification/store'
+import decoder from 'jwt-decode'
 // let array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
 class EggSetting extends React.Component{
   constructor(props) {
     super(props);
-    this.array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
+    this.array = ["", "","", "",""];
     //this.array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
     this.state = {
-        classes: ["CS 180", "CS97","Physics 1B", "Math 33A",""],
+        classes: ["", "","", "",""],
         classText: this.computeClassText(this.array)
     };  
    
@@ -58,9 +59,17 @@ myCallback = (newclass,index) => {
 //   }
 // }
 componentDidMount = async() => {
-  const {data} =await this.props.settingFn.settingAct(this.props.loginData);
+  const {data} =await this.props.settingFn.settingAct(
+    {
+      headers: {
+        "x-access-token": this.props.loginData.info
+      }
+    }
+  );
+  console.log('reah here change token')
   if(data.status===1)
   {
+    console.log(decoder(this.props.loginData.info))
       this.props.noteFn.addNoteAct({
           type: 'alert-primary',
           text: 'Cannot get your classes data',
@@ -69,8 +78,9 @@ componentDidMount = async() => {
   }
   else
   {
-    console.log(this.props.loginData)
-    console.log(data.userName)
+    // console.log('reah here change token')
+    // console.log(this.props.loginData.info)
+    // console.log(data.userName)
     this.array = data.array;
     this.setState({ classes: data.array });
   }
@@ -91,9 +101,10 @@ returnBack= async e =>{
   e.preventDefault();
   console.log(this.array)
   const {data} =await this.props.settingFn.settingUpdate({
-    login:this.props.loginData,
-    array: this.array,
-    userName: this.props.loginData.userName,
+    headers: {
+      "x-access-token": this.props.loginData.info
+    },
+    body: this.array,
   });
   // console.log('next should be loginData')
   // console.log(this.props.loginData);

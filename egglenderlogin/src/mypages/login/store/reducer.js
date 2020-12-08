@@ -2,7 +2,6 @@ import * as actionTypes from './types'
 import isEmpty from 'lodash/isEmpty'
 const initial = {
     hasLogin: false,
-    userName: '',
     info: {},
 }
 export default (state = initial, action) => {
@@ -11,7 +10,7 @@ export default (state = initial, action) => {
             return {
                 hasLogin: !isEmpty(action.payload),
                 info: action.payload,
-                userName:action.userName
+                // userName:action.userName
             };
         default:
             return state;
