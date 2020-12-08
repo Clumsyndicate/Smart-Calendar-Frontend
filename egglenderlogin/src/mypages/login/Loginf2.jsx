@@ -62,8 +62,9 @@ class LoginF2 extends Component
         }
         if(data.status===0)
         {
+            localStorage.setItem('storeuserName', data.userName)
             localStorage.setItem('storeTOKEN', data.mytoken)
-            this.props.loginFn.syncInfoAct(decoder(data.mytoken))
+            this.props.loginFn.syncInfoAct(data.userName,decoder(data.mytoken))
             this.props.history.push('/myProfile')
             this.props.noteFn.addNoteAct({
                 type: 'alert-primary',

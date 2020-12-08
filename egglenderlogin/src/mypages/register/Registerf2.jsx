@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import axios from "../../utils/request";
-import shortid from 'shortid';
+import React, {Component} from 'react'
+import classnames  from 'classnames'
+import {withRouter} from 'react-router-dom'
+import shortid from 'shortid'
 import decoder from 'jwt-decode'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,14 +9,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from 'react-router-dom'
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
+
+
 
 const styles = theme => ({
     paper: {
@@ -39,40 +40,52 @@ const styles = theme => ({
   });
 
 
-class LoginF2 extends Component 
+class Registerf2 extends Component 
 {
     state = {
         info: {
         userName: '',
-        userPwd: '',      
+        userEmail: '',
+        userPwd: '',
+        userPwd2: '',
+             
         },
         
         errMessage: [],
     };
     handleSubmit = async e => {
         e.preventDefault();
-        const {data} =await this.props.loginFn.loginAct(this.state.info);
-        if(data.status===1)
+        this.setState({ errMessage: [] });
+        console.log(this.state.info)
+        // const { data } = await this.props.registerFn.registerAct(
+        //   this.state
+        // );
+        const {data} = await this.props.registerFn.registerAct(this.state.info)
+        console.log(data)
+        if(data.status === 1)
         {
-            this.props.noteFn.addNoteAct({
-                type: 'alert-primary',
-                text: 'Incorrect username or password!',
-                id: shortid.generate()
-            })
+            console.log(data.msg)
+            if(data.msg ==="Username has already existed")
+            {
+                this.props.noteFn.addNoteAct({
+                    type: 'alert-primary',
+                    text: 'Username has already existed',
+                    id: shortid.generate()
+                })
+            }
+            return this.setState(
+                {
+                    errMessage:data.msg,
+                }
+            );
         }
-        if(data.status===0)
-        {
-            localStorage.setItem('storeTOKEN', data.mytoken)
-            this.props.loginFn.syncInfoAct(decoder(data.mytoken))
-            this.props.history.push('/myProfile')
-            this.props.noteFn.addNoteAct({
-                type: 'alert-primary',
-                text: 'You have successfully login!',
-                id: shortid.generate()
-            })
-        }
-        // console.log(data);
-    };
+        this.props.history.push("/login")
+        this.props.noteFn.addNoteAct({
+            type: 'alert-primary',
+            text: 'You have successfully Sign up! Now you can login!',
+            id: shortid.generate()
+        })
+    }
     handleInput = data =>
     {
         this.setState({
@@ -84,7 +97,8 @@ class LoginF2 extends Component
         });
     }
     render(){
-        const { userName,  userPwd,} = this.state.info;
+        const { userName, userEmail, userPwd, userPwd2} = this.state.info;
+        const {errMessage}  =this.state;
         const { classes } = this.props;
         return(
             <Container component="main" maxWidth="xs">
@@ -94,7 +108,7 @@ class LoginF2 extends Component
                     <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                    Sign in
+                    SIGN UP
                     </Typography>
                     <form className={classes.form} onSubmit = {this.handleSubmit}>
                     <TextField
@@ -104,23 +118,58 @@ class LoginF2 extends Component
                         fullWidth
                         id="userName" 
                         label="User Name"
-                        name="email"
+                        name="username"
+                        autoFocus
+                        onChange={this.handleInput}
+                    />
+                     <small id="userNameHelp" className="form-text text-muted">
+                            {errMessage[0] === 'userName' && errMessage[1] }
+                    </small>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="userEmail" 
+                        label="User Email"
+                        name="userEmail"
                         autoComplete="email"
                         autoFocus
                         onChange={this.handleInput}
                     />
+                      <small id="userEmailHelp" className="form-text text-muted">
+                            {errMessage[0] === 'userEmail' && errMessage[1] }
+                    </small>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="userPwd" 
+                        label="Password"
+                        name="password"
+                        type="password"
+                        autoComplete="current-password"
+                        autoFocus
+                        onChange={this.handleInput}
+                    />
+                    <small id="userEmailHelp" className="form-text text-muted">
+                            {errMessage[0] === 'userPwd' && errMessage[1] }
+                    </small>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Confirm Password"
                         type="password"
-                        id="userPwd"
-                        autoComplete="current-password"
+                        id="userPwd2"
                         onChange={this.handleInput}
                     />
+                     <small id="userEmailHelp" className="form-text text-muted">
+                            {errMessage[0] === 'userPwd2' && errMessage[1] }
+                    </small>
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
@@ -138,7 +187,7 @@ class LoginF2 extends Component
                         <Grid item>
                         Don't have an account?
                         <Button color="inherit">
-                            <Link to='/register' style={{ color: 'black' }}>Sign up</Link>
+                            <Link to='/register' style={{ color: 'Black' }}>Signup</Link>
                         </Button>
                         </Grid>
                     </Grid>
@@ -148,4 +197,4 @@ class LoginF2 extends Component
         )
     }
 }
-export default withRouter(withStyles(styles)(LoginF2));
+export default withRouter(withStyles(styles)(Registerf2));

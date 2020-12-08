@@ -19,6 +19,7 @@
     "ical": "^0.8.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
+    "material-ui-dropzone": "^3.5.0",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
