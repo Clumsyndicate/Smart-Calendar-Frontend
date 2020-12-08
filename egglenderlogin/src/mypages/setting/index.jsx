@@ -59,17 +59,12 @@ myCallback = (newclass,index) => {
 //   }
 // }
 componentDidMount = async() => {
-  const {data} =await this.props.settingFn.settingAct(
-    {
-      headers: {
-        "x-access-token": this.props.loginData.info
-      }
-    }
-  );
-  console.log('reah here change token')
+  const {data} =await this.props.settingFn.settingAct({},this.props.loginData.info);
+  
   if(data.status===1)
   {
-    console.log(decoder(this.props.loginData.info))
+    console.log('reah here change token1')
+    // console.log(decoder(this.props.loginData.info))
       this.props.noteFn.addNoteAct({
           type: 'alert-primary',
           text: 'Cannot get your classes data',
@@ -78,9 +73,9 @@ componentDidMount = async() => {
   }
   else
   {
-    // console.log('reah here change token')
+    console.log('reah here change token')
     // console.log(this.props.loginData.info)
-    // console.log(data.userName)
+    console.log(data)
     this.array = data.array;
     this.setState({ classes: data.array });
   }
@@ -101,15 +96,12 @@ returnBack= async e =>{
   e.preventDefault();
   console.log(this.array)
   const {data} =await this.props.settingFn.settingUpdate({
-    headers: {
-      "x-access-token": this.props.loginData.info
-    },
-    body: this.array,
-  });
+    array: this.array
+  }, this.props.loginData.info);
   // console.log('next should be loginData')
   // console.log(this.props.loginData);
   // console.log('reach the submit');
-  // console.log(data);
+  console.log(data);
   // console.log(this.state.classes)
   // console.log(this.array)
  
