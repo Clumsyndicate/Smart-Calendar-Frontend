@@ -40,40 +40,25 @@ myCallback = (newclass,index) => {
   this.setState({ classes: this.array });
   
 }
-// componentWillMount = async() => {
-//   console.log('reach the start of the page')
-//   const {data} =await this.props.settingFn.settingAct(this.props.loginData);
-//   if(data.status===1)
-//   {
-//       this.props.noteFn.addNoteAct({
-//           type: 'alert-primary',
-//           text: 'Cannot get your classes data',
-//           id: shortid.generate()
-//       })
-//   }
-//   else
-//   {
-//     this.array = data.array;
-//   }
-// }
-// componentDidMount = async() => {
-//   const {data} =await this.props.settingFn.settingAct(this.props.loginData);
-//   if(data.status===1)
-//   {
-//       this.props.noteFn.addNoteAct({
-//           type: 'alert-primary',
-//           text: 'Cannot get your classes data',
-//           id: shortid.generate()
-//       })
-//   }
-//   else
-//   {
-//     console.log(this.props.loginData)
-//     console.log(data.userName)
-//     this.array = data.array;
-//     this.setState({ classes: data.array });
-//   }
-// }
+
+componentDidMount = async() => {
+  const {data} =await this.props.settingFn.settingAct(this.props.loginData);
+  if(data.status===1)
+  {
+      this.props.noteFn.addNoteAct({
+          type: 'alert-primary',
+          text: 'Cannot get your classes data',
+          id: shortid.generate()
+      })
+  }
+  else
+  {
+    console.log(this.props.loginData)
+    console.log(data.userName)
+    this.array = data.array;
+    this.setState({ classes: data.array });
+  }
+}
 
 deleteClass=(index)=>{
    let arr=this.state.classes
@@ -82,11 +67,27 @@ deleteClass=(index)=>{
   this.array[index]=""
 }
 
-// returnBack= async() =>{
-//   const {data} =await this.props.settingFn.settingUpdate(this.props.loginData);
-//   console.log('reach the submit')
+returnBack= async e =>{
+  e.preventDefault();
+  const {data} =await this.props.settingFn.settingUpdate({
+    login:this.props.loginData,
+    array: this.array,
+    userName: this.props.loginData.userName,
+  });
+  console.log('next should be loginData')
+  // console.log(this.props.loginData);
+  // console.log('reach the submit');
+  console.log(data);
+  // console.log(this.state.classes)
+  // console.log(this.array)
+  let text = this.computeClassText(this.array)
+  this.setState({
+    classText:text
+  })
+}
+// returnBack=()=>{
 //   // console.log(this.state.classes)
-//   // console.log(this.array)
+//   console.log(this.array)
 //   let text = this.computeClassText(this.array)
 //   this.setState({
 //     classText:text
@@ -95,17 +96,6 @@ deleteClass=(index)=>{
 //   // this.props.history.push('/myProfile')
 //   //post to backend here
 // }
-returnBack=()=>{
-  // console.log(this.state.classes)
-  console.log(this.array)
-  let text = this.computeClassText(this.array)
-  this.setState({
-    classText:text
-  })
-  // console.log(text)
-  // this.props.history.push('/myProfile')
-  //post to backend here
-}
 render(){
   // console.log(this.state.classes)
   return (
