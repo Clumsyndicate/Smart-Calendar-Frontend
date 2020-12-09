@@ -1,61 +1,20 @@
 import React from 'react';
+import axios from 'axios';
 import moment from "moment";
-import Scheduler, { Editing } from 'devextreme-react/scheduler';
-import SelectBox from 'devextreme-react/select-box';
-import List, { ItemDragging } from 'devextreme-react/list';
+import Button from './button.js'
 import { events } from './events.js';
 import { data, locations } from './data.js';
+import { Switch } from 'devextreme-react/switch';
+import SelectBox from 'devextreme-react/select-box';
 import timeZoneUtils from 'devextreme/time_zone_utils';
-import Button from './button.js'
-
-import axios from 'axios';
+import { NumberBox } from 'devextreme-react/number-box';
+import List, { ItemDragging } from 'devextreme-react/list';
+import Scheduler, { Editing, Resource } from 'devextreme-react/scheduler';
 
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
 var txt = moment().format("ddd[,] MMM DD").toString();
-
-const views = ['day', 'week', 'agenda', 'month'];
-
-function getLocations(date) {
-  const tz = [
-     {
-        offset: -8,
-        title: "Pacific Time (GMT -08:00) America - Los Angeles",
-        id: "America/Godthab"
-     },
-     {
-      offset: -6,
-      title: "Central Standard Time (GMT -06:00) America - Chicago",
-      id: "Atlantic/Azores"
-     },
-     {
-      offset: -5,
-      title: "Eastern Time (GMT -05:00) America - New_York",
-      id: "Portugal"
-     },
-     {
-      offset: 0,
-      title: "Greenwich Mean Time (GMT +00:00) Europe - London",
-      id: "Antarctica/Vostok"
-     },
-    {
-        offset: 8,
-        title: "China Standard Time (GMT +08:00) Asia - Shanghai",
-        id: "Antarctica/McMurdo"
-     },
-     {
-      offset: 5.5,
-      title: "India Standard Time (GMT +05:30) Asia - Kolkata",
-      id: "Australia/Yancowinna"
-     }
-  ]
-  return tz;
-}
-
+const views = ['day', 'week', 'month', 'agenda'];
 const demoLocations = getLocations(currentDate);
-
-function ItemTemplate(data) {
-  return <div>{data.text}</div>;
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -63,6 +22,9 @@ class App extends React.Component {
     this.state = {
       timeZone: demoLocations[0].id,
       demoLocations: demoLocations,
+      showCurrentTimeIndicator: true,
+      shadeUntilCurrentTime: true,
+      updateInterval: 10,
       //for list
       deleteType: 'slideItem',
       searchMode: 'contains',
@@ -71,6 +33,10 @@ class App extends React.Component {
     this.onValueChanged = this.onValueChanged.bind(this);
     this.onAppointmentFormOpening = this.onAppointmentFormOpening.bind(this);
     this.onOptionChanged = this.onOptionChanged.bind(this);
+    this.onShowCurrentTimeIndicatorChanged = this.onShowCurrentTimeIndicatorChanged.bind(this);
+    this.onShadeUntilCurrentTimeChanged = this.onShadeUntilCurrentTimeChanged.bind(this);
+    this.onUpdateIntervalChanged = this.onUpdateIntervalChanged.bind(this);
+    this.onContentReady = this.onContentReady.bind(this);
     //for list
     this.onSelectedItemsChange = this.onSelectedItemsChange.bind(this);
     this.onDragStart = this.onDragStart.bind(this);
@@ -90,7 +56,7 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
       )
       .then(result => {
         console.log(result);
@@ -115,7 +81,7 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
       )
       .then(result => {
         console.log(result.data.text);
@@ -146,15 +112,10 @@ class App extends React.Component {
   }
   onAppointmentFormOpening(e) {
     const form = e.form;
-
     const startDateTimezoneEditor = form.getEditor('startDateTimeZone');
     const endDateTimezoneEditor = form.getEditor('endDateTimeZone');
     const startDateDataSource = startDateTimezoneEditor.option('dataSource');
     const endDateDataSource = endDateTimezoneEditor.option('dataSource');
-
-    startDateDataSource.filter(['id', 'contains', 'Europe']);
-    endDateDataSource.filter(['id', 'contains', 'Europe']);
-
     startDateDataSource.load();
     endDateDataSource.load();
   }
@@ -164,6 +125,23 @@ class App extends React.Component {
         demoLocations: getLocations(e.value)
       });
     }
+  }
+
+  onShowCurrentTimeIndicatorChanged(e) {
+    this.setState({ showCurrentTimeIndicator: e.value });
+  }
+
+  onShadeUntilCurrentTimeChanged(e) {
+    this.setState({ shadeUntilCurrentTime: e.value });
+  }
+
+  onUpdateIntervalChanged(args) {
+    this.setState({ updateInterval: args.value });
+  }
+
+  onContentReady(e) {
+    const currentHour = new Date().getHours() - 1;
+    e.component.scrollToTime(currentHour, 30, new Date());
   }
 
 // for list
@@ -221,10 +199,16 @@ class App extends React.Component {
               dataSource={datab}
               views={views}
               defaultCurrentView="week"
+              showCurrentTimeIndicator={this.state.showCurrentTimeIndicator}
+              showAllDayPanel={true}
+              shadeUntilCurrentTime={this.state.shadeUntilCurrentTime}
               startDayHour={0}
+              shadeUntilCurrentTime={true}
               defaultCurrentDate={currentDate}
               timeZone={timeZone}
-              height={800}
+              showCurrentTimeIndicator={true}
+              height={680}
+              onContentReady={this.onContentReady}
               onAppointmentFormOpening={this.onAppointmentFormOpening}
               onOptionChanged={this.onOptionChanged}>
               <Editing
@@ -234,7 +218,6 @@ class App extends React.Component {
           </div>
 
           <div className="widget-container">
-
             <div className="header">
               <span className="caption">Upcoming Events !!! </span>
               <div className="sideNote">( Slide left to delete, or drag to change 
@@ -244,7 +227,7 @@ class App extends React.Component {
             <List
               dataSource={eventsb}
               // items={events}
-              height={800}
+              height={680}
               keyExpr="id"
               repaintChangesOnly={true}
               allowItemDeleting={true}
@@ -266,14 +249,49 @@ class App extends React.Component {
               </ItemDragging>
             </List>
           </div>
-
         </div>
-
       </React.Fragment>
     );
   }
 }
-
-
-
 export default App;
+
+function getLocations(date) {
+  const tz = [
+     {
+        offset: -8,
+        title: "Pacific Time (GMT -08:00) America - Los Angeles",
+        id: "America/Los Angeles"
+     },
+     {
+      offset: -6,
+      title: "Central Standard Time (GMT -06:00) America - Chicago",
+      id: "America/Chicago"
+     },
+     {
+      offset: -5,
+      title: "Eastern Time (GMT -05:00) America - New York",
+      id: "America/New_York"
+     },
+     {
+      offset: 0,
+      title: "Greenwich Mean Time (GMT +00:00) Europe - London",
+      id: "Europe/London"
+     },
+    {
+        offset: 8,
+        title: "China Standard Time (GMT +08:00) Asia - Shanghai",
+        id: "Asia/Shanghai"
+     },
+     {
+      offset: 5.5,
+      title: "India Standard Time (GMT +05:30) Asia - Kolkata",
+      id: "Asia/Kolkata"
+     }
+  ]
+  return tz;
+}
+
+function ItemTemplate(data) {
+  return <div>{data.text}</div>;
+}
