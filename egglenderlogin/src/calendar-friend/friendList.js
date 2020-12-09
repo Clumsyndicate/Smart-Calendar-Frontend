@@ -59,7 +59,7 @@ export default function FriendList(props) {
   let displaylength=props.data.length>8? 8:props.data.length
 
   return (
-    <div>
+    <div>      
       <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>
       
       <div  className={classes.root}>

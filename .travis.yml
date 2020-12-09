@@ -1,0 +1,9 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+script:
+    - npm run install
+    - npm test
+    - CI=false npm run build

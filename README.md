@@ -1,5 +1,7 @@
 # Smart-Calendar
 
+[![Build Status](https://travis-ci.org/Clumsyndicate/Smart-Calendar-Frontend.svg?branch=main)](https://travis-ci.org/Clumsyndicate/Smart-Calendar-Frontend)
+
 ## Introduction
 
 The inspiration for our smart calendar comes from dealing with time zone craziness and jumbled up schedules for international students during the Covid-19 pandemic. Despite efforts to make studying fairer for domestic and international students alike, the domestic timezone still takes precedence. As a group of international students, we have identified a number of pains that we aim to tackle with our product. 

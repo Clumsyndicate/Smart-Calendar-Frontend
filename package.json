@@ -1,0 +1,17 @@
+{
+  "name": "smart-calendar-frontend",
+  "version": "1.0.0",
+  "description": "## Introduction",
+  "main": "egglenderlogin/src/index.js",
+  "scripts": {
+    "install": "npm install --prefix egglenderlogin", 
+    "test": "npm test --prefix egglenderlogin",
+    "build": "npm run build --prefix egglenderlogin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clumsyndicate/Smart-Calendar-Frontend/tree/main/egglenderlogin"
+  },
+  "author": "Johnson Zhou",
+  "license": "ISC"
+}
