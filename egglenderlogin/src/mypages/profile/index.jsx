@@ -44,9 +44,8 @@ class CenteredGrid extends Component {
     else
     {
       console.log('reah here getting friends')
-      // console.log(this.props.loginData.info)
       console.log(data)
-      this.setState({ friends: data.friends });
+      // this.setState({ friends: data.friends });
     }
   }
   // componentDidMount() {
