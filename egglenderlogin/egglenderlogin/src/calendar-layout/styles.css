@@ -1,19 +1,17 @@
 .Title {
   font-weight: bold;
-  font-style: italic;
+  color: #FFF0F5;
   font-size: 250%;
-  margin-left: 10px;
-  margin-right: 5px;
+  text-align: left;
   padding: 15px;
-  background: #E6E6FA; /*粉紫#E6E6FA 淡粉#FFF0F5 爱丽丝蓝#F0F8FF*/
-  font-family: "Garamond", serif;
+  background-image: linear-gradient(to bottom, #7e57c2 30%, #ba68c8 90%); /*粉紫#E6E6FA 淡粉#FFF0F5 爱丽丝蓝#F0F8FF*/
+  font-family: "Georgia", serif
 }
 
 .aParent {
 	display: flex;
 	border: 3px solid #fff;
-  padding: 5px;
-  background: #F0F8FF;
+  background-image: linear-gradient(to right, #bbdefb 30%, #F0F8FF 90%);
 }
 
 .calendar-layout {
@@ -49,12 +47,13 @@
   font-size: 135%;
   margin-left: 10px;
   margin-right: 10px;
-  background: #FFF0F5; /*天蓝#87CEEB*/
+
   font-family: "Times New Roman", Times, serif;
 }
 
 .option .button {
-  margin-left: 105px;
+  /*margin-left: 105px;*/
+  padding: 0 120px;
 }
 
 .dx-scheduler {
@@ -71,5 +70,5 @@
 .header {
   margin-top: 10px;
   padding: 15px;
-  background: rgba(191, 191, 191, 0.15);
+  background: linear-gradient(to bottom, #eceff1 30%, #F0F8FF 90%);
 }

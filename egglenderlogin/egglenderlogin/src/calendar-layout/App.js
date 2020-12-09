@@ -10,20 +10,9 @@ import Button from './button.js'
 
 import axios from 'axios';
 
-
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
 var txt = moment().format("ddd[,] MMM DD").toString();
 
-// const views = ['week', 'month', 'day'];
-
-// function getLocations(date) {
-//   const timeZones = timeZoneUtils.getTimeZones(date);
-//   return timeZones.filter((timeZone) => {
-//     return locations.indexOf(timeZone.id) !== -1;
-//   });
-// }
-
-// const demoLocations = getLocations(currentDate);
 const views = ['day', 'week', 'agenda', 'month'];
 
 function getLocations(date) {

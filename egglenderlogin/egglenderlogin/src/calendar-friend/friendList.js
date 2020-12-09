@@ -23,13 +23,17 @@ const useStyles = makeStyles((theme) => ({
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
-  title: {
-    color: theme.palette.primary.light,
-  },
   titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    background: 'linear-gradient(to bottom, #f57c00 30%, #ffb74d 90%)',
+    textAlign: 'left',
+    padding: '5px',
+    color: '#5d4037',
+    // marginLeft: '10px',
+    fontFamily: 'Georgia',
   },
+  layout: {
+    border: '3px solid #ffb74d',
+  }
 }));
 
 /**
@@ -55,21 +59,19 @@ export default function FriendList(props) {
 
   return (
     <div>
-      <br/>
-    <div style={{textAlign:"left"}}><h5>Potential Study Partners:</h5></div>
-    <br/>
-    <div className={classes.root}>
-      <GridList className={classes.gridList} cols={displaylength} spacing={1}>
-        {props.data.map((tile,index) => (
-          <GridListTile key={index} rows={12}>
-            {/* <img src={tile.img} alt={tile.title} /> */}
-            <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes} contact={tile.contact}/>
-
-
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
+      
+      <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>
+      
+      <div  className={classes.root}>
+        <GridList className={classes.gridList} cols={displaylength} spacing={1}>
+          {props.data.map((tile,index) => (
+            <GridListTile key={index} rows={12}>
+              {/* <img src={tile.img} alt={tile.title} /> */}
+              <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes} contact={tile.contact}/>
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
     </div>
   );
 }
