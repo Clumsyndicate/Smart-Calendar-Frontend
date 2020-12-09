@@ -7,9 +7,11 @@ import tileData from '../../calendar-friend/tileData'
 import FriendList from '../../calendar-friend/friendList'
 import App from '../../calendar-layout/App'
 import '../../calendar-layout/styles.css'
-
-
-
+import {reducer, actionCreators as profileActionCreator} from './store'
+import  {actionCreators as noteActionCreators} from '../notification/store'
+import {bindActionCreators} from 'redux'
+import shortid from 'shortid';
+import { connect } from 'react-redux'
 // const styles = theme => ({
 //   root: {
 //     flexGrow: 1,
@@ -21,12 +23,32 @@ import '../../calendar-layout/styles.css'
 //   },
 // });
 
-export default class CenteredGrid extends Component {
+class CenteredGrid extends Component {
   constructor(props) {
     super(props);
     this.state = { friends: tileData, isLoaded: true, error: null};
   }
-  
+  componentDidMount = async() => {
+    const {data} =await this.props.profileFn.getFriendListAct({}, this.props.loginData.info);
+    
+    if(data.status===1)
+    {
+      console.log('reah here getting friendlist1')
+      // console.log(decoder(this.props.loginData.info))
+        this.props.noteFn.addNoteAct({
+            type: 'alert-primary',
+            text: 'Cannot get your friendlist data',
+            id: shortid.generate()
+        })
+    }
+    else
+    {
+      console.log('reah here getting friends')
+      // console.log(this.props.loginData.info)
+      console.log(data)
+      this.setState({ friends: data.friends });
+    }
+  }
   // componentDidMount() {
   //   fetch("https://5fcb6ef351f70e00161f193f.mockapi.io/friends")
   //     .then(res => res.json())
@@ -66,6 +88,20 @@ export default class CenteredGrid extends Component {
   
  
 }
+const mapStateToProps = state =>
+{
+    return {
+      loginData: state.login
+    }
+}
+const mapDispatchToProps = dispatch =>
+{
+    return {
+        profileFn: bindActionCreators(profileActionCreator, dispatch),
+        noteFn: bindActionCreators(noteActionCreators, dispatch),
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(CenteredGrid)
 // export default withStyles(styles)(CenteredGrid);
 // import React, {Component,useState} from 'react'
 // import { Container } from '@material-ui/core';
