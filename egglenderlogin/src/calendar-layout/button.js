@@ -11,9 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import { DropzoneArea } from "material-ui-dropzone";
 
 import axios from 'axios';
-const api = axios.create({
-  baseURL: `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-})
 
 function refreshPage() {
   window.location.reload(false);
@@ -122,7 +119,10 @@ function analyze(strdata, config) {
   for (var j = 0; j < temp.length; ++j)
   {
     try {
-      const response = api.post(`https://5fc9fe933c1c22001644175c.mockapi.io/events`, temp[j], config);
+      const response = axios.post(
+        `/api/setschedule`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        , temp[j], config);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);

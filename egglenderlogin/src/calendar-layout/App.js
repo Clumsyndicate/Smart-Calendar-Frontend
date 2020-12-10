@@ -19,15 +19,7 @@ import { data, locations } from './data.js';
 import Button from './button.js'
 
 import axios from 'axios';
-// import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 
-// const url = 'https://5fc9fe933c1c22001644175c.mockapi.io/events';
-// const dataSource = axios.create({
-//   loadUrl: `${url }/Get`,
-//   insertUrl: `${url }/Post`,
-//   updateUrl: `${url }/Put`,
-//   deleteUrl: `${url }/Delete`,
-// });
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
 var txt = moment().format("ddd[,] MMM DD").toString();
 const views = ['day', 'week', 'agenda', 'month'];
@@ -120,8 +112,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        // `http://localhost:3000/posts/`
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        `/assets/schedule.json`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
@@ -144,8 +136,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        // `http://localhost:3000/posts/`
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        `/assets/schedule.json`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data.text);
@@ -248,10 +240,15 @@ class App extends React.Component {
                 "text": e.text,
               };
               console.log(temp);
-    axios.post(
-        // `http://localhost:3000/posts/`
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+    try {
+      const response = axios.post(
+        `/api/setschedule`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
         , temp, config);
+      console.log('👉 Returned data:', response);
+    } catch (e) {
+      console.log(`😱 Axios request failed: ${e}`);
+    }
   }
 
 
@@ -263,9 +260,9 @@ class App extends React.Component {
 
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
     
-    // window.setInterval(function(){
-    //   updateEvent(datab)
-    // }, 10000);
+    window.setInterval(function(){
+      updateEvent(datab)
+    }, 10000);
     
     const classList = [
       { "id": "1",
@@ -402,22 +399,22 @@ class App extends React.Component {
 }
 
 
-// function updateEvent(datab){
-//   if(datab != null){
-//     for (var j = 0; j < datab.length; ++j)
-//     {
-//       const id = j+1
-//       const url = `https://5fc9fe933c1c22001644175c.mockapi.io/events` + id;
-//       try {
-//         datab[j].id = id;
-//         const response = axios.put(url, datab[j]);
-//         axios.post(`https://5fc9fe933c1c22001644175c.mockapi.io/events`, datab[j]);
-//         console.log('👉 Returned data:', response);
-//       } catch (e) {
-//         console.log(`😱 Axios request failed: ${e}`);
-//       }
-//     }
-//   }
-// }
+function updateEvent(datab){
+  if(datab != null){
+    for (var j = 0; j < datab.length; ++j)
+    {
+      const id = j+1
+      const url = `/api/getschedule` + id;
+      try {
+        datab[j].id = id;
+        const response = axios.put(url, datab[j]);
+        axios.post(`/api/setschedule`, datab[j]);
+        console.log('👉 Returned data:', response);
+      } catch (e) {
+        console.log(`😱 Axios request failed: ${e}`);
+      }
+    }
+  }
+}
 
 export default App;
