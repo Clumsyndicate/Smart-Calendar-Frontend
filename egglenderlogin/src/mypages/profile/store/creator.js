@@ -8,6 +8,6 @@ export const getFriendListAct = (data,token) => {
         }
       }
     return dispatch => {
-        return axios.post('/api/profile', data,config);
+        return axios.post('/api/friendlist', data,config);
     };
 };

@@ -27,12 +27,14 @@ import { connect } from 'react-redux'
 class CenteredGrid extends Component {
   constructor(props) {
     super(props);
-    this.state = { friends: tileData, isLoaded: true, error: null};
+    this.state = { friends: tileData, isLoaded: false, error: null};
   }
   componentDidMount = async() => {
+    console.log("before");
     const {data} =await this.props.profileFn.getFriendListAct({}, this.props.loginData.info);
-    
-    if(data.status===1)
+    console.log("after");
+    console.log(data);
+    if (data.status===1)
     {
       console.log('reah here getting friendlist1')
       // console.log(decoder(this.props.loginData.info))
@@ -41,22 +43,31 @@ class CenteredGrid extends Component {
             text: 'Cannot get your friendlist data',
             id: shortid.generate()
         })
+        this.setState({
+            isLoaded: true,
+            friends: []
+        });
     }
     else
     {
       console.log('reah here getting friends')
       console.log(data)
       // this.setState({ friends: data.friends });
+      this.setState({
+        isLoaded: true,
+        friends: data.friendlist
+    });
     }
   }
   // componentDidMount() {
-  //   fetch("https://5fcb6ef351f70e00161f193f.mockapi.io/friends")
+  //   fetch("/api/friendlist")
   //     .then(res => res.json())
   //     .then(
   //       (result) => {
+  //         console.log(result)
   //         this.setState({
   //           isLoaded: true,
-  //           friends: result.friendList
+  //           friends: result
   //         });
   //       },
   //       (error) => {
