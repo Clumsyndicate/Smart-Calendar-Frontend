@@ -178,7 +178,6 @@ class TestNavigator extends Component{
             
             </Toolbar>
             </StyledBar>
-            <renderMenu1/>
             </div>
         )
     }
