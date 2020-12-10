@@ -51,9 +51,9 @@ function Content(props){
     contactText="No contact way shared~"
   }
   else{
-    let way=Object.keys(props.contact)[0];
+    let way=props.contact.contact;
     contactText+=way;
-    contactText+=": "+props.contact[way]
+    contactText+=": "+props.contact.contactval
 
   }
 

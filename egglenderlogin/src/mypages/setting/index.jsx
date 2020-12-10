@@ -92,7 +92,7 @@ componentDidMount = async() => {
   {
     console.log('reah here change token')
     // console.log(this.props.loginData.info)
-    console.log(data.contactInfo.contactval)
+    // console.log(data.contactInfo.contactval)
     this.array = data.array;
     this.setState({
       classes: data.array,
