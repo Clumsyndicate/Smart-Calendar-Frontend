@@ -22,8 +22,8 @@ class EggSetting extends React.Component{
     this.state = {
         classes: ["", "","", "",""],
         classText: this.computeClassText(this.array),
-        contact:"gggg",
-        contactval:"ggg"
+        contact:"",
+        contactval:""
     };  
    
 }
@@ -92,9 +92,13 @@ componentDidMount = async() => {
   {
     console.log('reah here change token')
     // console.log(this.props.loginData.info)
-    console.log(data)
+    console.log(data.contactInfo.contactval)
     this.array = data.array;
-    this.setState({ classes: data.array });
+    this.setState({
+      classes: data.array,
+      contact: data.contactInfo.contact,
+      contactval: data.contactInfo.contactval,
+    });
   }
 }
 

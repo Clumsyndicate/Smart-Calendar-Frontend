@@ -34,7 +34,7 @@ function Contact(props){
         <TextField
           id="standard-select-currency"
           select
-          label={changed?"Contact Way":props.contact}
+          label={(props.contact==="")?"Contact Way":props.contact}
           defaultValue={props.contact}
           value={contact}
           onChange={handleChange}
@@ -46,7 +46,7 @@ function Contact(props){
             </MenuItem>
           ))}
         </TextField>
-        <TextField id="standard-basic" label="name/address/id" onChange={handleValueChange} defaultValue={props.contactval}/>
+        <TextField id="standard-basic" label={props.contactval} onChange={handleValueChange} defaultValue={(props.contactval==="")?"name/address/id":props.contactval}/>
       </form>
       </div>
     );
