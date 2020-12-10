@@ -3,7 +3,6 @@ import SelectionBar from './selection'
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux'
-import  { Redirect } from 'react-router-dom'
 import shortid from 'shortid';
 import {reducer, actionCreators as settingActionCreator} from './store'
 import  {actionCreators as noteActionCreators} from '../notification/store'
@@ -145,7 +144,7 @@ render(){
 
       </div>
       <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
-          <p>Your change won't be saved unless you click it</p>
+          <p>Your changes won't be saved unless you click it</p>
       
       </div>
           
