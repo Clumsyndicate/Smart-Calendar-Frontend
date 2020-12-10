@@ -9,6 +9,7 @@ import eggregister from './mypages/register/index';
 import eggHomepage from './mypages/Homepage/index';
 import EggSetting from './mypages/setting/index'
 import Notification from './mypages/notification'
+import AboutMe from './mypages/aboutme/index'
 export default class App extends Component{
     render(){
         return(
