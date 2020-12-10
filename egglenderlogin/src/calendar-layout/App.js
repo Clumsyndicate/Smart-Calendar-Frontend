@@ -11,6 +11,7 @@ import timeZoneUtils from 'devextreme/time_zone_utils';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import { events } from './events.js';
@@ -80,6 +81,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: props.token,
+
       timeZone: demoLocations[0].id,
       demoLocations: demoLocations,
       showCurrentTimeIndicator: true,
@@ -236,7 +239,7 @@ class App extends React.Component {
   }
 
 // for search box and add button
-  onChange(e) {
+  onChange(e, config) {
     var temp ={ "id": this.state.datab.length+1, 
                 "startDate": e.startDate, 
                 "endDate": e.endDate, 
@@ -248,12 +251,16 @@ class App extends React.Component {
     axios.post(
         // `http://localhost:3000/posts/`
         `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-        , temp);
+        , temp, config);
   }
 
 
   
   render() {
+    const config = {
+        headers: { "x-access-token": this.props.token }
+    };
+
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
     
     // window.setInterval(function(){
@@ -298,7 +305,7 @@ class App extends React.Component {
       <React.Fragment>
 
         <div className="Title">MY EGGLENDAR 
-            <span className="uploadButton"><Button /></span>
+            <span className="uploadButton"><Button token={this.token}/></span>
         </div>
 
         <div class="aParent">
@@ -319,7 +326,7 @@ class App extends React.Component {
               />
              <Autocomplete
                 className="classes-search-box"
-                onChange={(event,value) => {this.onChange(value);}}
+                onChange={(event,value) => {this.onChange(value, config);}}
                 options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
                 groupBy={(option) => option.firstLetter}
                 getOptionLabel={(option) => option.text}
@@ -327,7 +334,9 @@ class App extends React.Component {
                 renderInput={(params) => 
                   <TextField {...params} color="blue" label="Search your classes" variant="outlined" />}
               />
-              <button onClick={refreshPage}>Add class</button>
+              <Fab onClick={refreshPage}>
+                <AddIcon />
+              </Fab>
 
             </div>
             <Scheduler

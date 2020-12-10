@@ -55,18 +55,6 @@ class TestNavigator extends Component{
         this.setState({ anchorEl: null });
         };
 
-        const renderMenu = (
-            <Menu
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              keepMounted
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-              open= {this.state.count}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-            </Menu>
-          );
         return(
             <div className={classes.root}>
             <StyledBar position="static">
@@ -130,51 +118,6 @@ class TestNavigator extends Component{
             </div>
                 
             )}
-
-
-
-
-
-
-
-            {/* <Button color="inherit">
-                <Link to='/login' style={{ color: 'white' }}>login</Link>
-            </Button>
-            <Button color="inherit">
-                <Link to='/myProfile' style={{ color: 'white' }}>Mycalender</Link>
-            </Button>
-            <IconButton
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                    >
-                    <AccountCircle />
-            </IconButton>
-            <Popper open={open} anchorEl={this.state.anchorEl} transition>
-                <div>
-                
-                    <Menu
-                    id="menu-appbar"
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    open={open}
-                    onClose={handleClose}
-                    >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    </Menu>
-                </div>
-            </Popper> */}
             
             </Toolbar>
             </StyledBar>

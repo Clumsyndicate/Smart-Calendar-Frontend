@@ -84,7 +84,7 @@ function timezone(str) {
   return txt;
 }
 
-function analyze(strdata) {
+function analyze(strdata, config) {
   const raw = strdata;
   const ical = require("ical");
 
@@ -122,7 +122,7 @@ function analyze(strdata) {
   for (var j = 0; j < temp.length; ++j)
   {
     try {
-      const response = api.post(`https://5fc9fe933c1c22001644175c.mockapi.io/events`, temp[j]);
+      const response = api.post(`https://5fc9fe933c1c22001644175c.mockapi.io/events`, temp[j], config);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
@@ -134,7 +134,10 @@ class uploadButton extends Component {
   //const [open, setOpen] = React.useState(false);
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = { 
+      open: false,
+      token: props.token, 
+    };
 
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -154,7 +157,13 @@ class uploadButton extends Component {
   }
 
   render() {
+    
+    const config = {
+        headers: { "x-access-token": this.props.token }
+    };
+    
     const { open } = this.state;
+
     return (
       <div>
         <Button
@@ -189,7 +198,7 @@ class uploadButton extends Component {
                       loading: false,
                       error: false
                     });
-                    analyze(result);
+                    analyze(result, config);
                     //console.log(this.state);
                   });
                 }
