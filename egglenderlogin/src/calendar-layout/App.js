@@ -37,7 +37,7 @@ function getLocations(date) {
      {
         offset: -8,
         title: "Pacific Time (GMT -08:00) America - Los Angeles",
-        id: "America/Los——Angeles"
+        id: "America/Los_Angeles"
      },
      {
       offset: -6,

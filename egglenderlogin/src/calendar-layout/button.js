@@ -12,7 +12,7 @@ import { DropzoneArea } from "material-ui-dropzone";
 
 import axios from 'axios';
 const api = axios.create({
-  baseURL: `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+  baseURL: `http://localhost:3000/posts/`
 })
 
 function refreshPage() {
@@ -75,22 +75,12 @@ function convert(str) {
     var temp = ret.match(/.+?(?=;DTSTART)/);
     ret = temp[0];
   }
-  var byday = new String(ret.match(/BYDAY.*$/));
-  ret = ret.match(/.+?(?=;BYDAY)/);
-  var sun = byday.includes("SU");
-  byday = byday.replace("SA", "SU");
-  byday = byday.replace("FR", "SA");
-  byday = byday.replace("TH", "FR");
-  byday = byday.replace("WE", "TH");
-  byday = byday.replace("TU", "WE");
-  byday = byday.replace("MO", "TU");
-  if (sun) byday = byday.replace("SU", "MO");
-  return ret + ";" + byday;
+  return ret;
 }
 function timezone(str) {
   var newstr = new String(str);
   var sub = newstr.substring(0, 25);
-  var txt = new String(sub + "GMT-0800 (PST)");
+  var txt = new String(sub + "GMT-0700 (PST)");
   return txt;
 }
 
@@ -132,7 +122,7 @@ function analyze(strdata) {
   for (var j = 0; j < temp.length; ++j)
   {
     try {
-      const response = api.post('https://5fc9fe933c1c22001644175c.mockapi.io/events', temp[j]);
+      const response = api.post('http://localhost:3000/posts/', temp[j]);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
