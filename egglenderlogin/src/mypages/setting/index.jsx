@@ -22,8 +22,8 @@ class EggSetting extends React.Component{
     this.state = {
         classes: ["", "","", "",""],
         classText: this.computeClassText(this.array),
-        contact:"gggg",
-        contactval:"ggg"
+        contact:"",
+        contactval:""
     };  
    
 }
