@@ -28,7 +28,7 @@ export default function SelectionBar(props) {
     (async () => {
       //const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
       //const response = await fetch('https://5fc7ab11f3c77600165d8a61.mockapi.io/class');
-      const response = await fetch('http://149.28.86.112:9000/api/classlist');
+      const response = await fetch('http://149.28.86.112:9001/api/classlist');
       //const countries = await response.json();
       const myclasses = await response.json();
       //console.log(myclasses[0].classList)

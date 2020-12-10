@@ -46,7 +46,7 @@ function Contact(props){
             </MenuItem>
           ))}
         </TextField>
-        <TextField id="standard-basic" label="name/address/id" onChange={handleValueChange} defaultValue={(props.contactval==="")?"name/address/id":props.contactval}/>
+        <TextField id="standard-basic" label={props.contactval} onChange={handleValueChange} defaultValue={(props.contactval==="")?"name/address/id":props.contactval}/>
       </form>
       </div>
     );

@@ -90,7 +90,7 @@ class CenteredGrid extends Component {
     } else {
     return (
       <div>
-        <App />
+        <App token={this.props.loginData.info}/>
         <FriendList data={this.state.friends}/>
       </div>
     );
