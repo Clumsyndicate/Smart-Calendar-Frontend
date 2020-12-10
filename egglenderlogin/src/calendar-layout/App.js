@@ -37,7 +37,7 @@ function getLocations(date) {
      {
         offset: -8,
         title: "Pacific Time (GMT -08:00) America - Los Angeles",
-        id: "America/Los Angeles"
+        id: "America/Los——Angeles"
      },
      {
       offset: -6,
@@ -117,8 +117,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        // `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        `http://localhost:3000/posts/`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
@@ -141,8 +141,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        // `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
-        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        `http://localhost:3000/posts/`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data.text);
@@ -237,33 +237,40 @@ class App extends React.Component {
 
 // for search box and add button
   onChange(e) {
-    var temp ={ "id": e.id, 
+    var temp ={ "id": this.state.datab.length+1, 
                 "startDate": e.startDate, 
                 "endDate": e.endDate, 
                 "location": e.location, 
                 "recurrenceRule": e.recurrenceRule,
                 "text": e.text,
               };
+              console.log(temp);
     axios.post(
-        // `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
-        'https://5fc9fe933c1c22001644175c.mockapi.io/events'
+        `http://localhost:3000/posts/`
+        // 'https://5fc9fe933c1c22001644175c.mockapi.io/events'
         , temp);
   }
 
+
+  
   render() {
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
-
+    
+    window.setInterval(function(){
+      updateEvent(datab)
+    }, 10000);
+    
     const classList = [
       { "id": "1",
-        "startDate": "Thu Dec 01 2020 15:00:00 GMT-0800 (PST)",
-        "endDate": "Thu Dec 01 2020 15:50:00 GMT-0800 (PST)",
+        "startDate": "Thu Dec 01 2020 15:00:00 GMT-0700 (PST)",
+        "endDate": "Thu Dec 01 2020 15:50:00 GMT-0700 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
         "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
         "text": "Math32B"
       },
       { "id": "2",
-        "startDate": "Fri Dec 02 2020 20:00:00 GMT-0800 (PST)",
-        "endDate": "Fri Dec 02 2020 20:50:00 GMT-0800 (PST)",
+        "startDate": "Fri Dec 02 2020 09:00:00 GMT-0700 (PST)",
+        "endDate": "Fri Dec 02 2020 09:50:00 GMT-0700 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
         "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH,SA",
         "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
@@ -310,7 +317,7 @@ class App extends React.Component {
                 value={timeZone}
                 onValueChanged={this.onValueChanged}
               />
-              <Autocomplete
+             <Autocomplete
                 className="classes-search-box"
                 onChange={(event,value) => {this.onChange(value);}}
                 options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
@@ -386,5 +393,22 @@ class App extends React.Component {
 }
 
 
+function updateEvent(datab){
+  if(datab != null){
+    for (var j = 0; j < datab.length; ++j)
+    {
+      const id = j+1
+      const url = 'http://localhost:3000/posts/' + id;
+      try {
+        datab[j].id = id;
+        const response = axios.put(url, datab[j]);
+        axios.post('http://localhost:3000/posts/', datab[j]);
+        console.log('👉 Returned data:', response);
+      } catch (e) {
+        console.log(`😱 Axios request failed: ${e}`);
+      }
+    }
+  }
+}
 
 export default App;
