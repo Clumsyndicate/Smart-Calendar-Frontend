@@ -118,7 +118,11 @@ let postInfo={
   e.preventDefault();
   console.log(this.array)
   const {data} =await this.props.settingFn.settingUpdate({
-    array: this.array
+    array: this.array,
+    contactInfo: {
+      contact:this.state.contact,
+      contactval:this.state.contactval,
+    }
   }, this.props.loginData.info);
   // console.log('next should be loginData')
   // console.log(this.props.loginData);
