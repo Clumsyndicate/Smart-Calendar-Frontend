@@ -125,7 +125,7 @@ class TestNavigator extends Component{
                 <Link to='/myProfile' style={{ color: 'white' }}>ToCalendar</Link>
             </Button>
             <Button color="inherit" style={{float:"right"}}>
-                <Link to='/setting' style={{ color: 'white' }}>Change Enroll List</Link>
+                <Link to='/setting' style={{ color: 'white' }}>AboutMe</Link>
             </Button>
             </div>
                 

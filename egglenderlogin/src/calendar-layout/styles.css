@@ -51,7 +51,7 @@
 
 .option .caption {
 	font-weight: bold;
-  font-size: 135%;
+  font-size: 150%;
   margin-left: 10px;
   margin-right: 10px;
 
@@ -71,8 +71,9 @@
 
 .header .caption {
 	font-weight: bold;
-  font-size: 120%;
+  font-size: 135%;
   font-family: "Georgia", serif;
+  margin-bottom: 10px;
 }
 
 .header {

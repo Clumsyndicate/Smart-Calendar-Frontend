@@ -7,7 +7,13 @@ import shortid from 'shortid';
 import {reducer, actionCreators as settingActionCreator} from './store'
 import  {actionCreators as noteActionCreators} from '../notification/store'
 import decoder from 'jwt-decode'
-// let array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Contact from '../aboutme/contact'
+import ImgUpload from '../aboutme/upload'
+
+const contactways = ['Email', 'TEL','Facebook','Snap','Instagram','WeChat']
+
 class EggSetting extends React.Component{
   constructor(props) {
     super(props);
@@ -15,11 +21,23 @@ class EggSetting extends React.Component{
     //this.array = ["CS 180", "CS97","Physics 1B", "Math 33A",""];
     this.state = {
         classes: ["", "","", "",""],
-        classText: this.computeClassText(this.array)
+        classText: this.computeClassText(this.array),
+        contact:"gggg",
+        contactval:"ggg"
     };  
    
 }
 
+handleContactChange = (newcontact) => {
+  this.setState({ contact: newcontact});
+  console.log(newcontact)
+  };
+
+  handleContactValueChange = (newval) => {
+    this.setState({ contactval: newval});
+    console.log(newval)
+    };
+  
 computeClassText=(arr)=>{
   let text=""
   for(let i=0;i<arr.length;i++){
@@ -92,10 +110,19 @@ returnBack= async e =>{
   this.setState({
     classText:text
   })
+let postInfo={
+  "enrollList": this.array,
+  "contactInfo":{"contact":this.state.contact, "contactval": this.state.contactval}
+}
+//to set state when get: classes: postInfo.enrollList; contact: postInfo.contactInfo.contact, contactval=postInfo.contactInfo.contactval
   e.preventDefault();
   console.log(this.array)
   const {data} =await this.props.settingFn.settingUpdate({
-    array: this.array
+    array: this.array,
+    contactInfo: {
+      contact:this.state.contact,
+      contactval:this.state.contactval,
+    }
   }, this.props.loginData.info);
   // console.log('next should be loginData')
   // console.log(this.props.loginData);
@@ -114,9 +141,12 @@ render(){
   return (
 
       <div>
-      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-          <h2>Change Enrolled Classes</h2>
-          </div>
+        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+            <h4>My Enrolled Classes: </h4>
+      </div>
+      <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
+      <h6>{this.state.classText}</h6>
+      </div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
           <SelectionBar class1={this.state.classes[0]} callback={this.myCallback} index="0" deletefunc={this.deleteClass}/>
           </div>
@@ -133,11 +163,14 @@ render(){
           <SelectionBar class1={this.state.classes[4]} callback={this.myCallback} index="4" deletefunc={this.deleteClass}/>
           </div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
-            <h6>Your current enrolled classes are: <br/><br/> {this.state.classText}</h6>
-      
+            <h4>My Contact: </h4>
       </div>
-          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
-          
+          <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval}/>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
+            <h4>My Avatar: </h4>
+      </div>
+      <ImgUpload/>
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
           <Button variant="outlined" color="primary" style={{marginLeft:"1rem"}} onClick={this.returnBack}>
         Save Change
       </Button>
@@ -147,7 +180,6 @@ render(){
           <p>Your changes won't be saved unless you click it</p>
       
       </div>
-          
     </div>
   );}
 }
