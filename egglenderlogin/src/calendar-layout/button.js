@@ -12,7 +12,7 @@ import { DropzoneArea } from "material-ui-dropzone";
 
 import axios from 'axios';
 const api = axios.create({
-  baseURL: `http://localhost:3000/posts/`
+  baseURL: `https://5fc9fe933c1c22001644175c.mockapi.io/events`
 })
 
 function refreshPage() {
@@ -122,7 +122,7 @@ function analyze(strdata) {
   for (var j = 0; j < temp.length; ++j)
   {
     try {
-      const response = api.post('http://localhost:3000/posts/', temp[j]);
+      const response = api.post(`https://5fc9fe933c1c22001644175c.mockapi.io/events`, temp[j]);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);

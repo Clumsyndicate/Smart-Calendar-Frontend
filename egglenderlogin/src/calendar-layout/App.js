@@ -117,8 +117,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `http://localhost:3000/posts/`
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        // `http://localhost:3000/posts/`
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
@@ -141,8 +141,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `http://localhost:3000/posts/`
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        // `http://localhost:3000/posts/`
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data.text);
@@ -246,8 +246,8 @@ class App extends React.Component {
               };
               console.log(temp);
     axios.post(
-        `http://localhost:3000/posts/`
-        // 'https://5fc9fe933c1c22001644175c.mockapi.io/events'
+        // `http://localhost:3000/posts/`
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
         , temp);
   }
 
@@ -256,9 +256,9 @@ class App extends React.Component {
   render() {
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
     
-    window.setInterval(function(){
-      updateEvent(datab)
-    }, 10000);
+    // window.setInterval(function(){
+    //   updateEvent(datab)
+    // }, 10000);
     
     const classList = [
       { "id": "1",
@@ -393,22 +393,22 @@ class App extends React.Component {
 }
 
 
-function updateEvent(datab){
-  if(datab != null){
-    for (var j = 0; j < datab.length; ++j)
-    {
-      const id = j+1
-      const url = 'http://localhost:3000/posts/' + id;
-      try {
-        datab[j].id = id;
-        const response = axios.put(url, datab[j]);
-        axios.post('http://localhost:3000/posts/', datab[j]);
-        console.log('👉 Returned data:', response);
-      } catch (e) {
-        console.log(`😱 Axios request failed: ${e}`);
-      }
-    }
-  }
-}
+// function updateEvent(datab){
+//   if(datab != null){
+//     for (var j = 0; j < datab.length; ++j)
+//     {
+//       const id = j+1
+//       const url = `https://5fc9fe933c1c22001644175c.mockapi.io/events` + id;
+//       try {
+//         datab[j].id = id;
+//         const response = axios.put(url, datab[j]);
+//         axios.post(`https://5fc9fe933c1c22001644175c.mockapi.io/events`, datab[j]);
+//         console.log('👉 Returned data:', response);
+//       } catch (e) {
+//         console.log(`😱 Axios request failed: ${e}`);
+//       }
+//     }
+//   }
+// }
 
 export default App;
