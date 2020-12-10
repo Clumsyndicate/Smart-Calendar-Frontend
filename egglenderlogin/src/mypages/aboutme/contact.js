@@ -20,10 +20,10 @@ function Contact(props){
     const handleChange = (event) => {
         setContact(event.target.value);
         props.handleContactChange(event.target.value)
-        setChange(true)
       };
     const handleValueChange = (event) => {
         props.handleContactValueChange(event.target.value)
+        setChange(true)
     };
     
     return (
@@ -46,7 +46,7 @@ function Contact(props){
             </MenuItem>
           ))}
         </TextField>
-        <TextField id="standard-basic" label="name/address/id" onChange={handleValueChange} defaultValue={props.contactval}/>
+        <TextField id="standard-basic" label={changed?"name/address/id":props.contactval} onChange={handleValueChange} defaultValue={props.contactval}/>
       </form>
       </div>
     );
