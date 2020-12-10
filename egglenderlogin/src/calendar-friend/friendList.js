@@ -2,11 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import FriendCard from "./friendCard"
-import tileData from './tileData';
+import FriendCard from "./friendCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
     float:"left",
+    //maxWidth:'1500px'
   },
   gridList: {
     flexWrap: 'nowrap',
@@ -61,12 +58,11 @@ export default function FriendList(props) {
   return (
     <div>      
       <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>
-      
+      <br/>
       <div  className={classes.root}>
-        <GridList className={classes.gridList} cols={displaylength} spacing={1}>
+        <GridList className={classes.gridList} cols={displaylength} cellHeight='auto'>
           {props.data.map((tile,index) => (
             <GridListTile key={index} rows={12}>
-              {/* <img src={tile.img} alt={tile.title} /> */}
               <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes} contact={tile.contact}/>
             </GridListTile>
           ))}

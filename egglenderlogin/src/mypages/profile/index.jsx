@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import tileData from '../../calendar-friend/tileData'
 import FriendList from '../../calendar-friend/friendList'
+import LoadingFriends from '../../calendar-friend/friendLoading'
 import App from '../../calendar-layout/App'
 import '../../calendar-layout/styles.css'
 import {reducer, actionCreators as profileActionCreator} from './store'
@@ -74,7 +75,7 @@ class CenteredGrid extends Component {
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div><App /> <div>Loading...</div></div>;
+      return <div></div>;
     } else {
     return (
       <div>
