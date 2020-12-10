@@ -63,7 +63,7 @@ export default function FriendList(props) {
       <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>
       
       <div  className={classes.root}>
-        <GridList className={classes.gridList} cols={11} cellHeight='auto'>
+        <GridList className={classes.gridList} cols={displaylength} cellHeight={'auto'}>
           {props.data.map((tile,index) => (
             <GridListTile key={index} rows={12}>
               {/* <img src={tile.img} alt={tile.title} /> */}
