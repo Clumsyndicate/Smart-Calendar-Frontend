@@ -88,9 +88,8 @@ export default function FriendCard(props) {
         classList+=", "
     }
   }
-  //const myimg = props.img
-  const myimg = "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-  console.log(myimg)
+  const myimg = props.img
+  // const myimg = "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
   //const myimg = "data:image/png;base64, "+props.img
   console.log(myimg)
   let buttonText=expanded?"Hide Contact":"See Contact"
