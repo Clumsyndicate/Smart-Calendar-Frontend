@@ -74,20 +74,27 @@ export default function FriendCard(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   }
+  let totalnum=props.num;
   let text
-  if(props.num===1){
+  let classList=""
+  for(let i=0;i<props.num;i++){
+    if(props.class[i]===""){
+      totalnum--;
+      continue;
+    }
+    classList+=props.class[i];
+    if(i!==props.num-1){
+        classList+=" "
+    }
+  }
+ 
+  if(totalnum===1){
     text="1 class in common:"
   }
   else{
-      text=props.num+" classes in common:"
+      text=totalnum+" classes in common:"
   }
-  let classList=""
-  for(let i=0;i<props.num;i++){
-    classList+=props.class[i];
-    if(i!==props.num-1){
-        classList+=", "
-    }
-  }
+ 
   const myimg = props.img
   // const myimg = "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
   //const myimg = "data:image/png;base64, "+props.img
