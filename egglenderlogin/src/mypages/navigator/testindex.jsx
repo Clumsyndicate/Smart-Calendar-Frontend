@@ -109,12 +109,12 @@ class TestNavigator extends Component{
             <Button color="inherit">
                 <Link to='/login' style={{ color: 'white' }}>login</Link>
             </Button>
-            <Button color="inherit">
+            {/* <Button color="inherit">
                 <Link to='/myProfile' style={{ color: 'white' }}>ToCalendar</Link>
             </Button>
             <Button color="inherit" style={{float:"right"}}>
                 <Link to='/setting' style={{ color: 'white' }}>AboutMe</Link>
-            </Button>
+            </Button> */}
             </div>
                 
             )}
