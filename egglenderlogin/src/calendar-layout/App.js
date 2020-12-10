@@ -18,7 +18,15 @@ import { data, locations } from './data.js';
 import Button from './button.js'
 
 import axios from 'axios';
+// import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 
+// const url = 'https://5fc9fe933c1c22001644175c.mockapi.io/events';
+// const dataSource = axios.create({
+//   loadUrl: `${url }/Get`,
+//   insertUrl: `${url }/Post`,
+//   updateUrl: `${url }/Put`,
+//   deleteUrl: `${url }/Delete`,
+// });
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
 var txt = moment().format("ddd[,] MMM DD").toString();
 const views = ['day', 'week', 'agenda', 'month'];
@@ -60,14 +68,12 @@ function getLocations(date) {
   return tz;
 }
 
-
-
-function ItemTemplate(data) {
-  return <div>{data.text}</div>;
-}
+// function ItemTemplate(data) {
+//   return <div>{data.text}</div>;
+// }
 
 function refreshPage() {
-  window.location.reload(false);
+  window.location.reload();
 }
 
 class App extends React.Component {
@@ -111,8 +117,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        // `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
@@ -125,8 +131,6 @@ class App extends React.Component {
       .catch(error => {
         console.error("error: ", error);
         this.setState({
-          // objects cannot be used as a react child
-          // -> <p>{error}</p> would throw otherwise
           error: `${error}`,
           loading: false
         });
@@ -137,8 +141,8 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+        // `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
+        `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data.text);
@@ -241,10 +245,9 @@ class App extends React.Component {
                 "text": e.text,
               };
     axios.post(
-        `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
-        // 'https://5fc9fe933c1c22001644175c.mockapi.io/events'
+        // `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
+        'https://5fc9fe933c1c22001644175c.mockapi.io/events'
         , temp);
-    refreshPage();
   }
 
   render() {
@@ -255,15 +258,23 @@ class App extends React.Component {
         "startDate": "Thu Dec 01 2020 15:00:00 GMT-0800 (PST)",
         "endDate": "Thu Dec 01 2020 15:50:00 GMT-0800 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=FR",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
         "text": "Math32B"
       },
       { "id": "2",
-        "startDate": "Fri Dec 02 2020 09:00:00 GMT-0800 (PST)",
-        "endDate": "Fri Dec 02 2020 09:50:00 GMT-0800 (PST)",
+        "startDate": "Fri Dec 02 2020 20:00:00 GMT-0800 (PST)",
+        "endDate": "Fri Dec 02 2020 20:50:00 GMT-0800 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
         "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH,SA",
         "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
+      },
+      {
+        "id": "3",
+        "startDate": "Mon Oct 05 2020 10:00:00 GMT-0700 (PST)",
+        "endDate": "Mon Oct 05 2020 11:50:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201211T234500Z;BYDAY=TU,TH",
+        "text": "COM SCI 180 LEC 1 (Online - Recorded)"
       },
     ]
 
@@ -301,7 +312,7 @@ class App extends React.Component {
               />
               <Autocomplete
                 className="classes-search-box"
-                onChange={(event,value) => this.onChange(value)}
+                onChange={(event,value) => {this.onChange(value);}}
                 options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
                 groupBy={(option) => option.firstLetter}
                 getOptionLabel={(option) => option.text}
@@ -309,6 +320,7 @@ class App extends React.Component {
                 renderInput={(params) => 
                   <TextField {...params} color="blue" label="Search your classes" variant="outlined" />}
               />
+              <button onClick={refreshPage}>Add class</button>
 
             </div>
             <Scheduler
@@ -323,7 +335,7 @@ class App extends React.Component {
               defaultCurrentDate={currentDate}
               timeZone={timeZone}
               showCurrentTimeIndicator={true}
-              height={680}
+              height={800}
               onContentReady={this.onContentReady}
               onAppointmentFormOpening={this.onAppointmentFormOpening}
               onOptionChanged={this.onOptionChanged}>
@@ -343,8 +355,7 @@ class App extends React.Component {
 
             <List
               dataSource={eventsb}
-              // items={events}
-              height={680}
+              height={800}
               keyExpr="id"
               repaintChangesOnly={true}
               allowItemDeleting={true}
@@ -352,7 +363,7 @@ class App extends React.Component {
               showSelectionControls={true}
               selectionMode="multiple"
               onOptionChanged={this.onSelectedItemsChange}
-              itemRender={ItemTemplate}
+              // itemRender={ItemTemplate}
               searchExpr="text"
               searchEnabled={true}
               searchMode={this.state.searchMode}>

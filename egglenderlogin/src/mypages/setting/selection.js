@@ -26,12 +26,17 @@ export default function SelectionBar(props) {
     }
 
     (async () => {
-      const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-      
-      const countries = await response.json();
-
+      //const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
+      //const response = await fetch('https://5fc7ab11f3c77600165d8a61.mockapi.io/class');
+      const response = await fetch('http://149.28.86.112:9000/api/classlist');
+      //const countries = await response.json();
+      const myclasses = await response.json();
+      //console.log(myclasses[0].classList)
       if (active) {
-        setOptions(Object.keys(countries).map((key) => countries[key].item[0]));
+        //setOptions(Object.keys(countries).map((key) => countries[key].item[0]));
+        //console.log(options)
+        //console.log(myclasses)
+        setOptions(myclasses.classList.map((item)=>item));
       }
     })();
 
@@ -45,7 +50,7 @@ export default function SelectionBar(props) {
       setOptions([]);
     }
   }, [open]);
-
+  //console.log(myclasses)
   return (
 
     <div style={{display:"flex"}}>
@@ -60,17 +65,15 @@ export default function SelectionBar(props) {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={(option) => option.name}
+      // getOptionSelected={(option, value) => option.name === value.name}
+      // getOptionLabel={(option) => option.name}
+      getOptionSelected={(option, value) => option === value}
+      getOptionLabel={(option) => option}
       options={options}
       loading={loading}
       onInputChange={(event,value,reason)=>{setInput(reason);if(reason==="reset")func(value,index)}}
       renderInput={(params) => {
         class1=params.inputProps.value?params.inputProps.value:class1
-        // if(!loading&&class1!=""&&class1!=prev){
-        //     func(class1,index)
-        // }
-        //prev=class1
           return(
         <TextField
           {...params}
