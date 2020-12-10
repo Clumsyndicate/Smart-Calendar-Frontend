@@ -1,20 +1,74 @@
 import React from 'react';
-import axios from 'axios';
 import moment from "moment";
-import Button from './button.js'
+
+import Scheduler, { Editing, Resource } from 'devextreme-react/scheduler';
+import SelectBox from 'devextreme-react/select-box';
+import List, { ItemDragging } from 'devextreme-react/list';
+import { Switch } from 'devextreme-react/switch';
+import { NumberBox } from 'devextreme-react/number-box';
+
+import timeZoneUtils from 'devextreme/time_zone_utils';
+
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import AddIcon from '@material-ui/icons/Add';
+
 import { events } from './events.js';
 import { data, locations } from './data.js';
-import { Switch } from 'devextreme-react/switch';
-import SelectBox from 'devextreme-react/select-box';
-import timeZoneUtils from 'devextreme/time_zone_utils';
-import { NumberBox } from 'devextreme-react/number-box';
-import List, { ItemDragging } from 'devextreme-react/list';
-import Scheduler, { Editing, Resource } from 'devextreme-react/scheduler';
+import Button from './button.js'
+
+import axios from 'axios';
 
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
 var txt = moment().format("ddd[,] MMM DD").toString();
-const views = ['day', 'week', 'month', 'agenda'];
+const views = ['day', 'week', 'agenda', 'month'];
 const demoLocations = getLocations(currentDate);
+
+function getLocations(date) {
+  const tz = [
+     {
+        offset: -8,
+        title: "Pacific Time (GMT -08:00) America - Los Angeles",
+        id: "America/Los Angeles"
+     },
+     {
+      offset: -6,
+      title: "Central Standard Time (GMT -06:00) America - Chicago",
+      id: "America/Chicago"
+     },
+     {
+      offset: -5,
+      title: "Eastern Time (GMT -05:00) America - New York",
+      id: "America/New_York"
+     },
+     {
+      offset: 0,
+      title: "Greenwich Mean Time (GMT +00:00) Europe - London",
+      id: "Europe/London"
+     },
+    {
+        offset: 8,
+        title: "China Standard Time (GMT +08:00) Asia - Shanghai",
+        id: "Asia/Shanghai"
+     },
+     {
+      offset: 5.5,
+      title: "India Standard Time (GMT +05:30) Asia - Kolkata",
+      id: "Asia/Kolkata"
+     }
+  ]
+  return tz;
+}
+
+
+
+function ItemTemplate(data) {
+  return <div>{data.text}</div>;
+}
+
+function refreshPage() {
+  window.location.reload(false);
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -43,6 +97,7 @@ class App extends React.Component {
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
     this.onReorder = this.onReorder.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   state = {
@@ -57,6 +112,7 @@ class App extends React.Component {
     return axios
       .get(
         `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
@@ -82,6 +138,7 @@ class App extends React.Component {
     return axios
       .get(
         `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
+        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data.text);
@@ -174,16 +231,65 @@ class App extends React.Component {
     this.onAdd(e);
   }
 
+// for search box and add button
+  onChange(e) {
+    var temp ={ "id": e.id, 
+                "startDate": e.startDate, 
+                "endDate": e.endDate, 
+                "location": e.location, 
+                "recurrenceRule": e.recurrenceRule,
+                "text": e.text,
+              };
+    axios.post(
+        `https://5fc7ab11f3c77600165d8a61.mockapi.io/text`
+        // 'https://5fc9fe933c1c22001644175c.mockapi.io/events'
+        , temp);
+    refreshPage();
+  }
+
   render() {
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
+
+    const classList = [
+      { "id": "1",
+        "startDate": "Thu Dec 01 2020 15:00:00 GMT-0800 (PST)",
+        "endDate": "Thu Dec 01 2020 15:50:00 GMT-0800 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=FR",
+        "text": "Math32B"
+      },
+      { "id": "2",
+        "startDate": "Fri Dec 02 2020 09:00:00 GMT-0800 (PST)",
+        "endDate": "Fri Dec 02 2020 09:50:00 GMT-0800 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH,SA",
+        "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
+      },
+    ]
+
+    const options = classList.map((option) => {
+      const firstLetter = option.text[0].toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
+        ...option,
+      };
+    });
+
     return (
       
       <React.Fragment>
-        <div className="Title">MY EGGLENDAR</div>
+
+        <div className="Title">MY EGGLENDAR 
+            <span className="uploadButton"><Button /></span>
+        </div>
+
         <div class="aParent">
+
           <div className="calendar-layout">
+
             <div className="option">
               <span className="caption">{txt} 「 Time Zone 」</span>
+
               <SelectBox
                 className="selector"
                 items={demoLocations}
@@ -193,7 +299,17 @@ class App extends React.Component {
                 value={timeZone}
                 onValueChanged={this.onValueChanged}
               />
-              <span className="button"><Button /></span>
+              <Autocomplete
+                className="classes-search-box"
+                onChange={(event,value) => this.onChange(value)}
+                options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+                groupBy={(option) => option.firstLetter}
+                getOptionLabel={(option) => option.text}
+                style={{ width: 300, backgound: 'black' }}
+                renderInput={(params) => 
+                  <TextField {...params} color="blue" label="Search your classes" variant="outlined" />}
+              />
+
             </div>
             <Scheduler
               dataSource={datab}
@@ -218,6 +334,7 @@ class App extends React.Component {
           </div>
 
           <div className="widget-container">
+
             <div className="header">
               <span className="caption">Upcoming Events !!! </span>
               <div className="sideNote">( Slide left to delete, or drag to change 
@@ -249,49 +366,14 @@ class App extends React.Component {
               </ItemDragging>
             </List>
           </div>
+
         </div>
+
       </React.Fragment>
     );
   }
 }
+
+
+
 export default App;
-
-function getLocations(date) {
-  const tz = [
-     {
-        offset: -8,
-        title: "Pacific Time (GMT -08:00) America - Los Angeles",
-        id: "America/Los Angeles"
-     },
-     {
-      offset: -6,
-      title: "Central Standard Time (GMT -06:00) America - Chicago",
-      id: "America/Chicago"
-     },
-     {
-      offset: -5,
-      title: "Eastern Time (GMT -05:00) America - New York",
-      id: "America/New_York"
-     },
-     {
-      offset: 0,
-      title: "Greenwich Mean Time (GMT +00:00) Europe - London",
-      id: "Europe/London"
-     },
-    {
-        offset: 8,
-        title: "China Standard Time (GMT +08:00) Asia - Shanghai",
-        id: "Asia/Shanghai"
-     },
-     {
-      offset: 5.5,
-      title: "India Standard Time (GMT +05:30) Asia - Kolkata",
-      id: "Asia/Kolkata"
-     }
-  ]
-  return tz;
-}
-
-function ItemTemplate(data) {
-  return <div>{data.text}</div>;
-}

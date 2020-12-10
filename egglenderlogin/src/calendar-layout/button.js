@@ -168,8 +168,7 @@ class uploadButton extends Component {
     return (
       <div>
         <Button
-          variant="outlined"
-          color="primary"
+          variant="contained"
           onClick={this.handleClickOpen}
         >
           Upload Calendar File

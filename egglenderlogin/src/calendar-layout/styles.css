@@ -1,11 +1,18 @@
 .Title {
+  display: flex;
   font-weight: bold;
   color: #FFF0F5;
   font-size: 250%;
   text-align: left;
   padding: 15px;
-  background-image: linear-gradient(to bottom, #7e57c2 30%, #ba68c8 90%); /*粉紫#E6E6FA 淡粉#FFF0F5 爱丽丝蓝#F0F8FF*/
+  padding-bottom: 30px;
+  background-image: linear-gradient(to bottom, #7e57c2 30%, #ba68c8 90%);
   font-family: "Georgia", serif
+}
+
+.Title .uploadButton {
+  position: absolute;
+  right: 30px;
 }
 
 .aParent {
@@ -51,9 +58,10 @@
   font-family: "Times New Roman", Times, serif;
 }
 
-.option .button {
-  /*margin-left: 105px;*/
-  padding: 0 120px;
+
+.option .classes-search-box {
+  margin-left: 150px;
+  margin-right: 10px;
 }
 
 .dx-scheduler {
