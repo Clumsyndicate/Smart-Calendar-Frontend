@@ -5,7 +5,7 @@ export default class eggHomepage extends Component{
             <div>
                 <div className="jumbotron">
                     <h1 className="display-4">Welcome to Egglendar!</h1>
-                    <p className="lead">This is a free online academic calendar designed for all the students!</p>
+                    <p className="lead">This is a free online academic calendar designed for all the UCLA students!</p>
                     <hr className="my-4"/>
                     <p>It is also our CS97 final project!</p>
                     <a className="btn btn-primary btn-lg" href="/login" role="button">Sign Up or Log In</a>
