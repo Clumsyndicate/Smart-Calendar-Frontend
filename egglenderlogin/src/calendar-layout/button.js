@@ -178,13 +178,13 @@ class uploadButton extends Component {
           open={open}
         >
           <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            Upload your Class Planner calendar file
+            Upload your myUCLA Class Planner calendar file
           </DialogTitle>
           <DialogContent dividers>
             <Typography gutterBottom>
               If you do not have a calendar file (.ics) yet, you could download
-              the sample calendar file here:
-              <a href="url"> sample .ics file</a>
+              the sample calendar file here (recommended):
+              <a href="https://drive.google.com/file/d/1oTxeSgplEpK0GM6WYae_SFz1HoxEiT6N"> sample .ics file</a>
             </Typography>
 
             <DropzoneArea
