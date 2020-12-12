@@ -112,18 +112,23 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `/assets/schedule.json`
+        '/api/getschedule',{
+          headers: {
+          "x-access-token": this.props.token
+          }
+        }
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
         this.setState({
-          datab: result.data,
+          // datab: result.data,
           loading: false,
           error: false
         });
       })
       .catch(error => {
+        console.log('get some error')
         console.error("error: ", error);
         this.setState({
           error: `${error}`,
@@ -136,13 +141,17 @@ class App extends React.Component {
     this.setState({ loading: true });
     return axios
       .get(
-        `/assets/schedule.json`
+        '/api/getschedule',{
+          headers: {
+          "x-access-token": this.props.token
+          }
+        }
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data.text);
         this.setState({
-          eventsb: result.data,
+          // eventsb: result.data,
           loading: false,
           error: false
         });
@@ -232,6 +241,7 @@ class App extends React.Component {
 
 // for search box and add button
   onChange(e, config) {
+    console.log('reach change calendar')
     var temp ={ "id": this.state.datab.length+1, 
                 "startDate": e.startDate, 
                 "endDate": e.endDate, 
@@ -241,8 +251,9 @@ class App extends React.Component {
               };
               console.log(temp);
     try {
+      console.log('reachchange');
       const response = axios.post(
-        `/api/setschedule`
+        '/api/setschedule'
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
         , temp, config);
       console.log('👉 Returned data:', response);
@@ -404,11 +415,11 @@ function updateEvent(datab){
     for (var j = 0; j < datab.length; ++j)
     {
       const id = j+1
-      const url = `/api/getschedule` + id;
+      const url = '/api/getschedule' + id;
       try {
         datab[j].id = id;
         const response = axios.put(url, datab[j]);
-        axios.post(`/api/setschedule`, datab[j]);
+        axios.post('/api/setschedule', datab[j]);
         console.log('👉 Returned data:', response);
       } catch (e) {
         console.log(`😱 Axios request failed: ${e}`);

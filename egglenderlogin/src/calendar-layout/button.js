@@ -120,7 +120,7 @@ function analyze(strdata, config) {
   {
     try {
       const response = axios.post(
-        `/api/setschedule`
+        '/api/setschedule'
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
         , temp[j], config);
       console.log('👉 Returned data:', response);
