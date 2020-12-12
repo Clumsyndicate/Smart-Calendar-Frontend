@@ -5,17 +5,18 @@ class ImgUpload extends React.Component {
  
     constructor(props) {
         super(props);
-         this.state = { pictures: [] , uploaded: false};
+         this.state = { pictures: undefined , uploaded: false};
          this.onDrop = this.onDrop.bind(this);
     }
   
-    onDrop(picture) {
-        this.setState({
-            pictures: this.state.pictures.concat(picture),
-            uploaded:true
-        });
-       
-         alert("Upload Success!")
+    onDrop(picture,pic) {
+        // this.setState({
+        //     pictures: picture,
+        //     uploaded:true
+        // });
+        this.props.saveNewAvatar(picture,pic)
+        alert("Upload Success!")
+
     }
   
     render() {

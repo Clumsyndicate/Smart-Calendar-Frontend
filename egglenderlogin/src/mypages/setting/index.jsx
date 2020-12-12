@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Contact from '../aboutme/contact'
 import ImgUpload from '../aboutme/upload'
+import Avatar from '@material-ui/core/Avatar';
 
 const contactways = ['Email', 'TEL','Facebook','Snap','Instagram','WeChat']
 
@@ -23,20 +24,31 @@ class EggSetting extends React.Component{
         classes: ["", "","", "",""],
         classText: this.computeClassText(this.array),
         contact:"",
-        contactval:""
+        contactval:"",
+        avatarpic:undefined,
+        currentavatar:"https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
     };  
    
 }
 
 handleContactChange = (newcontact) => {
   this.setState({ contact: newcontact});
-  console.log(newcontact)
+  // console.log(newcontact)
   };
 
   handleContactValueChange = (newval) => {
+    if(newval===undefined){
+      newval=""
+    }
     this.setState({ contactval: newval});
-    console.log(newval)
+    // console.log(newval)
     };
+
+  saveNewAvatar=(file,pic)=>{
+    this.setState({ avatarpic: file[0], currentavatar:pic[0]});
+    console.log("avatar")
+    console.log(file)
+  }
   
 computeClassText=(arr)=>{
   let text=""
@@ -114,6 +126,9 @@ returnBack= async e =>{
   this.setState({
     classText:text
   })
+console.log("contact")
+console.log(this.state.contact)
+console.log(this.state.contactval)
 let postInfo={
   "enrollList": this.array,
   "contactInfo":{"contact":this.state.contact, "contactval": this.state.contactval}
@@ -172,8 +187,9 @@ render(){
           <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval}/>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
             <h4>My Avatar: </h4>
+            <Avatar style={{marginLeft:"0.5rem"}} src={this.state.currentavatar} />
       </div>
-      <ImgUpload/>
+      <ImgUpload saveNewAvatar={this.saveNewAvatar}/>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
           <Button variant="outlined" color="primary" style={{marginLeft:"1rem"}} onClick={this.returnBack}>
         Save Change

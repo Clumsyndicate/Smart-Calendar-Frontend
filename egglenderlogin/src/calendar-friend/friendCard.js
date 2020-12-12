@@ -50,6 +50,9 @@ function Content(props){
   if(Object.keys(props.contact).length===0){
     contactText="No contact way shared~"
   }
+  else if(props.contact.contact===""||props.contact.contact===undefined||props.contact.contactval===""||props.contact.contactval===undefined){
+    contactText="No contact way shared~"
+  }
   else{
     let way=props.contact.contact;
     contactText+=way;
