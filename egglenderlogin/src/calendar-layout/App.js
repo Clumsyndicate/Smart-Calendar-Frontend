@@ -122,7 +122,7 @@ class App extends React.Component {
       .then(result => {
         console.log(result);
         this.setState({
-          // datab: result.data,
+          datab: result.data,
           loading: false,
           error: false
         });
@@ -149,9 +149,9 @@ class App extends React.Component {
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
-        console.log(result.data.text);
+        console.log(result.data);
         this.setState({
-          // eventsb: result.data,
+          eventsb: result.data,
           loading: false,
           error: false
         });
@@ -313,7 +313,7 @@ class App extends React.Component {
       <React.Fragment>
 
         <div className="Title">MY EGGLENDAR 
-            <span className="uploadButton"><Button token={this.token}/></span>
+            <span className="uploadButton"><Button token={this.props.token}/></span>
         </div>
 
         <div class="aParent">
