@@ -111,6 +111,7 @@ componentDidMount = async() => {
       classes: data.array,
       contact: data.contactInfo.contact,
       contactval: data.contactInfo.contactval,
+      currentavatar: data.avatar,
     });
   }
   
@@ -147,16 +148,18 @@ let postInfo={
       contactval:this.state.contactval,
     }
   }, this.props.loginData.info);
-  // console.log('next should be loginData')
-  // console.log(this.props.loginData);
-  // console.log('reach the submit');
   console.log(data);
-  // console.log(this.state.classes)
-  // console.log(this.array)
- 
-  // console.log(text)
-  // this.props.history.push('/myProfile')
-  //post to backend here
+
+  if(this.state.avatarpic !== undefined)
+  {
+    console.log('prepare to upload avatar')
+
+    const {data} =await this.props.settingFn.uploadAvatar({
+      avatarpic: this.state.avatarpic,
+    }, this.props.loginData.info);
+    console.log('upload image successfully')
+  }
+
 }
 
 render(){
