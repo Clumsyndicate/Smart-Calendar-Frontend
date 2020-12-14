@@ -126,6 +126,13 @@ deleteClass=(index)=>{
   this.array[index]=""
 }
 
+deleteContact=()=>{
+  this.setState({
+    contact: "",
+    contactval: "",
+  });
+}
+
 returnBack= async e =>{
   let text = this.computeClassText(this.array)
   this.setState({
@@ -192,13 +199,19 @@ render(){
             <h4>My Contact: </h4>
       </div>
           <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval} />
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
+          <Button variant="outlined" color="primary" onClick={this.deleteContact}>
+        Delete My Contact
+      </Button>
+
+      </div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
             <h4>My Avatar: </h4>
             <Avatar style={{marginLeft:"0.5rem"}} src={this.state.currentavatar} />
       </div>
       <ImgUpload saveNewAvatar={this.saveNewAvatar}/>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
-          <Button variant="outlined" color="primary" style={{marginLeft:"1rem"}} onClick={this.returnBack}>
+          <Button variant="outlined" color="primary" onClick={this.returnBack}>
         Save Change
       </Button>
 
