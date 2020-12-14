@@ -104,6 +104,7 @@ componentDidMount = async() => {
   {
     console.log('reah here change token')
     // console.log(this.props.loginData.info)
+    if(data.contactInfo){
     console.log(data.contactInfo.contactval)
     this.array = data.array;
     this.setState({
@@ -111,6 +112,9 @@ componentDidMount = async() => {
       contact: data.contactInfo.contact,
       contactval: data.contactInfo.contactval,
     });
+  }
+  
+  
   }
 }
 
@@ -184,7 +188,7 @@ render(){
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
             <h4>My Contact: </h4>
       </div>
-          <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval}/>
+          <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval} />
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
             <h4>My Avatar: </h4>
             <Avatar style={{marginLeft:"0.5rem"}} src={this.state.currentavatar} />
