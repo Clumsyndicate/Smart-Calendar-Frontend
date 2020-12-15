@@ -156,6 +156,22 @@ let postInfo={
     }
   }, this.props.loginData.info);
   console.log(data);
+  if(data.status == 0)
+  {
+    this.props.noteFn.addNoteAct({
+      type: 'alert-primary',
+      text: 'Update the classlist successfully!',
+      id: shortid.generate()
+    })
+  }
+  else
+  {
+    this.props.noteFn.addNoteAct({
+      type: 'alert-primary',
+      text: 'Cannot update your classlist!',
+      id: shortid.generate()
+    })
+  }
 
   if(this.state.avatarpic !== undefined)
   {
@@ -167,7 +183,23 @@ let postInfo={
     // const {data2} =await this.props.settingFn.uploadAvatar({
     //   avatarpic: this.state.avatarpic,
     // }, this.props.loginData.info);
-    console.log('upload image successfully')
+    console.log(data2)
+    // if(data2.status == 0)
+    // {
+    //   this.props.noteFn.addNoteAct({
+    //     type: 'alert-primary',
+    //     text: data2.msg,
+    //     id: shortid.generate()
+    //   })
+    // }
+    // else
+    // {
+    //   this.props.noteFn.addNoteAct({
+    //     type: 'alert-primary',
+    //     text: data2.msg,
+    //     id: shortid.generate()
+    //   })
+    // }
   }
 
 }
