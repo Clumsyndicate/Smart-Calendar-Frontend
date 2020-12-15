@@ -411,21 +411,21 @@ class App extends React.Component {
 
 
 function updateEvent(datab){
-  if(datab != null){
-    for (var j = 0; j < datab.length; ++j)
-    {
-      const id = j+1
-      const url = '/api/getschedule' + id;
-      try {
-        datab[j].id = id;
-        const response = axios.put(url, datab[j]);
-        axios.post('/api/setschedule', datab[j]);
-        console.log('👉 Returned data:', response);
-      } catch (e) {
-        console.log(`😱 Axios request failed: ${e}`);
-      }
-    }
-  }
+  // if(datab != null){
+  //   for (var j = 0; j < datab.length; ++j)
+  //   {
+  //     const id = j+1
+  //     const url = '/api/getschedule' + id;
+  //     try {
+  //       datab[j].id = id;
+  //       const response = axios.put(url, datab[j]);
+  //       axios.post('/api/setschedule', datab[j]);
+  //       console.log('👉 Returned data:', response);
+  //     } catch (e) {
+  //       console.log(`😱 Axios request failed: ${e}`);
+  //     }
+  //   }
+  // }
 }
 
 export default App;
