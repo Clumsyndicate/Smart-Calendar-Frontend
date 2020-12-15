@@ -27,9 +27,13 @@ export const settingUpdate = (data, token) => {
 export const uploadAvatar = (data, token) => {
     let config = {
         headers: {
-        "x-access-token": token
+        "x-access-token": token,
+        'content-type': 'multipart/form-data',
         }
+        
       }
+      console.log('uploadavataring')
+      console.log(data)
     return dispatch => {
         return axios.post('/api/uploadAvatar', data,config);
     };

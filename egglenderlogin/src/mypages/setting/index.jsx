@@ -160,10 +160,13 @@ let postInfo={
   if(this.state.avatarpic !== undefined)
   {
     console.log('prepare to upload avatar')
-
-    const {data} =await this.props.settingFn.uploadAvatar({
-      avatarpic: this.state.avatarpic,
-    }, this.props.loginData.info);
+    console.log(this.state.avatarpic);
+    const formData = new FormData();
+    formData.append('file',this.state.avatarpic)
+    const {data2} =await this.props.settingFn.uploadAvatar(formData, this.props.loginData.info);
+    // const {data2} =await this.props.settingFn.uploadAvatar({
+    //   avatarpic: this.state.avatarpic,
+    // }, this.props.loginData.info);
     console.log('upload image successfully')
   }
 
