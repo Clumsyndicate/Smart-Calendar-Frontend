@@ -26,7 +26,7 @@ class EggSetting extends React.Component{
         contact:"",
         contactval:"",
         avatarpic:undefined,
-        currentavatar:"https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+        currentavatar:"avatars/default.png"
     };  
    
 }
