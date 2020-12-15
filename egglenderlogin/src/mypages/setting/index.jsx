@@ -162,7 +162,7 @@ let postInfo={
     console.log('prepare to upload avatar')
     console.log(this.state.avatarpic);
     const formData = new FormData();
-    formData.append('file',this.state.avatarpic)
+    formData.append('avatarpic',this.state.avatarpic)
     const {data2} =await this.props.settingFn.uploadAvatar(formData, this.props.loginData.info);
     // const {data2} =await this.props.settingFn.uploadAvatar({
     //   avatarpic: this.state.avatarpic,
