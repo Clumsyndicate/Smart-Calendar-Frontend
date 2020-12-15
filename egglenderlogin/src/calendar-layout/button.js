@@ -82,52 +82,52 @@ function timezone(str) {
 }
 
 function analyze(strdata, config) {
-  const raw = strdata;
-  const ical = require("ical");
+  // const raw = strdata;
+  // const ical = require("ical");
 
-  const data1 = ical.parseICS(raw);
-  var temp = [];
-  var i = 0;
+  // const data1 = ical.parseICS(raw);
+  // var temp = [];
+  // var i = 0;
 
-  for (let k in data1) {
-    if (data1.hasOwnProperty(k)) {
-      var ev = data1[k];
-      if (data1[k].type === "VEVENT") {
-        i++;
-        var event = ev.summary;
-        var start = timezone(ev.start);
-        var end = timezone(ev.end);
-        if (ev.rrule !== undefined) {
-          var rrule = convert(ev.rrule.toString());
-          var url = "null";
-          if (ev.url !== undefined) {
-            url = ev.url;
-          }
-        }
-        temp.push({
-          text: event,
-          startDate: start,
-          endDate: end,
-          id: i,
-          location: url,
-          recurrenceRule: rrule
-        });
-      }
-    }
-  }
-  // post the data onto the backend
-  for (var j = 0; j < temp.length; ++j)
-  {
-    try {
-      const response = axios.post(
-        '/api/setschedule'
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-        , temp[j], config);
-      console.log('👉 Returned data:', response);
-    } catch (e) {
-      console.log(`😱 Axios request failed: ${e}`);
-    }
-  }
+  // for (let k in data1) {
+  //   if (data1.hasOwnProperty(k)) {
+  //     var ev = data1[k];
+  //     if (data1[k].type === "VEVENT") {
+  //       i++;
+  //       var event = ev.summary;
+  //       var start = timezone(ev.start);
+  //       var end = timezone(ev.end);
+  //       if (ev.rrule !== undefined) {
+  //         var rrule = convert(ev.rrule.toString());
+  //         var url = "null";
+  //         if (ev.url !== undefined) {
+  //           url = ev.url;
+  //         }
+  //       }
+  //       temp.push({
+  //         text: event,
+  //         startDate: start,
+  //         endDate: end,
+  //         id: i,
+  //         location: url,
+  //         recurrenceRule: rrule
+  //       });
+  //     }
+  //   }
+  // }
+  // // post the data onto the backend
+  // for (var j = 0; j < temp.length; ++j)
+  // {
+  //   try {
+  //     const response = axios.post(
+  //       '/api/setschedule'
+  //       // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
+  //       , temp[j], config);
+  //     console.log('👉 Returned data:', response);
+  //   } catch (e) {
+  //     console.log(`😱 Axios request failed: ${e}`);
+  //   }
+  // }
 }
 
 class uploadButton extends Component {
