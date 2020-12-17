@@ -13,10 +13,11 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-
+import SaveIcon from '@material-ui/icons/Save';
 import { events } from './events.js';
 import { data, locations } from './data.js';
-import Button from './button.js'
+import ButtonUpload from './button.js'
+import Button from "@material-ui/core/Button";
 
 import axios from 'axios';
 
@@ -25,9 +26,20 @@ var txt = moment().format("ddd[,] MMM DD").toString();
 const views = ['day', 'week', 'agenda', 'month'];
 const demoLocations = getLocations(currentDate);
 
+var zone = new Date().toTimeString().slice(9);
+var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
+console.log("Browser timezone: " + name + " " +zone )
+
 function getLocations(date) {
+  var zone = new Date().toTimeString().slice(9);
+  var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const tz = [
-     {
+    {
+      offset: -8,
+      title: "Browser timezone: " + name + " " +zone,
+      id: name
+    }, 
+    {
         offset: -8,
         title: "Pacific Time (GMT -08:00) America - Los Angeles",
         id: "America/Los_Angeles"
@@ -240,7 +252,7 @@ class App extends React.Component {
   }
 
 // for search box and add button
-  onChange(e, config) {
+  onChange(e, config, data) {
     console.log('reach change calendar')
     var temp ={ "id": this.state.datab.length+1, 
                 "startDate": e.startDate, 
@@ -250,30 +262,25 @@ class App extends React.Component {
                 "text": e.text,
               };
               console.log(temp);
+              data.push(temp);
     try {
       console.log('reachchange');
       const response = axios.post(
         '/api/setschedule'
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-        , temp, config);
+        , data, config);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
     }
   }
 
-
-  
   render() {
     const config = {
         headers: { "x-access-token": this.props.token }
     };
 
     const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
-    
-    window.setInterval(function(){
-      updateEvent(datab)
-    }, 10000);
     
     const classList = [
       { "id": "1",
@@ -308,33 +315,42 @@ class App extends React.Component {
       };
     });
 
+    function updateEvent(){
+      try {
+        console.log('reachchange');
+        const response = axios.post('/api/setschedule', datab, config);
+        console.log('👉 Returned data:', response);
+      } catch (e) {
+        console.log(`😱 Axios request failed: ${e}`);
+      }
+      setTimeout(function (){
+        window.location.reload()
+      }, 1900);
+       
+      // refreshPage();
+    }
+
     return (
-      
       <React.Fragment>
-
         <div className="Title">MY EGGLENDAR 
-            <span className="uploadButton"><Button token={this.props.token}/></span>
+            <span className="uploadButton"><ButtonUpload token={this.props.token}/></span>
         </div>
-
         <div class="aParent">
-
           <div className="calendar-layout">
-
             <div className="option">
               <span className="caption">{txt} 「 Time Zone 」</span>
-
               <SelectBox
                 className="selector"
                 items={demoLocations}
                 displayExpr="title"
                 valueExpr="id"
-                width={240}
+                width={300}
                 value={timeZone}
                 onValueChanged={this.onValueChanged}
               />
              <Autocomplete
                 className="classes-search-box"
-                onChange={(event,value) => {this.onChange(value, config);}}
+                onChange={(event,value) => {this.onChange(value, config, datab);}}
                 options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
                 groupBy={(option) => option.firstLetter}
                 getOptionLabel={(option) => option.text}
@@ -342,9 +358,12 @@ class App extends React.Component {
                 renderInput={(params) => 
                   <TextField {...params} color="blue" label="Search your classes" variant="outlined" />}
               />
-              <Fab onClick={refreshPage}>
-                <AddIcon />
-              </Fab>
+              <Button
+                variant="contained"
+                onClick={updateEvent}>
+                Save all changes
+                <SaveIcon />
+              </Button>
 
             </div>
             <Scheduler
@@ -410,22 +429,6 @@ class App extends React.Component {
 }
 
 
-function updateEvent(datab){
-  if(datab != null){
-    for (var j = 0; j < datab.length; ++j)
-    {
-      const id = j+1
-      const url = '/api/getschedule' + id;
-      try {
-        datab[j].id = id;
-        const response = axios.put(url, datab[j]);
-        axios.post('/api/setschedule', datab[j]);
-        console.log('👉 Returned data:', response);
-      } catch (e) {
-        console.log(`😱 Axios request failed: ${e}`);
-      }
-    }
-  }
-}
+
 
 export default App;

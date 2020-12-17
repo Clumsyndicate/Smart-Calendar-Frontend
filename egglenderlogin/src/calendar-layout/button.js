@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { DropzoneArea } from "material-ui-dropzone";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import axios from 'axios';
 
@@ -77,7 +78,7 @@ function convert(str) {
 function timezone(str) {
   var newstr = new String(str);
   var sub = newstr.substring(0, 25);
-  var txt = new String(sub + "GMT-0700 (PST)");
+  var txt = new String(sub + "GMT-0800 (PST)");
   return txt;
 }
 
@@ -103,32 +104,49 @@ function analyze(strdata, config) {
           if (ev.url !== undefined) {
             url = ev.url;
           }
+          temp.push({
+            text: event,
+            startDate: start,
+            endDate: end,
+            id: i,
+            location: url,
+            recurrenceRule: rrule
+          });
         }
-        temp.push({
-          text: event,
-          startDate: start,
-          endDate: end,
-          id: i,
-          location: url,
-          recurrenceRule: rrule
-        });
+        else if(start.length > 30){
+          temp.push({
+            text: event,
+            startDate: start,
+            endDate: end,
+            id: i,
+            allDay: false,
+          });
+        }
+        else{
+          // temp.push({
+          //   text: event,
+          //   startDate: start,
+          //   endDate: end,
+          //   id: i,
+          //   allDay: true,
+          // });
+          continue;
+        }
       }
     }
   }
-  // post the data onto the backend
-  for (var j = 0; j < temp.length; ++j)
-  {
+  console.log(temp);
     try {
       const response = axios.post(
         '/api/setschedule'
         // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-        , temp[j], config);
+        , temp, config);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
     }
   }
-}
+// }
 
 class uploadButton extends Component {
   //const [open, setOpen] = React.useState(false);
@@ -170,7 +188,8 @@ class uploadButton extends Component {
           variant="contained"
           onClick={this.handleClickOpen}
         >
-          Upload Calendar File
+          <CloudUploadIcon />
+          &nbsp; Upload Calendar File
         </Button>
         <Dialog
           onClose={this.handleClose}
