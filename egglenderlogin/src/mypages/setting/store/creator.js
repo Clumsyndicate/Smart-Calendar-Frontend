@@ -19,7 +19,7 @@ export const settingUpdate = (data, token) => {
         }
       }
     return dispatch => {
-        console.log('reach update');
+        // console.log('reach update');
         return axios.post('/api/settingupdate', data,config);
     };
 };
@@ -32,8 +32,8 @@ export const uploadAvatar = (data, token) => {
         }
         
       }
-      console.log('uploadavataring')
-      console.log(data)
+    //   console.log('uploadavataring')
+    //   console.log(data)
     return dispatch => {
         return axios.post('/api/uploadAvatar', data,config);
     };

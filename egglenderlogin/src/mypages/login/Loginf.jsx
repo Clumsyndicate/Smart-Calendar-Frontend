@@ -19,22 +19,22 @@ class LoginF extends Component
         const {data} =await this.props.loginFn.loginAct(this.state.info);
         if(data.status===1)
         {
-            this.props.noteFn.addNoteAct({
-                type: 'alert-primary',
-                text: 'Incorrect username or password!',
-                id: shortid.generate()
-            })
+            // this.props.noteFn.addNoteAct({
+            //     type: 'alert-primary',
+            //     text: 'Incorrect username or password!',
+            //     id: shortid.generate()
+            // })
         }
         if(data.status===0)
         {
             localStorage.setItem('storeTOKEN', data.mytoken)
             this.props.loginFn.syncInfoAct(decoder(data.mytoken))
             this.props.history.push('/myProfile')
-            this.props.noteFn.addNoteAct({
-                type: 'alert-primary',
-                text: 'You have successfully login!',
-                id: shortid.generate()
-            })
+            // this.props.noteFn.addNoteAct({
+            //     type: 'alert-primary',
+            //     text: 'You have successfully login!',
+            //     id: shortid.generate()
+            // })
         }
         // console.log(data);
     };

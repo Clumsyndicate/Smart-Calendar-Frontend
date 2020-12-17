@@ -19,15 +19,15 @@ class Registerf extends Component
     handleSubmit = async e => {
         e.preventDefault();
         this.setState({ errMessage: [] });
-        console.log(this.state.info)
+        // console.log(this.state.info)
         // const { data } = await this.props.registerFn.registerAct(
         //   this.state
         // );
         const {data} = await this.props.registerFn.registerAct(this.state.info)
-        console.log(data)
+        // console.log(data)
         if(data.status === 1)
         {
-            console.log(data.msg)
+            // console.log(data.msg)
             if(data.msg ==="Username has already existed")
             {
                 this.props.noteFn.addNoteAct({

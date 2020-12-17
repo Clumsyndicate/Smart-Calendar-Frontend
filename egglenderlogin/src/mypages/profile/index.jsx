@@ -30,13 +30,13 @@ class CenteredGrid extends Component {
     this.state = { friends: tileData, isLoaded: false, error: null};
   }
   componentDidMount = async() => {
-    console.log("before");
+    // console.log("before");
     const {data} =await this.props.profileFn.getFriendListAct({}, this.props.loginData.info);
-    console.log("after");
-    console.log(data);
+    // console.log("after");
+    // console.log(data);
     if (data.status===1)
     {
-      console.log('reah here getting friendlist1')
+      // console.log('reah here getting friendlist1')
       // console.log(decoder(this.props.loginData.info))
         this.props.noteFn.addNoteAct({
             type: 'alert-primary',
@@ -50,8 +50,8 @@ class CenteredGrid extends Component {
     }
     else
     {
-      console.log('reah here getting friends')
-      console.log(data)
+      // console.log('reah here getting friends')
+      // console.log(data)
       // this.setState({ friends: data.friends });
       this.setState({
         isLoaded: true,

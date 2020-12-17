@@ -46,8 +46,8 @@ handleContactChange = (newcontact) => {
 
   saveNewAvatar=(file,pic)=>{
     this.setState({ avatarpic: file[0], currentavatar:pic[0]});
-    console.log("avatar")
-    console.log(file)
+    // console.log("avatar")
+    // console.log(file)
   }
   
 computeClassText=(arr)=>{
@@ -92,7 +92,7 @@ componentDidMount = async() => {
   
   if(data.status===1)
   {
-    console.log('reah here change token1')
+    // console.log('reah here change token1')
     // console.log(decoder(this.props.loginData.info))
       this.props.noteFn.addNoteAct({
           type: 'alert-primary',
@@ -102,10 +102,10 @@ componentDidMount = async() => {
   }
   else
   {
-    console.log('reah here change token')
+    // console.log('reah here change token')
     // console.log(this.props.loginData.info)
     if(data.contactInfo){
-    console.log(data.contactInfo.contactval)
+    // console.log(data.contactInfo.contactval)
     this.array = data.array;
     this.setState({
       classes: data.array,
@@ -138,16 +138,16 @@ returnBack= async e =>{
   this.setState({
     classText:text
   })
-console.log("contact")
-console.log(this.state.contact)
-console.log(this.state.contactval)
+// console.log("contact")
+// console.log(this.state.contact)
+// console.log(this.state.contactval)
 let postInfo={
   "enrollList": this.array,
   "contactInfo":{"contact":this.state.contact, "contactval": this.state.contactval}
 }
 //to set state when get: classes: postInfo.enrollList; contact: postInfo.contactInfo.contact, contactval=postInfo.contactInfo.contactval
   e.preventDefault();
-  console.log(this.array)
+  // console.log(this.array)
   const {data} =await this.props.settingFn.settingUpdate({
     array: this.array,
     contactInfo: {
@@ -155,7 +155,7 @@ let postInfo={
       contactval:this.state.contactval,
     }
   }, this.props.loginData.info);
-  console.log(data);
+  // console.log(data);
   if(data.status == 0)
   {
     this.props.noteFn.addNoteAct({
@@ -175,15 +175,15 @@ let postInfo={
 
   if(this.state.avatarpic !== undefined)
   {
-    console.log('prepare to upload avatar')
-    console.log(this.state.avatarpic);
+    // console.log('prepare to upload avatar')
+    // console.log(this.state.avatarpic);
     const formData = new FormData();
     formData.append('avatarpic',this.state.avatarpic)
     const {data2} =await this.props.settingFn.uploadAvatar(formData, this.props.loginData.info);
     // const {data2} =await this.props.settingFn.uploadAvatar({
     //   avatarpic: this.state.avatarpic,
     // }, this.props.loginData.info);
-    console.log(data2)
+    // console.log(data2)
     // if(data2.status == 0)
     // {
     //   this.props.noteFn.addNoteAct({
