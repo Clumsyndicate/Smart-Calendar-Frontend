@@ -1,36 +1,21 @@
 import React from 'react';
+import axios from 'axios';
 import moment from "moment";
-
-import Scheduler, { Editing, Resource } from 'devextreme-react/scheduler';
+import Scheduler, { Editing } from 'devextreme-react/scheduler';
 import SelectBox from 'devextreme-react/select-box';
 import List, { ItemDragging } from 'devextreme-react/list';
-import { Switch } from 'devextreme-react/switch';
-import { NumberBox } from 'devextreme-react/number-box';
-
-import timeZoneUtils from 'devextreme/time_zone_utils';
-
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
-import { events } from './events.js';
-import { data, locations } from './data.js';
 import ButtonUpload from './button.js'
 import Button from "@material-ui/core/Button";
 
-import axios from 'axios';
-
 const currentDate = new Date(moment().format("YYYY"), parseInt(moment().format("MM")) -1,  moment().format('DD'));
-var txt = moment().format("ddd[,] MMM DD").toString();
+const txt = moment().format("ddd[,] MMM DD").toString();
 const views = ['day', 'week', 'agenda', 'month'];
-const demoLocations = getLocations(currentDate);
+const demoLocations = getLocations();
 
-var zone = new Date().toTimeString().slice(9);
-var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
-console.log("Browser timezone: " + name + " " +zone )
-
-function getLocations(date) {
+function getLocations() {
   var zone = new Date().toTimeString().slice(9);
   var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const tz = [
@@ -73,20 +58,11 @@ function getLocations(date) {
   return tz;
 }
 
-// function ItemTemplate(data) {
-//   return <div>{data.text}</div>;
-// }
-
-function refreshPage() {
-  window.location.reload();
-}
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       token: props.token,
-
       timeZone: demoLocations[0].id,
       demoLocations: demoLocations,
       showCurrentTimeIndicator: true,
@@ -95,7 +71,7 @@ class App extends React.Component {
       //for list
       deleteType: 'slideItem',
       searchMode: 'contains',
-      events,
+      // events,
     };
     this.onValueChanged = this.onValueChanged.bind(this);
     this.onAppointmentFormOpening = this.onAppointmentFormOpening.bind(this);
@@ -129,7 +105,6 @@ class App extends React.Component {
           "x-access-token": this.props.token
           }
         }
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result);
@@ -158,7 +133,6 @@ class App extends React.Component {
           "x-access-token": this.props.token
           }
         }
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
       )
       .then(result => {
         console.log(result.data);
@@ -222,7 +196,6 @@ class App extends React.Component {
   }
 
 // for list
-
   onSelectedItemsChange(args) {
     if(args.name === 'selectedItems') {
       this.setState({
@@ -265,10 +238,7 @@ class App extends React.Component {
               data.push(temp);
     try {
       console.log('reachchange');
-      const response = axios.post(
-        '/api/setschedule'
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-        , data, config);
+      const response = axios.post('/api/setschedule', data, config);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
@@ -279,8 +249,7 @@ class App extends React.Component {
     const config = {
         headers: { "x-access-token": this.props.token }
     };
-
-    const { timeZone, demoLocations, eventsb, loading, error, datab } = this.state;
+    const { timeZone, demoLocations, eventsb, datab } = this.state;
     
     const classList = [
       { "id": "1",
@@ -326,8 +295,6 @@ class App extends React.Component {
       setTimeout(function (){
         window.location.reload()
       }, 1900);
-       
-      // refreshPage();
     }
 
     return (
@@ -374,10 +341,8 @@ class App extends React.Component {
               showAllDayPanel={true}
               shadeUntilCurrentTime={this.state.shadeUntilCurrentTime}
               startDayHour={0}
-              shadeUntilCurrentTime={true}
               defaultCurrentDate={currentDate}
               timeZone={timeZone}
-              showCurrentTimeIndicator={true}
               height={800}
               onContentReady={this.onContentReady}
               onAppointmentFormOpening={this.onAppointmentFormOpening}

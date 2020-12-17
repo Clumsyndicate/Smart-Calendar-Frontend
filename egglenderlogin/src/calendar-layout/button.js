@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component} from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -10,8 +11,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { DropzoneArea } from "material-ui-dropzone";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
-import axios from 'axios';
 
 function refreshPage() {
   window.location.reload(false);
@@ -76,9 +75,9 @@ function convert(str) {
   return ret;
 }
 function timezone(str) {
-  var newstr = new String(str);
+  var newstr = String(str);
   var sub = newstr.substring(0, 25);
-  var txt = new String(sub + "GMT-0800 (PST)");
+  var txt = String(sub + "GMT-0800 (PST)");
   return txt;
 }
 
@@ -137,10 +136,7 @@ function analyze(strdata, config) {
   }
   console.log(temp);
     try {
-      const response = axios.post(
-        '/api/setschedule'
-        // `https://5fc9fe933c1c22001644175c.mockapi.io/events`
-        , temp, config);
+      const response = axios.post('/api/setschedule', temp, config);
       console.log('👉 Returned data:', response);
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
@@ -211,7 +207,7 @@ class uploadButton extends Component {
                 if (files[0] !== undefined) {
                   var promise = files[0].text();
                   console.log(promise);
-                  const dataPromise = promise.then((result) => {
+                  promise.then((result) => {
                     this.setState({
                       datab: result,
                       loading: false,
