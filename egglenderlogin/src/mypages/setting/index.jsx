@@ -26,7 +26,7 @@ class EggSetting extends React.Component{
         contact:"",
         contactval:"",
         avatarpic:undefined,
-        currentavatar:"https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
+        currentavatar:"avatars/default.png"
     };  
    
 }
@@ -104,13 +104,18 @@ componentDidMount = async() => {
   {
     console.log('reah here change token')
     // console.log(this.props.loginData.info)
+    if(data.contactInfo){
     console.log(data.contactInfo.contactval)
     this.array = data.array;
     this.setState({
       classes: data.array,
       contact: data.contactInfo.contact,
       contactval: data.contactInfo.contactval,
+      currentavatar: data.avatar,
     });
+  }
+  
+  
   }
 }
 
@@ -119,6 +124,13 @@ deleteClass=(index)=>{
   arr[index]=""
   this.setState({ classes: arr });
   this.array[index]=""
+}
+
+deleteContact=()=>{
+  this.setState({
+    contact: "",
+    contactval: "",
+  });
 }
 
 returnBack= async e =>{
@@ -143,16 +155,53 @@ let postInfo={
       contactval:this.state.contactval,
     }
   }, this.props.loginData.info);
-  // console.log('next should be loginData')
-  // console.log(this.props.loginData);
-  // console.log('reach the submit');
   console.log(data);
-  // console.log(this.state.classes)
-  // console.log(this.array)
- 
-  // console.log(text)
-  // this.props.history.push('/myProfile')
-  //post to backend here
+  if(data.status == 0)
+  {
+    this.props.noteFn.addNoteAct({
+      type: 'alert-primary',
+      text: 'Update the classlist successfully!',
+      id: shortid.generate()
+    })
+  }
+  else
+  {
+    this.props.noteFn.addNoteAct({
+      type: 'alert-primary',
+      text: 'Cannot update your classlist!',
+      id: shortid.generate()
+    })
+  }
+
+  if(this.state.avatarpic !== undefined)
+  {
+    console.log('prepare to upload avatar')
+    console.log(this.state.avatarpic);
+    const formData = new FormData();
+    formData.append('avatarpic',this.state.avatarpic)
+    const {data2} =await this.props.settingFn.uploadAvatar(formData, this.props.loginData.info);
+    // const {data2} =await this.props.settingFn.uploadAvatar({
+    //   avatarpic: this.state.avatarpic,
+    // }, this.props.loginData.info);
+    console.log(data2)
+    // if(data2.status == 0)
+    // {
+    //   this.props.noteFn.addNoteAct({
+    //     type: 'alert-primary',
+    //     text: data2.msg,
+    //     id: shortid.generate()
+    //   })
+    // }
+    // else
+    // {
+    //   this.props.noteFn.addNoteAct({
+    //     type: 'alert-primary',
+    //     text: data2.msg,
+    //     id: shortid.generate()
+    //   })
+    // }
+  }
+
 }
 
 render(){
@@ -184,14 +233,20 @@ render(){
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
             <h4>My Contact: </h4>
       </div>
-          <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval}/>
+          <Contact handleContactChange={this.handleContactChange} handleContactValueChange={this.handleContactValueChange} contact={this.state.contact} contactval={this.state.contactval} />
+          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
+          <Button variant="outlined" color="primary" onClick={this.deleteContact}>
+        Delete My Contact
+      </Button>
+
+      </div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
             <h4>My Avatar: </h4>
             <Avatar style={{marginLeft:"0.5rem"}} src={this.state.currentavatar} />
       </div>
       <ImgUpload saveNewAvatar={this.saveNewAvatar}/>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"3em"}}>
-          <Button variant="outlined" color="primary" style={{marginLeft:"1rem"}} onClick={this.returnBack}>
+          <Button variant="outlined" color="primary" onClick={this.returnBack}>
         Save Change
       </Button>
 

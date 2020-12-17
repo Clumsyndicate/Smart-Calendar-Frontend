@@ -14,18 +14,24 @@ function Contact(props){
         },
       }));
     const classes = useStyles();
-    //const [changed,setChange]=React.useState(false)
+    const [changed,setChange]=React.useState(false)
     const [contact, setContact] = React.useState('')
+    //const [contactval, setContactval] = React.useState('')
+    //setContactval(props.contactval)
+    let contactval = props.contactval
+
       const contactways = ['Email', 'TEL','Facebook','Snap','Instagram','WeChat']
     const handleChange = (event) => {
         setContact(event.target.value);
         props.handleContactChange(event.target.value)
       };
     const handleValueChange = (event) => {
+        //console.log(event)
         props.handleContactValueChange(event.target.value)
-        //setChange(true)
+        setChange(true)
     };
-    //console.log(props.contact)
+    //console.log(props.contactval)
+    //defaultValue={(contactval===""||contactval===undefined)?"name/address/id":contactval}
     return (
         <div style={{display: 'flex',  justifyContent:'center', alignItems:'center',marginTop:"1em"}}>
       <form className={classes.root} noValidate autoComplete="off">
@@ -46,7 +52,7 @@ function Contact(props){
             </MenuItem>
           ))}
         </TextField>
-        <TextField id="standard-basic" onChange={handleValueChange} defaultValue={(props.contactval===""||props.contactval===undefined)?"name/address/id":props.contactval} label="name/address/id"/>
+        <TextField id="standard-basic" onChange={handleValueChange}  label={(contactval===""||contactval===undefined||changed)?"name/address/id":contactval}/>
       </form>
       </div>
     );
