@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The inspiration for our smart calendar comes from dealing with time zone craziness and jumbled up schedules for international students during the Covid-19 pandemic. Despite efforts to make studying fairer for domestic and international students alike, the domestic timezone still takes precedence. As a group of international students, we have identified a number of pains that we aim to tackle with our product. 
+The inspiration for our smart calendar comes from dealing with time zone craziness and jumbled up schedules for UCLA international students during the COVID-19 pandemic. Despite efforts to make studying fairer for domestic and international students alike, the domestic timezone still takes precedence. As a group of international students, we have identified a number of pains that we aim to tackle with our product. 
 
 Pains:
  - Convoluted deadlines & misleading dates
@@ -12,9 +12,11 @@ Pains:
  - Hard to socialize with classmates, hard to find study-mates. (Exacerbated by midnight dicussion sections)
 
 To deal with these problems, we are introducing the following features:
- - Flexible timezone changes for the calendar.
+ - Automatic timezone adaption for users.
+ - Direct translation of class schedule from [Study List calendar data](https://be.my.ucla.edu/studylist.aspx) in .ics form
+ - Cloud sync of all events
  - Intelligent deadline management, day-shift and midnight warnings. 
- - If willing, the system will introduce students with similar schedules as study-mates.
+ - If willing, the application will introduce students with similar schedules as study-mates.
 
 ## Technology 
 
