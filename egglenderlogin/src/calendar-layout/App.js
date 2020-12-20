@@ -198,8 +198,6 @@ class App extends React.Component {
         headers: { "x-access-token": this.props.token }
     };
     const { timeZone, demoLocations, datab } = this.state;
-    console.log(datab);
-    
     const options = classList.map((option) => {
       const firstLetter = option.text[0].toUpperCase();
       return {

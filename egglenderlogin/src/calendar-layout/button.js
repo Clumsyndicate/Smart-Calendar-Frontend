@@ -165,7 +165,6 @@ function analyze(strdata, config) {
       }
     }
   }
-  console.log(temp);
     try {
       const response = axios.post('/api/setschedule', temp, config);
     } catch (e) {
