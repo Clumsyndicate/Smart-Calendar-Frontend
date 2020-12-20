@@ -85,7 +85,6 @@ function convert(str, flag) {
 
 function timezone(str) {
   var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(name);
   var newstr = String(str);
   var sub = newstr.substring(0, 19);
   var procedure1 = sub.replace("-", "/");
@@ -118,9 +117,9 @@ function modifyweek(str){
   var RealChina = moment.tz(procedure2, "America/Los_Angeles");
   China = RealChina.clone().tz(name);
   if(name.includes("America")){
-    var flag2 = China.add(1, 'hours').format().split("-")[2].substring(0,2);}
-  else{
     var flag2 = China.format().split("-")[2].substring(0,2);}
+  else{
+    var flag2 = China.add(1, 'hours').format().split("-")[2].substring(0,2);}
   return flag1 === flag2;
 }
 
@@ -131,47 +130,37 @@ function analyze(strdata, config) {
   var temp = [];
   var i = 0;
   for (let k in data1) {
+    console.log(i);
     if (data1.hasOwnProperty(k)) {
       var ev = data1[k];
       if (data1[k].type === "VEVENT") {
         i++;
         var event = ev.summary;
-        
+        var url = "null";
+        if (ev.url !== undefined) {
+          url = ev.url;
+        }
         if (ev.rrule !== undefined) {
           var weekflag = modifyweek(ev.start.toISOString());
-          var start = timezone(ev.start.toISOString());
-          var end = timezone(ev.end.toISOString());
-          var rrule = convert(ev.rrule.toString(), weekflag);
-          var url = "null";
-          if (ev.url !== undefined) {
-            url = ev.url;
-          }
           temp.push({
             text: event,
-            startDate: start,
-            endDate: end,
+            startDate: timezone(ev.start.toISOString()),
+            endDate: timezone(ev.end.toISOString()),
             id: i,
             location: url,
-            recurrenceRule: rrule
+            recurrenceRule: convert(ev.rrule.toString(), weekflag)
           });
         }
-        // else if(start.length > 30){
-        //   temp.push({
-        //     text: event,
-        //     startDate: start,
-        //     endDate: end,
-        //     id: i,
-        //     allDay: false,
-        //   });
-        // }
+        else if(String(ev.start).length > 20){
+          temp.push({
+            text: event,
+            startDate: timezone(ev.start.toISOString()),
+            endDate: timezone(ev.end.toISOString()),
+            id: i,
+            allDay: false,
+          });
+        }
         else{
-          // temp.push({
-          //   text: event,
-          //   startDate: start,
-          //   endDate: end,
-          //   id: i,
-          //   allDay: true,
-          // });
           continue;
         }
       }
@@ -180,9 +169,8 @@ function analyze(strdata, config) {
   console.log(temp);
     try {
       const response = axios.post('/api/setschedule', temp, config);
-      console.log('👉 Returned data:', response);
     } catch (e) {
-      console.log(`😱 Axios request failed: ${e}`);
+      console.log(`Axios request failed: ${e}`);
     }
 }
 
@@ -239,9 +227,15 @@ class uploadButton extends Component {
           </DialogTitle>
           <DialogContent dividers>
             <Typography gutterBottom>
-              If you do not have a calendar file (.ics) yet, you could download
-              the sample calendar file here (recommended):
-              <a href="https://drive.google.com/file/d/1oTxeSgplEpK0GM6WYae_SFz1HoxEiT6N"> sample .ics file</a>
+              If you do not have a calendar file (.ics) yet, you could choose to download one of the following sample calendar file (recommended):
+              <p></p>
+              <a href="https://drive.google.com/file/d/1sXH01vKmIdaOc5tjdK5ilUvUvjvi9038/view?usp=sharing"> Fall sample .ics file (many events, require scroll back)</a>
+              <p></p>
+              <a href="https://drive.google.com/file/d/1TmsDTo-GdPL7-7rd2cWPWxbQ1Jna6Xq5/view?usp=sharing"> Winter Break mock sample .ics file (current events, RECOMMENDED)</a>
+              <p></p>
+              <a href="https://drive.google.com/file/d/1MOOEcHpV0thN2x0FXfFlxR7QrWaMdGoQ/view?usp=sharing"> Winter sample .ics file (less events, require scroll forward)</a>
+              <p></p>
+              *New file uplaoded will erase all existing events
             </Typography>
 
             <DropzoneArea

@@ -92,42 +92,7 @@ class App extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  // state = {
-  //   // loading: true,
-  //   // error: "",
-  //   datab: null,
-  // };
-
-  // loadCal = () => {
-  //   this.setState({ loading: true });
-  //   return axios
-  //     .get(
-  //       '/api/getschedule',{
-  //         headers: {
-  //         "x-access-token": this.props.token
-  //         }
-  //       }
-  //     )
-  //     .then(result => {
-  //       console.log(result);
-  //       this.setState({
-  //         datab: result.data,
-  //         loading: false,
-  //         error: false
-  //       });
-  //     })
-  //     .catch(error => {
-  //       console.log('get some error')
-  //       console.error("error: ", error);
-  //       this.setState({
-  //         error: `${error}`,
-  //         loading: false
-  //       });
-  //     });
-  // };
-
   componentDidMount() {
-    // this.loadCal();
     axios
     .get(
       '/api/getschedule',
@@ -137,7 +102,6 @@ class App extends React.Component {
         }
       })
     .then(result => {
-        console.log(result);
         this.setState({
           datab: result.data
         });
@@ -214,7 +178,6 @@ class App extends React.Component {
 
 // for search box and add button
   onChange(e, config, data) {
-    console.log('reach change calendar')
     var temp ={ "id": this.state.datab.length+1, 
                 "startDate": e.startDate, 
                 "endDate": e.endDate, 
@@ -222,14 +185,11 @@ class App extends React.Component {
                 "recurrenceRule": e.recurrenceRule,
                 "text": e.text,
               };
-              console.log(temp);
               data.push(temp);
     try {
-      console.log('reachchange');
       const response = axios.post('/api/setschedule', data, config);
-      console.log('👉 Returned data:', response);
     } catch (e) {
-      console.log(`😱 Axios request failed: ${e}`);
+      console.log(`Axios request failed: ${e}`);
     }
   }
 
@@ -238,78 +198,8 @@ class App extends React.Component {
         headers: { "x-access-token": this.props.token }
     };
     const { timeZone, demoLocations, datab } = this.state;
+    console.log(datab);
     
-    const classList = [
-      { "id": "1",
-        "startDate": "Thu Oct 01 2020 15:00:00 GMT-0700 (PST)",
-        "endDate": "Thu Oct 01 2020 15:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
-        "text": "Math 32B LEC 1 (Online - Recorded)"
-      },
-      { "id": "2",
-        "startDate": "Fri Dec 02 2020 09:00:00 GMT-0700 (PST)",
-        "endDate": "Fri Dec 02 2020 09:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=MO,WE,FR",
-        "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
-      },
-      {
-        "id": "3",
-        "startDate": "Mon Oct 05 2020 10:00:00 GMT-0700 (PST)",
-        "endDate": "Mon Oct 05 2020 11:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=MO,WE",
-        "text": "COM SCI 180 LEC 1 (Online - Recorded)"
-      },
-      {
-        "id": "4",
-        "startDate": "Tue Oct 06 2020 13:00:00 GMT-0700 (PST)",
-        "endDate": "Tue Oct 06 2020 13:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH",
-        "text": "EPS 3 LEC 1 (Online - Recorded)"
-      },
-      {
-        "id": "5",
-        "startDate": "Tue Oct 06 2020 17:00:00 GMT-0700 (PST)",
-        "endDate": "Tue Oct 06 2020 18:15:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH",
-        "text": "CHIN 40 LEC 1 (Online - Recorded)"
-      },
-      {
-        "id": "6",
-        "startDate": "Wed Sep 30 2020 10:00:00 GMT-0700 (PST)",
-        "endDate": "Wed Sep 30 2020 12:00:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=WE,FR",
-        "text": "CLUSTER M70 (Online - Recorded)"
-      },
-      { "id": "7",
-        "startDate": "Thu Dec 01 2020 15:00:00 GMT-0700 (PST)",
-        "endDate": "Thu Dec 01 2020 15:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
-        "text": "Math32B"
-      },
-      { "id": "8",
-        "startDate": "Fri Dec 02 2020 09:00:00 GMT-0700 (PST)",
-        "endDate": "Fri Dec 02 2020 09:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH,SA",
-        "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
-      },
-      {
-        "id": "9",
-        "startDate": "Mon Oct 05 2020 10:00:00 GMT-0700 (PST)",
-        "endDate": "Mon Oct 05 2020 11:50:00 GMT-0700 (PST)",
-        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
-        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201211T234500Z;BYDAY=TU,TH",
-        "text": "COM SCI 180 LEC 1 (Online - Recorded)"
-      },
-    ]
-
     const options = classList.map((option) => {
       const firstLetter = option.text[0].toUpperCase();
       return {
@@ -320,11 +210,9 @@ class App extends React.Component {
 
     function updateEvent(){
       try {
-        console.log('reachchange');
         const response = axios.post('/api/setschedule', datab, config);
-        console.log('👉 Returned calendar data:', response);
       } catch (e) {
-        console.log(`😱 Axios request failed: ${e}`);
+        console.log(`Axios request failed: ${e}`);
       }
       setTimeout(function (){
         window.location.reload()
@@ -357,13 +245,13 @@ class App extends React.Component {
                 getOptionLabel={(option) => option.text}
                 style={{ width: 300, backgound: 'black' }}
                 renderInput={(params) => 
-                  <TextField {...params} color="blue" label="Search your classes" variant="outlined" />}
+                  <TextField {...params} color="blue" label="Search your classes (fall quarter)" variant="outlined" />}
               />
               <Button
-                variant="contained"
+                variant="outlined"
                 onClick={updateEvent}>
-                Save all changes
                 <SaveIcon />
+                &nbsp; Save all changes
               </Button>
 
             </div>
@@ -388,7 +276,6 @@ class App extends React.Component {
           </div>
 
           <div className="widget-container">
-
             <div className="header">
               <span className="caption">Events List </span>
               <div className="sideNote">( Slide left to delete, or drag to change 
@@ -418,14 +305,89 @@ class App extends React.Component {
               </ItemDragging>
             </List>
           </div>
-
         </div>
-
       </React.Fragment>
     );
   }
 }
-
+const classList = [
+  { "id": "151",
+    "startDate": "Thu Oct 01 2020 14:00:00 GMT-0800 (PST)",
+    "endDate": "Thu Oct 01 2020 15:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
+    "text": "Math 34B LEC 1"
+  },
+  { "id": "152",
+    "startDate": "Fri Dec 02 2020 09:00:00 GMT-0800 (PST)",
+    "endDate": "Fri Dec 02 2020 09:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=MO,WE,FR",
+    "text": "PHYSICS 1D LEC 1"
+  },
+  {
+    "id": "153",
+    "startDate": "Mon Oct 05 2020 13:00:00 GMT-0800 (PST)",
+    "endDate": "Mon Oct 05 2020 15:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=MO,WE",
+    "text": "COM SCI 87 LEC 1"
+  },
+  {
+    "id": "154",
+    "startDate": "Tue Oct 06 2020 13:00:00 GMT-0800 (PST)",
+    "endDate": "Tue Oct 06 2020 14:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH",
+    "text": "COM SCI 233 LEC 1"
+  },
+  {
+    "id": "155",
+    "startDate": "Tue Oct 06 2020 17:00:00 GMT-0800 (PST)",
+    "endDate": "Tue Oct 06 2020 18:15:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH",
+    "text": "CHIN 20 LEC 1"
+  },
+  {
+    "id": "156",
+    "startDate": "Wed Sep 30 2020 10:00:00 GMT-0700 (PST)",
+    "endDate": "Wed Sep 30 2020 12:00:00 GMT-0700 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=WE,FR",
+    "text": "CLUSTER M80 LEC 1"
+  },
+  { "id": "157",
+    "startDate": "Thu Dec 01 2020 15:00:00 GMT-0800 (PST)",
+    "endDate": "Thu Dec 01 2020 15:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
+    "text": "Math32B"
+  },
+  { "id": "158",
+    "startDate": "Fri Dec 02 2020 09:00:00 GMT-0800 (PST)",
+    "endDate": "Fri Dec 02 2020 10:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH,SA",
+    "text": "PHYSICS 1E LEC 1"
+  },
+  {
+    "id": "159",
+    "startDate": "Mon Oct 05 2020 10:00:00 GMT-0800 (PST)",
+    "endDate": "Mon Oct 05 2020 12:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201211T234500Z;BYDAY=TU,TH",
+    "text": "COM SCI 125 LEC 1"
+  },
+  {
+    "id": "160",
+    "startDate": "Mon Oct 05 2020 15:00:00 GMT-0800 (PST)",
+    "endDate": "Mon Oct 05 2020 17:50:00 GMT-0800 (PST)",
+    "location": "fake-class",
+    "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201211T234500Z;BYDAY=TU,TH,FR",
+    "text": "COM SCI 177 LEC 1"
+  },
+]
 
 
 export default App;
