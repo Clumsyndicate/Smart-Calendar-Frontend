@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from "moment-timezone";
 import React, { Component} from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -66,39 +67,81 @@ const DialogActions = withStyles((theme) => ({
   }
 }))(MuiDialogActions);
 
-function convert(str) {
+function convert(str, flag) {
   var ret = str;
   if (ret.indexOf("DTSTART") !== -1) {
     var temp = ret.match(/.+?(?=;DTSTART)/);
     ret = temp[0];
   }
+  if(flag === false){
+    var process = ret.split("=")[3].split(",");
+    var newweek = parseDay(process);
+    var temp = ret.split("=")
+    temp[3] = newweek
+    return temp.join('=');
+  }
   return ret;
 }
+
 function timezone(str) {
+  var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(name);
   var newstr = String(str);
-  var sub = newstr.substring(0, 25);
-  var txt = String(sub + "GMT-0800 (PST)");
-  return txt;
+  var sub = newstr.substring(0, 19);
+  var procedure1 = sub.replace("-", "/");
+  var procedure2 = sub.replace("T", " ");
+  var GMT = moment.tz(procedure2, "Etc/GMT-0");
+  var China = GMT.clone().tz(name);
+  var actuallyLA = China.format();
+  sub = actuallyLA.substring(0, 19);
+  var procedure2 = sub.replace("T", " ");
+  var RealChina = moment.tz(procedure2, "America/Los_Angeles");
+  China = RealChina.clone().tz(name);
+  if(name.includes("America")){
+    return China.format().replace("T", " ").replace("-", "/").replace("-", "/").substring(0, 19);}
+  return China.add(1, 'hours').format().replace("T", " ").replace("-", "/").replace("-", "/").substring(0, 19);
+}
+
+function modifyweek(str){
+  var name = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  var flag = false;
+  var newstr = String(str);
+  var sub = newstr.substring(0, 19);
+  var procedure1 = sub.replace("-", "/");
+  var procedure2 = sub.replace("T", " ");
+  var GMT = moment.tz(procedure2, "Etc/GMT-0");
+  var China = GMT.clone().tz(name);
+  var actuallyLA = China.format();
+  var flag1 = actuallyLA.split("-")[2].substring(0,2);
+  sub = actuallyLA.substring(0, 19);
+  var procedure2 = sub.replace("T", " ");
+  var RealChina = moment.tz(procedure2, "America/Los_Angeles");
+  China = RealChina.clone().tz(name);
+  if(name.includes("America")){
+    var flag2 = China.add(1, 'hours').format().split("-")[2].substring(0,2);}
+  else{
+    var flag2 = China.format().split("-")[2].substring(0,2);}
+  return flag1 === flag2;
 }
 
 function analyze(strdata, config) {
   const raw = strdata;
   const ical = require("ical");
-
   const data1 = ical.parseICS(raw);
   var temp = [];
   var i = 0;
-
   for (let k in data1) {
     if (data1.hasOwnProperty(k)) {
       var ev = data1[k];
       if (data1[k].type === "VEVENT") {
         i++;
         var event = ev.summary;
-        var start = timezone(ev.start);
-        var end = timezone(ev.end);
+        
         if (ev.rrule !== undefined) {
-          var rrule = convert(ev.rrule.toString());
+          var weekflag = modifyweek(ev.start.toISOString());
+          var start = timezone(ev.start.toISOString());
+          var end = timezone(ev.end.toISOString());
+          var rrule = convert(ev.rrule.toString(), weekflag);
           var url = "null";
           if (ev.url !== undefined) {
             url = ev.url;
@@ -112,15 +155,15 @@ function analyze(strdata, config) {
             recurrenceRule: rrule
           });
         }
-        else if(start.length > 30){
-          temp.push({
-            text: event,
-            startDate: start,
-            endDate: end,
-            id: i,
-            allDay: false,
-          });
-        }
+        // else if(start.length > 30){
+        //   temp.push({
+        //     text: event,
+        //     startDate: start,
+        //     endDate: end,
+        //     id: i,
+        //     allDay: false,
+        //   });
+        // }
         else{
           // temp.push({
           //   text: event,
@@ -141,8 +184,7 @@ function analyze(strdata, config) {
     } catch (e) {
       console.log(`😱 Axios request failed: ${e}`);
     }
-  }
-// }
+}
 
 class uploadButton extends Component {
   //const [open, setOpen] = React.useState(false);
@@ -206,7 +248,6 @@ class uploadButton extends Component {
               onChange={(files) => {
                 if (files[0] !== undefined) {
                   var promise = files[0].text();
-                  console.log(promise);
                   promise.then((result) => {
                     this.setState({
                       datab: result,
@@ -230,6 +271,27 @@ class uploadButton extends Component {
       </div>
     );
   }
+}
+
+function parseDay(original) {
+  var string = "";
+  for (var i = 0; i < original.length; i++) {
+    if(original[i] == "SU")
+      string += "MO,";
+    if(original[i] == "MO")
+      string += "TU,";
+    if(original[i] == "TU")
+      string += "WE,";
+    if(original[i] == "WE")
+      string += "TH,";
+    if(original[i] == "TH")
+      string += "FR,";
+    if(original[i] == "FR")
+      string += "SA,";
+    if(original[i] == "SA")
+      string += "SU,";
+  }
+  return string.substr(0, string.length -1);
 }
 
 export default withStyles(styles)(uploadButton);
