@@ -90,15 +90,15 @@ function timezone(str) {
   var procedure1 = sub.replace("-", "/");
   var procedure2 = sub.replace("T", " ");
   var GMT = moment.tz(procedure2, "Etc/GMT-0");
-  var China = GMT.clone().tz(name);
-  var actuallyLA = China.format();
+  var user = GMT.clone().tz(name);
+  var actuallyLA = user.format();
   sub = actuallyLA.substring(0, 19);
   var procedure2 = sub.replace("T", " ");
-  var RealChina = moment.tz(procedure2, "America/Los_Angeles");
-  China = RealChina.clone().tz(name);
+  var Realuser = moment.tz(procedure2, "America/Los_Angeles");
+  user = Realuser.clone().tz(name);
   if(name.includes("America")){
-    return China.format().replace("T", " ").replace("-", "/").replace("-", "/").substring(0, 19);}
-  return China.add(1, 'hours').format().replace("T", " ").replace("-", "/").replace("-", "/").substring(0, 19);
+    return user.format().replace("T", " ").replace("-", "/").replace("-", "/").substring(0, 19);}
+  return user.add(1, 'hours').format().replace("T", " ").replace("-", "/").replace("-", "/").substring(0, 19);
 }
 
 function modifyweek(str){
@@ -109,17 +109,17 @@ function modifyweek(str){
   var procedure1 = sub.replace("-", "/");
   var procedure2 = sub.replace("T", " ");
   var GMT = moment.tz(procedure2, "Etc/GMT-0");
-  var China = GMT.clone().tz(name);
-  var actuallyLA = China.format();
+  var user = GMT.clone().tz(name);
+  var actuallyLA = user.format();
   var flag1 = actuallyLA.split("-")[2].substring(0,2);
   sub = actuallyLA.substring(0, 19);
   var procedure2 = sub.replace("T", " ");
-  var RealChina = moment.tz(procedure2, "America/Los_Angeles");
-  China = RealChina.clone().tz(name);
+  var Realuser = moment.tz(procedure2, "America/Los_Angeles");
+  user = Realuser.clone().tz(name);
   if(name.includes("America")){
-    var flag2 = China.format().split("-")[2].substring(0,2);}
+    var flag2 = user.format().split("-")[2].substring(0,2);}
   else{
-    var flag2 = China.add(1, 'hours').format().split("-")[2].substring(0,2);}
+    var flag2 = user.add(1, 'hours').format().split("-")[2].substring(0,2);}
   return flag1 === flag2;
 }
 
@@ -130,7 +130,6 @@ function analyze(strdata, config) {
   var temp = [];
   var i = 0;
   for (let k in data1) {
-    console.log(i);
     if (data1.hasOwnProperty(k)) {
       var ev = data1[k];
       if (data1[k].type === "VEVENT") {

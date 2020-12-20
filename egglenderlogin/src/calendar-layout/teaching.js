@@ -112,7 +112,7 @@ render()
               </Typography>
               <Image
                 onClick={() => console.log('onClick')}
-                src='https://i.ibb.co/5TrsZRm/Demo.png'
+                src='https://i.ibb.co/ChKMr4C/Screen.jpg'
                 aspectRatio={(13/9)}
               />
               <p></p>
