@@ -62,6 +62,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      datab: null,
+
       token: props.token,
       timeZone: demoLocations[0].id,
       demoLocations: demoLocations,
@@ -71,8 +73,9 @@ class App extends React.Component {
       //for list
       deleteType: 'slideItem',
       searchMode: 'contains',
-      // events,
     };
+    this.componentDidMount = this.componentDidMount.bind(this);
+
     this.onValueChanged = this.onValueChanged.bind(this);
     this.onAppointmentFormOpening = this.onAppointmentFormOpening.bind(this);
     this.onOptionChanged = this.onOptionChanged.bind(this);
@@ -89,71 +92,56 @@ class App extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  state = {
-    loading: true,
-    error: "",
-    datab: null,
-    eventsb: null,
-  };
+  // state = {
+  //   // loading: true,
+  //   // error: "",
+  //   datab: null,
+  // };
 
-  loadCal = () => {
-    this.setState({ loading: true });
-    return axios
-      .get(
-        '/api/getschedule',{
-          headers: {
-          "x-access-token": this.props.token
-          }
-        }
-      )
-      .then(result => {
-        console.log(result);
-        this.setState({
-          datab: result.data,
-          loading: false,
-          error: false
-        });
-      })
-      .catch(error => {
-        console.log('get some error')
-        console.error("error: ", error);
-        this.setState({
-          error: `${error}`,
-          loading: false
-        });
-      });
-  };
-
-  loadList = () => {
-    this.setState({ loading: true });
-    return axios
-      .get(
-        '/api/getschedule',{
-          headers: {
-          "x-access-token": this.props.token
-          }
-        }
-      )
-      .then(result => {
-        console.log(result.data);
-        this.setState({
-          eventsb: result.data,
-          loading: false,
-          error: false
-        });
-      })
-      .catch(error => {
-        console.error("error: ", error);
-        this.setState({
-          error: `${error}`,
-          loading: false
-        });
-      });
-  };
+  // loadCal = () => {
+  //   this.setState({ loading: true });
+  //   return axios
+  //     .get(
+  //       '/api/getschedule',{
+  //         headers: {
+  //         "x-access-token": this.props.token
+  //         }
+  //       }
+  //     )
+  //     .then(result => {
+  //       console.log(result);
+  //       this.setState({
+  //         datab: result.data,
+  //         loading: false,
+  //         error: false
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.log('get some error')
+  //       console.error("error: ", error);
+  //       this.setState({
+  //         error: `${error}`,
+  //         loading: false
+  //       });
+  //     });
+  // };
 
   componentDidMount() {
-    this.loadCal();
-    this.loadList();
+    // this.loadCal();
+    axios
+    .get(
+      '/api/getschedule',
+      {
+        headers: {
+        "x-access-token": this.props.token
+        }
+      })
+    .then(result => {
+        console.log(result);
+        this.setState({
+          datab: result.data
+        });
+      })
   }
 
   onValueChanged(e) {
@@ -199,7 +187,7 @@ class App extends React.Component {
   onSelectedItemsChange(args) {
     if(args.name === 'selectedItems') {
       this.setState({
-        selectedItems: args.value
+        selectedItemKeys: args.value
       });
     }
   }
@@ -249,17 +237,63 @@ class App extends React.Component {
     const config = {
         headers: { "x-access-token": this.props.token }
     };
-    const { timeZone, demoLocations, eventsb, datab } = this.state;
+    const { timeZone, demoLocations, datab } = this.state;
     
     const classList = [
       { "id": "1",
+        "startDate": "Thu Oct 01 2020 15:00:00 GMT-0700 (PST)",
+        "endDate": "Thu Oct 01 2020 15:50:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
+        "text": "Math 32B LEC 1 (Online - Recorded)"
+      },
+      { "id": "2",
+        "startDate": "Fri Dec 02 2020 09:00:00 GMT-0700 (PST)",
+        "endDate": "Fri Dec 02 2020 09:50:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=MO,WE,FR",
+        "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
+      },
+      {
+        "id": "3",
+        "startDate": "Mon Oct 05 2020 10:00:00 GMT-0700 (PST)",
+        "endDate": "Mon Oct 05 2020 11:50:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=MO,WE",
+        "text": "COM SCI 180 LEC 1 (Online - Recorded)"
+      },
+      {
+        "id": "4",
+        "startDate": "Tue Oct 06 2020 13:00:00 GMT-0700 (PST)",
+        "endDate": "Tue Oct 06 2020 13:50:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH",
+        "text": "EPS 3 LEC 1 (Online - Recorded)"
+      },
+      {
+        "id": "5",
+        "startDate": "Tue Oct 06 2020 17:00:00 GMT-0700 (PST)",
+        "endDate": "Tue Oct 06 2020 18:15:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=TU,TH",
+        "text": "CHIN 40 LEC 1 (Online - Recorded)"
+      },
+      {
+        "id": "6",
+        "startDate": "Wed Sep 30 2020 10:00:00 GMT-0700 (PST)",
+        "endDate": "Wed Sep 30 2020 12:00:00 GMT-0700 (PST)",
+        "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
+        "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201221T234500Z;BYDAY=WE,FR",
+        "text": "CLUSTER M70 (Online - Recorded)"
+      },
+      { "id": "7",
         "startDate": "Thu Dec 01 2020 15:00:00 GMT-0700 (PST)",
         "endDate": "Thu Dec 01 2020 15:50:00 GMT-0700 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-MATH33A-1",
         "recurrenceRule": "FREQ=WEEKLY;UNTIL=20201220T234500Z;BYDAY=MO,WE,FR",
         "text": "Math32B"
       },
-      { "id": "2",
+      { "id": "8",
         "startDate": "Fri Dec 02 2020 09:00:00 GMT-0700 (PST)",
         "endDate": "Fri Dec 02 2020 09:50:00 GMT-0700 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-PHYSCI5-1",
@@ -267,7 +301,7 @@ class App extends React.Component {
         "text": "PHYSICS 1B LEC 1 (Online - Recorded)"
       },
       {
-        "id": "3",
+        "id": "9",
         "startDate": "Mon Oct 05 2020 10:00:00 GMT-0700 (PST)",
         "endDate": "Mon Oct 05 2020 11:50:00 GMT-0700 (PST)",
         "location": "https://ccle.ucla.edu/course/view/20F-COMSCI180-1",
@@ -288,7 +322,7 @@ class App extends React.Component {
       try {
         console.log('reachchange');
         const response = axios.post('/api/setschedule', datab, config);
-        console.log('👉 Returned data:', response);
+        console.log('👉 Returned calendar data:', response);
       } catch (e) {
         console.log(`😱 Axios request failed: ${e}`);
       }
@@ -356,13 +390,13 @@ class App extends React.Component {
           <div className="widget-container">
 
             <div className="header">
-              <span className="caption">Upcoming Events !!! </span>
+              <span className="caption">Events List </span>
               <div className="sideNote">( Slide left to delete, or drag to change 
                priority, or just put a check in the box !)</div>
             </div>
 
             <List
-              dataSource={eventsb}
+              dataSource={datab}
               height={800}
               keyExpr="id"
               repaintChangesOnly={true}
@@ -371,13 +405,12 @@ class App extends React.Component {
               showSelectionControls={true}
               selectionMode="multiple"
               onOptionChanged={this.onSelectedItemsChange}
-              // itemRender={ItemTemplate}
               searchExpr="text"
               searchEnabled={true}
               searchMode={this.state.searchMode}>
               <ItemDragging
                 allowReordering={true}
-                data="eventsb"
+                data="datab"
                 onDragStart={this.onDragStart}
                 onAdd={this.onAdd}
                 onRemove={this.onRemove}
