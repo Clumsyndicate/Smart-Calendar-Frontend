@@ -74,4 +74,4 @@ npm start
 Video demo: [Google Drive](https://drive.google.com/file/d/1_t6Gnqz54lKaGFfyz4KL6iMkViSJuwAr/view?usp=sharing)
 
 Picture demo:
-![](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/blob/main/egglenderlogin/src/calendar-layout/Demo.png)
+![](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/blob/main/src/calendar-layout/Demo.png)
