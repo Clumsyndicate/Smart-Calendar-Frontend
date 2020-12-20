@@ -32,7 +32,7 @@ This repository holds the frontend code. [Backend is here](https://github.com/Cl
 The frontend application is built with React.
 
 ## Install
-1. Enter the egglenderlogin directory
+1. Enter the repo directory
 
 2. Run the following command to install required packages, if failed you could manually add packages from our package list:
 ```shell

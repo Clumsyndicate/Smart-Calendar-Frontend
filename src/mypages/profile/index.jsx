@@ -1,0 +1,87 @@
+import React, {Component,useState} from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import tileData from '../../calendar-friend/tileData'
+import FriendList from '../../calendar-friend/friendList'
+import LoadingFriends from '../../calendar-friend/friendLoading'
+import App from '../../calendar-layout/App'
+import '../../calendar-layout/styles.css'
+import {reducer, actionCreators as profileActionCreator} from './store'
+import  {actionCreators as noteActionCreators} from '../notification/store'
+import {bindActionCreators} from 'redux'
+import shortid from 'shortid';
+import { connect } from 'react-redux'
+
+class CenteredGrid extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { friends: tileData, isLoaded: false, error: null};
+  }
+  componentDidMount = async() => {
+    // console.log("before");
+    const {data} =await this.props.profileFn.getFriendListAct({}, this.props.loginData.info);
+    // console.log("after");
+    // console.log(data);
+    if (data.status===1)
+    {
+      // console.log('reah here getting friendlist1')
+      // console.log(decoder(this.props.loginData.info))
+        this.props.noteFn.addNoteAct({
+            type: 'alert-primary',
+            text: 'Cannot get your friendlist data',
+            id: shortid.generate()
+        })
+        this.setState({
+            isLoaded: true,
+            friends: []
+        });
+    }
+    else
+    {
+      // console.log('reah here getting friends')
+      // console.log(data)
+      // this.setState({ friends: data.friends });
+      this.setState({
+        isLoaded: true,
+        friends: data.friendlist
+    });
+    }
+  }
+
+
+  render()
+  {
+    const { friends, isLoaded, error } = this.state;
+    // const { classes } = this.props;
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div></div>;
+    } else {
+    return (
+      <div>
+        <App token={this.props.loginData.info}/>
+        <FriendList data={this.state.friends}/>
+      </div>
+    );
+    }
+  }
+  
+ 
+}
+const mapStateToProps = state =>
+{
+    return {
+      loginData: state.login
+    }
+}
+const mapDispatchToProps = dispatch =>
+{
+    return {
+        profileFn: bindActionCreators(profileActionCreator, dispatch),
+        noteFn: bindActionCreators(noteActionCreators, dispatch),
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(CenteredGrid)
