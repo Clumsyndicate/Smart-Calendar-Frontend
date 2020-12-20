@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { findProps } from 'devextreme-react/core/template';
 
 
 
@@ -15,8 +14,6 @@ const useStyles = makeStyles({
     maxWidth: 210,
     height:325,
     backgroundColor:"rgba(245,247,250)"
-    //backgroundColor:'linear-gradient(red, white)'
-    //background: 'linear-gradient(125deg, rgba(237,231,246,1) 38%, rgba(209,196,233,1) 100%)'
   },
   cardtext:{
     overflow:"scroll"
@@ -99,18 +96,11 @@ export default function FriendCard(props) {
   }
  
   const myimg = props.img
-  // const myimg = "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-  //const myimg = "data:image/png;base64, "+props.img
-  console.log(myimg)
+  
   let buttonText=expanded?"Hide Contact":"See Contact"
   return (
     <Card className={classes.root}>
     
-        {/* <CardMedia
-          component="img"
-          height="170"
-          image={myimg}
-        /> */}
          <CardMedia
           component="img"
           height="170"

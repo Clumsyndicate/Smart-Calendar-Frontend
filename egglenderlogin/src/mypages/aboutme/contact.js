@@ -16,8 +16,7 @@ function Contact(props){
     const classes = useStyles();
     const [changed,setChange]=React.useState(false)
     const [contact, setContact] = React.useState('')
-    //const [contactval, setContactval] = React.useState('')
-    //setContactval(props.contactval)
+  
     let contactval = props.contactval
 
       const contactways = ['Email', 'TEL','Facebook','Snap','Instagram','WeChat']

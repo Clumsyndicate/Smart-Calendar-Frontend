@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   gridList: {
     flexWrap: 'nowrap',
     height:335,
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
   titleBar: {
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     padding: '5px',
     color: '#5d4037',
-    // marginLeft: '10px',
     fontFamily: 'Georgia',
   },
   layout: {
@@ -36,26 +34,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
+
 export default function FriendList(props) {
   const classes = useStyles();
-  console.log(props.data)
+  // console.log(props.data)
   let displaylength=props.data.length>8? 8:props.data.length
 
   return (
@@ -66,7 +48,6 @@ export default function FriendList(props) {
         <GridList className={classes.gridList} cols={displaylength} cellHeight='auto'>
           {props.data.map((tile,index) => (
             <GridListTile key={index} rows={12}>
-              {/* <img src={tile.img} alt={tile.title} /> */}
               <FriendCard name={tile.name} num={tile.total} img={tile.img} class={tile.classes} contact={tile.contact}/>
             </GridListTile>
           ))}
