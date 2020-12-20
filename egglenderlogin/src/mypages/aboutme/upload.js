@@ -10,10 +10,6 @@ class ImgUpload extends React.Component {
     }
   
     onDrop(picture,pic) {
-        // this.setState({
-        //     pictures: picture,
-        //     uploaded:true
-        // });
         this.props.saveNewAvatar(picture,pic)
         alert("Upload Success!")
 

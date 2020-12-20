@@ -17,7 +17,6 @@ export default function SelectionBar(props) {
    const deletefunc=props.deletefunc
    const index = parseInt(props.index,10)
    const classtext="Class " +(index+1)
-   //let prev=""
   React.useEffect(() => {
     let active = true;
     
@@ -26,16 +25,12 @@ export default function SelectionBar(props) {
     }
 
     (async () => {
-      //const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-      //const response = await fetch('https://5fc7ab11f3c77600165d8a61.mockapi.io/class');
+      
       const response = await fetch('api/classlist');
-      //const countries = await response.json();
+  
       const myclasses = await response.json();
-      //console.log(myclasses[0].classList)
+      
       if (active) {
-        //setOptions(Object.keys(countries).map((key) => countries[key].item[0]));
-        //console.log(options)
-        //console.log(myclasses)
         setOptions(myclasses.classList.map((item)=>item));
       }
     })();
@@ -65,8 +60,7 @@ export default function SelectionBar(props) {
       onClose={() => {
         setOpen(false);
       }}
-      // getOptionSelected={(option, value) => option.name === value.name}
-      // getOptionLabel={(option) => option.name}
+     
       getOptionSelected={(option, value) => option === value}
       getOptionLabel={(option) => option}
       options={options}
@@ -91,9 +85,6 @@ export default function SelectionBar(props) {
         />
           )}}
     />
-    {/* <Button variant="outlined" color="primary" onClick={()=>{func(class1,index)}} style={{marginLeft:"1rem"}}>
-        confirm
-      </Button> */}
       <Button variant="outlined" color="primary" onClick={()=>{deletefunc(index)}} style={{marginLeft:"1rem"}} disabled={inputstate==="clear"?false:true}>
         delete
       </Button>
