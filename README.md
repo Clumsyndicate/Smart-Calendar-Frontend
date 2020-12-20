@@ -1,6 +1,13 @@
-# Smart-Calendar
+# Egglendar
 
 [![Build Status](https://travis-ci.org/Clumsyndicate/Smart-Calendar-Frontend.svg?branch=main)](https://travis-ci.org/Clumsyndicate/Smart-Calendar-Frontend)
+
+Table of contents
+  * [Introduction](#introduction)
+  * [Technology](#technology)
+  * [Install](#install)
+  * [User's guide](#guide)
+  * [Demo](#demo)
 
 ## Introduction
 
@@ -24,10 +31,43 @@ This repository holds the frontend code. [Backend is here](https://github.com/Cl
 
 The frontend application is built with React.
 
-## Class scheduling and class adding part
-[link to this repository](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/blob/main/egglender-class)
+## Install
+1. Enter the egglenderlogin directory
 
-Interactive online react IDE: [Codesandbox](https://codesandbox.io/s/ucla-class-scheduler-v2-gp43m)
+2. Run the following command to install required packages, if failed you could manually add packages from our package list:
+```shell
+npm install
+```
 
-Demo screenshot:
-![](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/raw/main/egglender-class/Screenshot/Demo_v2.png)
+3. Start the application:
+```shell
+npm start
+```
+
+4. Go to [localhost](http://localhost:3000) for further operation
+    
+## Guide
+1. Sign up and Log in 
+
+2. Go to the setting's page to fill out enrolled class and contact information
+
+3. Upload .ics Calender data (there are two sample file at the uploading window)
+
+4. Other features to exlore:
+
+   - Change time-zone and view
+   
+   - Add extra classes in search box
+   
+   - double click empty slot to add events, single click existing events to modify events
+   
+   - Scroll the application to the bottom to find potential class mates
+
+5. Remember to save any changes before log out!
+
+
+## Demo
+Video demo: [Google Drive](https://drive.google.com/file/d/1_t6Gnqz54lKaGFfyz4KL6iMkViSJuwAr/view?usp=sharing)
+
+Picture demo:
+![](https://github.com/Clumsyndicate/Smart-Calendar-Frontend/blob/main/egglenderlogin/src/calendar-layout/Demo.png)
