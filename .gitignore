@@ -1,4 +1,6 @@
 build/
+yarn.lock
+package-lock.json
 
 # Logs
 logs
