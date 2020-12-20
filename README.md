@@ -59,9 +59,13 @@ npm start
    
    - Add extra classes in search box
    
-   - double click empty slot to add events, single click existing events to modify events
+   - Double click empty slot to add events, single click existing events to modify events
    
    - Scroll the application to the bottom to find potential class mates
+   
+   - Search for upcoming events in the list on the right
+   
+   - Drag on the events to change their priorities, slide to the left to delete events
 
 5. Remember to save any changes before log out!
 
