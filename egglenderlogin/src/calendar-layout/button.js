@@ -226,13 +226,15 @@ class uploadButton extends Component {
           </DialogTitle>
           <DialogContent dividers>
             <Typography gutterBottom>
-              If you do not have a calendar file (.ics) yet, you could choose to download one of the following sample calendar file (recommended):
+              If you do not have a calendar file (.ics) yet, you could choose to download one of the following sample calendar file (recommended).
               <p></p>
-              <a href="https://drive.google.com/file/d/1sXH01vKmIdaOc5tjdK5ilUvUvjvi9038/view?usp=sharing"> Fall sample .ics file (many events, require scroll back)</a>
+              ** Please right click to open download link in a new tab! **
               <p></p>
-              <a href="https://drive.google.com/file/d/1TmsDTo-GdPL7-7rd2cWPWxbQ1Jna6Xq5/view?usp=sharing"> Winter Break mock sample .ics file (current events, RECOMMENDED)</a>
+              <a href="https://drive.google.com/file/d/1sXH01vKmIdaOc5tjdK5ilUvUvjvi9038/view?usp=sharing"> Fall sample .ics file </a> (many events, require scroll back)
               <p></p>
-              <a href="https://drive.google.com/file/d/1MOOEcHpV0thN2x0FXfFlxR7QrWaMdGoQ/view?usp=sharing"> Winter sample .ics file (less events, require scroll forward)</a>
+              <a href="https://drive.google.com/file/d/1TmsDTo-GdPL7-7rd2cWPWxbQ1Jna6Xq5/view?usp=sharing"> Winter Break mock sample .ics file </a> (current events, RECOMMENDED)
+              <p></p>
+              <a href="https://drive.google.com/file/d/1MOOEcHpV0thN2x0FXfFlxR7QrWaMdGoQ/view?usp=sharing"> Winter sample .ics file </a> (less events, require scroll forward)
               <p></p>
               *New file uplaoded will erase all existing events
             </Typography>
