@@ -45,7 +45,7 @@ export default function FriendList(props) {
       <div>
         <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>
        <div>
-    <p>No person seems to have classes in common as you so far. Try edit your enroll list in <a href="/setting">Settings page</a> to find studymates!</p>
+    <p>No person seems to have classes in common as you so far. Try edit your enroll list in <a href="/setting">Settings page</a> to find studymates! (P.s. adding CS 97 will help you find lots of studymates)</p>
     </div>
     <GridList className={classes.gridList} cols={displaylength} cellHeight='auto'></GridList>
     </div>)
