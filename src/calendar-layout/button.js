@@ -235,7 +235,7 @@ class uploadButton extends Component {
               <p></p>
               <a href="https://drive.google.com/file/d/1MOOEcHpV0thN2x0FXfFlxR7QrWaMdGoQ/view?usp=sharing"> Winter sample .ics file </a> (less events, require scroll forward)
               <p></p>
-              *New file uplaoded will erase all existing events
+              *New file uploaded will erase all existing events
             </Typography>
 
             <DropzoneArea
