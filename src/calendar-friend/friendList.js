@@ -40,6 +40,17 @@ export default function FriendList(props) {
   // console.log(props.data)
   let displaylength=props.data.length>8? 8:props.data.length
 
+  if(props.data.length===0){
+    return (
+      <div>
+        <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>
+       <div>
+    <p>No person seems to have classes in common as you so far. Try edit your enroll list in <a href="/setting">Settings page</a> to find studymates!</p>
+    </div>
+    <GridList className={classes.gridList} cols={displaylength} cellHeight='auto'></GridList>
+    </div>)
+  }
+  
   return (
     <div>      
       <div className={classes.titleBar}><h5>Potential Study Partners:</h5></div>

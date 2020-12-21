@@ -91,7 +91,7 @@ render()
               <p></p>
               <Typography gutterBottom>
                 1. Update classes enrolled in
-                 <a href="http://localhost:3000/setting"> Settings page</a>
+                 <a href="/setting"> Settings page</a>
                  . Enroll CS 97 will match many class mates.
               </Typography>
               <p></p>
