@@ -178,6 +178,9 @@ class App extends React.Component {
 
 // for search box and add button
   onChange(e, config, data) {
+    if (data === ''){
+      data = []
+    }
     var temp ={ "id": this.state.datab.length+1, 
                 "startDate": e.startDate, 
                 "endDate": e.endDate, 
